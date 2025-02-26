@@ -58,13 +58,17 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
                 return InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.chartArchiveDetailsScreen,
-                        parameters: {"screenType": "appointmentScreen"});
+                    Get.toNamed(AppRoutes.appointmentDetailsScreen,
+                        parameters: {
+                      "screenType": "appointmentScreen",
+                      "appointmentID" : displayData.id!
+                    });
+
                   },
                   child: ChartCard(
                     id: shortId,
                     date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
-                    name: displayData.allDay.toString(),
+                    name: displayData.clientId!.name!,
                   ),
                 );
               },

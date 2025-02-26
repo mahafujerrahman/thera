@@ -47,6 +47,8 @@ class ApiConstants {
 
   static const String getAllPaidTreatmentEndPoint = "/patient/paid-treatment-service";
   static const String getAllUnPaidTreatmentEndPoint = "/patient/unpaid-treatment-service";
+  static const String getOneServiceDetailsByIDEndPoint = "/patient/get-one-service";
+  static const String getOneAppointmentDetailsByIDEndPoint = "/make-appointment/get-one-appointment";
 
 
 }

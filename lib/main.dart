@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/controller/localization_controller.dart';
 import 'package:thera_track_app/controller/theme_controller.dart';
-import 'package:thera_track_app/themes/light_theme.dart';
+import 'package:thera_track_app/firebase_options.dart';
+import 'package:thera_track_app/service/firebase_service.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/message.dart';
 import 'helpers/di.dart' as di;
@@ -12,9 +14,11 @@ import 'helpers/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform);
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Map<String, Map<String, String>> _languages = await di.init();
+  NotificationHelper.getFcmToken();
   runApp(MyApp(
     languages: _languages,
   ));

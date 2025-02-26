@@ -1,6 +1,5 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:thera_track_app/models/chartArchive/getAll_chart_archive_model.dart';
 import 'package:thera_track_app/models/clients/all_appointment_model.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
@@ -30,5 +29,23 @@ class AppointmentController extends GetxController {
   }
 
 
+  //====================>> Get One Appointment Details by ID <<===========================================
+
+  RxBool isLoading=false.obs;
+  Rx<GetAllAppointmentModel> getOneAppointmentById = GetAllAppointmentModel().obs;
+  getOneAppointmentByIdDetails(String appointmentID) async {
+    isLoading.value=true;
+    var response = await ApiClient.getData("${ApiConstants.getOneAppointmentDetailsByIDEndPoint}/$appointmentID");
+    print("===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getOneAppointmentById.value = GetAllAppointmentModel.fromJson(response.body['data']);
+      getOneAppointmentById.refresh();
+      isLoading.value=false;
+    } else {
+      isLoading.value=false;
+      ApiChecker.checkApi(response);
+    }
+  }
 
 }
