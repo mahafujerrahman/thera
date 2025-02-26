@@ -104,7 +104,6 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen2> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,67 +114,83 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen2> {
         ),
         centerTitle: true,
       ),
-      body: Column(
+      body: Stack(  // Wrap the content in a Stack to position the email section
         children: [
-          Expanded(
-            child: Obx(
-                  () => profileController.getAllPaidTreatmentModels.isEmpty
-                  ? Center(child: Text('No paid treatments added yet.', style: TextStyle(color: Colors.black)))
-                  : Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: profileController.getAllPaidTreatmentModels.length,
-                    itemBuilder: (context, index) {
-                      final displayData = profileController.getAllPaidTreatmentModels[index];
-                      return ClientRowWidget(
-                        status: 'paid',
-                        name: displayData.name ?? 'N/A',
-                        date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
-                        amount: int.parse(displayData.finalCost.toString()),
-                      );
-                    },
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    padding: EdgeInsets.all(12.r),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Obx(
+                      () => profileController.getAllPaidTreatmentModels.isEmpty
+                      ? Center(child: Text('No paid treatments added yet.', style: TextStyle(color: Colors.black)))
+                      : Column(
+                    children: [
+                      // Use SizedBox to avoid unbounded constraints
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height - 200, // Adjust height accordingly
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: profileController.getAllPaidTreatmentModels.length,
+                          itemBuilder: (context, index) {
+                            final displayData = profileController.getAllPaidTreatmentModels[index];
+                            return ClientRowWidget(
+                              status: 'paid',
+                              name: displayData.name ?? 'N/A',
+                              date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
+                              amount: int.parse(displayData.finalCost.toString()),
+                            );
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.all(12.r),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Total',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  TimeFormatHelper.formatDate(DateTime.now()),
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 4),
-                            Text(
-                              TimeFormatHelper.formatDate(DateTime.now()),
-                              style: TextStyle(color: Colors.grey),
+                            Obx(() => Text(
+                              '${profileController.paidTotalFinalCost} \$',
+                              style: TextStyle(
+                                color: AppColors.greenColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             ),
                           ],
                         ),
-                        Obx(() => Text(
-                            '${profileController.paidTotalFinalCost} \$',
-                            style: TextStyle(
-                              color: AppColors.greenColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          _buildEmailInputSection(),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: _buildEmailInputSection(),  // Position the email input section at the bottom
+          ),
         ],
       ),
     );
   }
+
+
+
 
   Widget _buildEmailInputSection() {
     return Padding(
