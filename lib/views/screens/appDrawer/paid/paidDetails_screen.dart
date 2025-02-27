@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pdf/pdf.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/time_formate.dart';
@@ -38,20 +40,20 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
-              pw.Text('Paid Treatments', style: pw.TextStyle(fontSize: 24, font: font)),
+              pw.Text('Paid ', style: pw.TextStyle(fontSize: 24, font: font)),
               pw.SizedBox(height: 20),
               pw.Table(
-                border: pw.TableBorder.all(width: 1),
+                border: pw.TableBorder.all(
+                  width: 1,
+                  color: PdfColors.green,
+                ),
                 children: [
+                  // Table Header
                   pw.TableRow(
                     children: [
                       pw.Padding(
                         padding: pw.EdgeInsets.all(4),
-                        child: pw.Text('Name', style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold)),
-                      ),
-                      pw.Padding(
-                        padding: pw.EdgeInsets.all(4),
-                        child: pw.Text('Date', style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold)),
+                        child: pw.Text('Name and Date', style: pw.TextStyle(font: font, fontWeight: pw.FontWeight.bold)),
                       ),
                       pw.Padding(
                         padding: pw.EdgeInsets.all(4),
@@ -59,17 +61,14 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                       ),
                     ],
                   ),
+                  // Table Rows with Name and Date combined in one column
                   for (var displayData in profileController.getAllPaidTreatmentModels)
                     pw.TableRow(
                       children: [
                         pw.Padding(
                           padding: pw.EdgeInsets.all(4),
-                          child: pw.Text(displayData.name ?? 'N/A', style: pw.TextStyle(font: font)),
-                        ),
-                        pw.Padding(
-                          padding: pw.EdgeInsets.all(4),
                           child: pw.Text(
-                            TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
+                            '${displayData.name ?? 'N/A'}\n${TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString()))}',
                             style: pw.TextStyle(font: font),
                           ),
                         ),
