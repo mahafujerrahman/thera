@@ -88,13 +88,6 @@ class AppDrawer extends StatelessWidget {
             SizedBox(height: 100.h),
             // ================================== >>>>
             ListTile(
-              leading: SvgPicture.asset(AppIcons.paidIcon,color: Colors.white),
-              title: Text('Paid Test',style: TextStyle(color: AppColors.blackColor),),
-              onTap: () {
-                Get.toNamed(AppRoutes.paidDetailsScreen2);
-              },
-            ),
-            ListTile(
               leading: SvgPicture.asset(AppIcons.logOut),
               title: Text('Log Out',style: TextStyle(color: AppColors.whiteColor),),
               onTap: () {

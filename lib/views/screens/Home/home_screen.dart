@@ -58,8 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   clipBehavior: Clip.hardEdge,
                   child: CachedNetworkImage(
-                    imageUrl: "${ApiConstants.imageBaseUrl}${profileData
-                        .profileImage}",
+                    imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
                     fit: BoxFit.cover,
                     placeholder: (context, url) =>
                         Center(

@@ -31,7 +31,6 @@ import 'package:thera_track_app/views/screens/Home/home_screen.dart';
 import 'package:thera_track_app/views/screens/Home/inventory/inventory_screen.dart';
 import 'package:thera_track_app/views/screens/Home/notification/notificationScreen.dart';
 import 'package:thera_track_app/views/screens/Home/offline_file/offline_file_screen.dart';
-import 'package:thera_track_app/views/screens/Home/paidtest_screen.dart';
 import 'package:thera_track_app/views/screens/Home/wallet/costDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/Home/wallet/addCostScreen.dart';
 import 'package:thera_track_app/views/screens/Home/wallet/wallet_screen.dart';
@@ -89,7 +88,7 @@ class AppRoutes{
   static String equipmentScreen = "/equipmentScreen";
   static String humanContactsScreen = "/humanContactsScreen";
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
-  static String paidDetailsScreen2 = "/PaidDetailsScreen2";
+
 
 
  static List<GetPage> page=[
@@ -163,9 +162,6 @@ class AppRoutes{
 
    // EquipmentScreen
    GetPage(name:equipmentScreen, page: ()=> EquipmentScreen(),transition: Transition.noTransition),
-
-
-   GetPage(name:paidDetailsScreen2, page: ()=> PaidDetailsScreen2(),transition: Transition.noTransition),
    GetPage(name:appointmentDetailsScreen, page: ()=> AppointmentDetailsScreen(),transition: Transition.noTransition),
   ];
 }
