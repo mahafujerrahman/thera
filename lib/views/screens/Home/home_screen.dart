@@ -60,15 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CachedNetworkImage(
                     imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
                     fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        Center(
-                          child: CupertinoActivityIndicator(
-                            radius: 16.r,
-                            color: AppColors.primaryColor,
-                          ),
+                    placeholder: (context, url) => Center(child: CupertinoActivityIndicator(radius: 16.r, color: AppColors.primaryColor,),
                         ),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error, size: 24.r, color: Colors.black),
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/images/image_placeHolder.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 );
               }
