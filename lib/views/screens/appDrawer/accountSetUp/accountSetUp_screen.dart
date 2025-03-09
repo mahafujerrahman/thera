@@ -107,16 +107,17 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                               child: Container(
                                 height: 120.h,
                                 width: 120.w,
-                                decoration: const BoxDecoration(shape: BoxShape.circle),
-                                child: profileData.profileImage == null || profileData.profileImage == ''
-                                    ?  Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor))
-                                    : CachedNetworkImage(
-                                  imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) => Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor)
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: profileData.profileImage != null && profileData.profileImage!.isNotEmpty
+                                        ? CachedNetworkImageProvider("${ApiConstants.imageBaseUrl}${profileData.profileImage}")
+                                        : AssetImage("assets/images/image_placeHolder.png") as ImageProvider,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
+
                             ),
                            /* Positioned(
                               bottom: 0.h,
