@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -109,10 +108,10 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                                 height: 120.h,
                                 width: 120.w,
                                 decoration: const BoxDecoration(shape: BoxShape.circle),
-                                child: profileData?.profileImage == null || profileData?.profileImage == ''
+                                child: profileData.profileImage == null || profileData.profileImage == ''
                                     ?  Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor))
                                     : CachedNetworkImage(
-                                  imageUrl: "${ApiConstants.imageBaseUrl}${profileData?.profileImage}",
+                                  imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor)
                                   ),
@@ -132,7 +131,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                           ],
                         ),
                         Text(
-                          "${profileData?.firstName}",
+                          "${profileData.firstName}",
                           style: AppStyles.fontSize16(fontWeight: FontWeight.w400),
                         ),
                       ],

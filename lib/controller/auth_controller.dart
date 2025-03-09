@@ -31,6 +31,7 @@ class AuthController extends GetxController {
 
     String phoneNumber = phoneNumberCTRL.text.trim();
     String countryCode = selectedCountryCodes;
+    var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
 
     Map<String, dynamic> body = {
       "firstName": userNameCTRL.text.trim(),
@@ -39,6 +40,7 @@ class AuthController extends GetxController {
       "password": passwordCTRL.text.trim(),
       "ConfirmPassword": confirmPasswordCTRL.text.trim(),
       "role": role,
+      "fcmToken": fcmToken,
     };
 
     var headers = {
@@ -53,6 +55,7 @@ class AuthController extends GetxController {
         "email": signUpEmailCtrl.text.trim(),
         "screenType": "signupScreen"},
       );
+      print('My signup token : $fcmToken');
       signUpLoading(false);
       update();
     }
