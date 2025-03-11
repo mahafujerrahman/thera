@@ -17,6 +17,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => LocalizationController(sharedPreferences: Get.find()));
 
 
+
   //Retrieving localized data
   Map<String, Map<String, String>> _languages = Map();
 
