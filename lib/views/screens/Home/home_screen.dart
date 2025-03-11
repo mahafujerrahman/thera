@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
@@ -57,18 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   clipBehavior: Clip.hardEdge,
                   child: CachedNetworkImage(
-                    imageUrl: "${ApiConstants.imageBaseUrl}${profileData
-                        .profileImage}",
+                    imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
                     fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        Center(
-                          child: CupertinoActivityIndicator(
-                            radius: 16.r,
-                            color: AppColors.primaryColor,
-                          ),
+                    placeholder: (context, url) => Center(child: CupertinoActivityIndicator(radius: 16.r, color: AppColors.primaryColor,),
                         ),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error, size: 24.r, color: Colors.black),
+                    errorWidget: (context, url, error) => Image.asset(
+                      "assets/images/image_placeHolder.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 );
               }

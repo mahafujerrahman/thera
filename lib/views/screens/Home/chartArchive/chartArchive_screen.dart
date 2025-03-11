@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:thera_track_app/controller/clientController/chartArchive_controller.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/helpers/time_formate.dart';
@@ -24,6 +22,7 @@ class _ChartArchiveScreenState extends State<ChartArchiveScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       chartArchiveController.getAllChartArchive();
+
     });
   }
 
@@ -61,7 +60,10 @@ class _ChartArchiveScreenState extends State<ChartArchiveScreen> {
                 onTap: () {
                   Get.toNamed(
                     AppRoutes.chartArchiveDetailsScreen,
-                    parameters: {"screenType": "chartArchiveScreen"},
+                    parameters: {
+                      "screenType": "chartArchiveScreen",
+                      "serviceID" : displayData.id!
+                    },
                   );
                 },
 

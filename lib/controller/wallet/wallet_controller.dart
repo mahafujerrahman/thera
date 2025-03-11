@@ -109,5 +109,23 @@ class WalletController extends GetxController {
     }
   }
 
+  //============== Get One Cost Details  ============================================
+  RxBool isLoading=false.obs;
+  Rx<GetAllWalletModel> getOnelWalletDetails = GetAllWalletModel().obs;
+  getOneCostDetails(String travelID) async {
+    isLoading.value=true;
+    var response = await ApiClient.getData("${ApiConstants.getOneTravelExpensesEndPoint}/$travelID");
+    print("===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getOnelWalletDetails.value = GetAllWalletModel.fromJson(response.body['data']['attributes']);
+      getOnelWalletDetails.refresh();
+      isLoading.value=false;
+    } else {
+      isLoading.value=false;
+      ApiChecker.checkApi(response);
+    }
+  }
+
 
 }

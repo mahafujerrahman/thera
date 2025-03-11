@@ -5,6 +5,7 @@ import 'package:thera_track_app/views/screens/Auth/SignUp/sign_up_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/Verification/verify_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/forgotPassword/forgotPassword_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/resetPassword/resetPassword_screen.dart';
+import 'package:thera_track_app/views/screens/Home/appointment/appointmentDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/Home/appointment/appointment_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/chartArchive_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/detailsChartArchive_screen.dart';
@@ -86,6 +87,8 @@ class AppRoutes{
   static String costDetailsScreen = "/costDetailsScreen";
   static String equipmentScreen = "/equipmentScreen";
   static String humanContactsScreen = "/humanContactsScreen";
+  static String appointmentDetailsScreen = "/appointmentDetailsScreen";
+
 
 
  static List<GetPage> page=[
@@ -159,5 +162,6 @@ class AppRoutes{
 
    // EquipmentScreen
    GetPage(name:equipmentScreen, page: ()=> EquipmentScreen(),transition: Transition.noTransition),
+   GetPage(name:appointmentDetailsScreen, page: ()=> AppointmentDetailsScreen(),transition: Transition.noTransition),
   ];
 }

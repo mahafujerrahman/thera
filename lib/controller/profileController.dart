@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/models/clients/paid_and_unpaid_treatment_service_model.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/models/profile/profile_model.dart';
 import 'package:thera_track_app/service/api_checker.dart';
@@ -176,6 +175,55 @@ class ProfileController extends GetxController  implements GetxService{
       Get.snackbar('Successfully', 'Setting Updated');
     } else {
       ApiChecker.checkApi(response);
+    }
+  }
+
+
+  //=========================>> Get All Paid Treatment <<============================
+
+  RxList<GetAllTreatmentModels> getAllPaidTreatmentModels = <GetAllTreatmentModels>[].obs;
+
+  Rx<num> paidTotalFinalCost = 0.obs;
+  var loading = false.obs;
+  getAllPaidTreatmentDetails() async {
+    loading(true);
+
+    var response = await ApiClient.getData("${ApiConstants.getAllPaidTreatmentEndPoint}");
+    if (response.statusCode == 200) {
+      paidTotalFinalCost.value = response.body['data']['attributes']['totalFinalCost'];
+
+      getAllPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(response.body['data']['attributes']['result'].map((x) => GetAllTreatmentModels.fromJson(x)));
+      loading(false);
+      update();
+      debugPrint('==============>> Paid Total Final Cost :  ${paidTotalFinalCost.value}');
+    }
+    else {
+      ApiChecker.checkApi(response);
+      loading(false);
+      update();
+    }
+  }
+
+  //=========================>> Get All unPaid Treatment <<============================
+
+  RxList<GetAllTreatmentModels> getAllUnPaidTreatmentModels = <GetAllTreatmentModels>[].obs;
+
+  Rx<num> unpaidTotalFinalCost = 0.obs;
+  getAllUnPaidTreatmentDetail() async {
+    loading(true);
+    var response = await ApiClient.getData("${ApiConstants.getAllUnPaidTreatmentEndPoint}");
+    if (response.statusCode == 200) {
+      unpaidTotalFinalCost.value = response.body['data']['attributes']['totalFinalCost'];
+
+      getAllUnPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(response.body['data']['attributes']['result'].map((x) => GetAllTreatmentModels.fromJson(x)));
+      loading(false);
+      update();
+      debugPrint('==============>> Unpaid Total Final Cost : ${unpaidTotalFinalCost.value}');
+    }
+    else {
+      ApiChecker.checkApi(response);
+      loading(false);
+      update();
     }
   }
 }

@@ -1,7 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:thera_track_app/controller/clientController/clientController.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -19,10 +23,25 @@ class EditContactDetailsScreen extends StatefulWidget {
 class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
 
   final TextEditingController fullNameCTRl = TextEditingController();
-  final TextEditingController townCTRl = TextEditingController();
+  final TextEditingController addressCTRl = TextEditingController();
   final TextEditingController postCodeCTRl = TextEditingController();
-  final TextEditingController countryCTRl = TextEditingController();
+  final TextEditingController telephoneCTRl = TextEditingController();
   final TextEditingController emailCTRl = TextEditingController();
+  final TextEditingController otherCTRl = TextEditingController();
+
+  final ClientController clientController = Get.put(ClientController());
+
+  @override
+  void initState() {
+    super.initState();
+    final profileData = clientController.getClientInfoByIdModel.value;
+    fullNameCTRl.text = profileData.name ?? '';
+    addressCTRl.text = profileData.address?.city ?? '';
+    postCodeCTRl.text = profileData.address?.zip ?? '';
+    telephoneCTRl.text = profileData.phoneNumber ?? 'N/A';
+    emailCTRl.text = profileData.email ?? 'N/A';
+    otherCTRl.text = profileData.other ?? 'N/A';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +76,7 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
               Text('Address',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: townCTRl,
+                controller: addressCTRl,
                 hintText: 'Enter your address',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -87,7 +106,7 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
               Text('Telephone',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: countryCTRl,
+                controller: telephoneCTRl,
                 hintText: 'Enter your Telephone',
 
                 validator: (value) {
@@ -101,7 +120,18 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
 
               Text('Mobile', style: AppStyles.fontSize16(fontWeight: FontWeight.w400,color: AppColors.color424242)),
               SizedBox(height: 8.h),
-              IntlPhoneField(
+              CustomTextField(
+                controller: telephoneCTRl,
+                hintText: 'Enter your Telephone',
+
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your Telephone";
+                  }
+                  return null;
+                },
+              ),
+              /*IntlPhoneField(
                 decoration: InputDecoration(
                   hintText: AppStrings.enterPhoneNumber,
                   hintStyle: TextStyle(color: Colors.grey),
@@ -127,7 +157,7 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
                 onChanged: (phone) {
                   print("Phone===============> ${phone.completeNumber}");
                 },
-              ),
+              ),*/
 
               // Email
               SizedBox(height: 8.h),
@@ -149,7 +179,7 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
               Text('Other',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller:emailCTRl,
+                controller:otherCTRl,
                 hintText: 'Enter Your Other',
                 validator: (value) {
                   if (value == null || value.isEmpty) {

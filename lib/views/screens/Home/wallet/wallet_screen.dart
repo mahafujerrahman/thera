@@ -85,12 +85,19 @@ class _WalletDetailsScreenState extends State<WalletDetailsScreen> {
                   itemCount: walletController.getAllWalletModel.length,
                   itemBuilder: (context, index) {
                     var displayData = walletController.getAllWalletModel[index];
-                    return CostRowWidget(
-                      departure: displayData.departure ?? 'N/A',
-                      destination: displayData.destination ?? 'N/A',
-                      distance: displayData.distance?.toString() ?? 'N/A',
-                      totalCost: displayData.totalCost?.toString() ?? 'N/A',
-                      index: index,
+                    return InkWell(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.costDetailsScreen,
+                            arguments :displayData.id
+                          );
+                      },
+                      child: CostRowWidget(
+                        departure: displayData.departure ?? 'N/A',
+                        destination: displayData.destination ?? 'N/A',
+                        distance: displayData.distance?.toString() ?? 'N/A',
+                        totalCost: displayData.totalCost?.toString() ?? 'N/A',
+                        index: index,
+                      ),
                     );
                   },
                 );

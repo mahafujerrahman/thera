@@ -29,6 +29,7 @@ class AppConstants{
   static String address = "Address";
   static String role = "Role";
   static String selectedOption = "selectedOption";
+  static String fcmToken = "fcmToken";
 
 
 

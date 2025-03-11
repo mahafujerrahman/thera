@@ -1,82 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:thera_track_app/controller/profileController.dart';
+import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/innerWidget/clientRowWidget.dart';
 
-class UnPaidDetailsScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> clients = [
-    {'name': 'Client 01', 'amount': 150, 'date': '14 jan 2025'},
-    {'name': 'Client 02', 'amount': 150, 'date': '14 jan 2025'},
-    {'name': 'Client 03', 'amount': 150, 'date': '14 jan 2025'},
-    {'name': 'Client 04', 'amount': 150, 'date': '14 jan 2025'},
-    {'name': 'Client 05', 'amount': 150, 'date': '14 jan 2025'},
+class UnPaidDetailsScreen extends StatefulWidget {
+  @override
+  State<UnPaidDetailsScreen> createState() => _UnPaidDetailsScreenState();
+}
 
-  ];
+class _UnPaidDetailsScreenState extends State<UnPaidDetailsScreen> {
+  final ProfileController profileController = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    super.initState();
+    profileController.getAllUnPaidTreatmentDetail();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Unpaid',style: AppStyles.fontSize16(),),
+        title: Text('Unpaid', style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: clients.length,
-              itemBuilder: (context, index) {
-                  final client = clients[index];
-                  return ClientRowWidget(
-                    status: 'unpaid',
-                    name: client['name'],
-                    date: client['date'],
-                    amount: 200,
-                  );
-
-                }
-            ),
-
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            padding: EdgeInsets.all(12),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Total',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      '20 Jan 2025',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-                Text(
-                  '9000 \$',
-                  style: TextStyle(
-                    color: AppColors.redColor,
-                    fontWeight: FontWeight.bold,
+      body: Obx(() {
+        // Observing changes in the data for dynamic updates
+        return Column(
+          children: [
+            Expanded(
+              child: profileController.getAllUnPaidTreatmentModels.isEmpty
+                  ? Center(
+                  child: Text('No unPaid treatments added yet.',
+                      style: TextStyle(color: Colors.black)))
+                  : Column(
+                    children: [
+                      ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: profileController.getAllUnPaidTreatmentModels.length,
+                      itemBuilder: (context, index) {
+                        final displayData = profileController.getAllUnPaidTreatmentModels[index];
+                        return Column(
+                          children: [
+                            ClientRowWidget(
+                              status: 'unpaid',
+                              name: displayData.name ?? 'N/A',
+                              date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
+                              amount: int.parse(displayData.finalCost.toString()),
+                            ),
+                          ],
+                        );
+                      }),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 16),
+                        padding: EdgeInsets.all(12.r),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  TimeFormatHelper.formatDate(DateTime.now()),
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '${profileController.unpaidTotalFinalCost} \$',
+                              style: TextStyle(
+                                color: AppColors.redColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
             ),
-          ),
-          _buildEmailInputSection(),
-        ],
-      ),
+            _buildEmailInputSection(),
+          ],
+        );
+      }),
     );
   }
-
-
 
   Widget _buildEmailInputSection() {
     return Padding(
@@ -130,3 +149,4 @@ class UnPaidDetailsScreen extends StatelessWidget {
     );
   }
 }
+

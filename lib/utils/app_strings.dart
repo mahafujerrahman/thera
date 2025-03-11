@@ -13,7 +13,6 @@ class AppStrings {
   static String backToLogin = 'Back To Sign In';
   static String buyPlan = 'Buy Plan';
   static String updateYourPlan = 'Update Your Plan';
-  static String sureLogOut = 'Are you sure you want to log out?';
   static String noText = 'No';
   static String yesText = 'Yes';
 

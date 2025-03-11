@@ -27,10 +27,9 @@ class AuthController extends GetxController {
 
   signUpMethod() async {
     signUpLoading(true);
-    // var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
-
     String phoneNumber = phoneNumberCTRL.text.trim();
     String countryCode = selectedCountryCodes;
+    var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
 
     Map<String, dynamic> body = {
       "firstName": userNameCTRL.text.trim(),
@@ -39,6 +38,7 @@ class AuthController extends GetxController {
       "password": passwordCTRL.text.trim(),
       "ConfirmPassword": confirmPasswordCTRL.text.trim(),
       "role": role,
+      "fcmToken": fcmToken,
     };
 
     var headers = {
@@ -77,11 +77,11 @@ class AuthController extends GetxController {
       var headers = {
         'Content-Type': 'application/json'
       };
-
+      var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
       Map<String, dynamic> body = {
         "email": signInEmailCtrl.text.trim(),
         "password": signInPasswordCtrl.text.trim(),
-        //"fcmToken": await PrefsHelper.getString(AppConstants.fcmToken),
+        "fcmToken": fcmToken,
       };
 
       print("===================> $body");

@@ -1,150 +1,4 @@
-// To parse this JSON data, do
-//
-//     final getAllAppointmentModel = getAllAppointmentModelFromJson(jsonString);
-
-import 'dart:convert';
-
-GetAllAppointmentModel getAllAppointmentModelFromJson(String str) => GetAllAppointmentModel.fromJson(json.decode(str));
-
-String getAllAppointmentModelToJson(GetAllAppointmentModel data) => json.encode(data.toJson());
-
-class GetAllAppointmentModel {
-  final String? id;
-  final ClientId? clientId;
-  final ServiceId? serviceId;
-  final DateTime? date;
-  final String? startTime;
-  final String? endTime;
-  final bool? allDay;
-  final bool? twelveHourBefore;
-  final bool? oneDayBefore;
-  final bool? twoDayBefore;
-  final bool? oneWeekBefore;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final int? v;
-
-  GetAllAppointmentModel({
-    this.id,
-    this.clientId,
-    this.serviceId,
-    this.date,
-    this.startTime,
-    this.endTime,
-    this.allDay,
-    this.twelveHourBefore,
-    this.oneDayBefore,
-    this.twoDayBefore,
-    this.oneWeekBefore,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-  });
-
-  factory GetAllAppointmentModel.fromJson(Map<String, dynamic> json) => GetAllAppointmentModel(
-    id: json["_id"],
-    clientId: json["clientId"] == null ? null : ClientId.fromJson(json["clientId"]),
-    serviceId: json["serviceId"] == null ? null : ServiceId.fromJson(json["serviceId"]),
-    date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    startTime: json["startTime"],
-    endTime: json["endTime"],
-    allDay: json["allDay"],
-    twelveHourBefore: json["twelveHourBefore"],
-    oneDayBefore: json["oneDayBefore"],
-    twoDayBefore: json["twoDayBefore"],
-    oneWeekBefore: json["oneWeekBefore"],
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "clientId": clientId?.toJson(),
-    "serviceId": serviceId?.toJson(),
-    "date": date?.toIso8601String(),
-    "startTime": startTime,
-    "endTime": endTime,
-    "allDay": allDay,
-    "twelveHourBefore": twelveHourBefore,
-    "oneDayBefore": oneDayBefore,
-    "twoDayBefore": twoDayBefore,
-    "oneWeekBefore": oneWeekBefore,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
-  };
-}
-
-class ClientId {
-  final Address? address;
-  final String? id;
-  final String? name;
-  final String? phoneNumber;
-  final String? email;
-  final String? other;
-  final int? v;
-  final bool? humanClient;
-
-  ClientId({
-    this.address,
-    this.id,
-    this.name,
-    this.phoneNumber,
-    this.email,
-    this.other,
-    this.v,
-    this.humanClient,
-  });
-
-  factory ClientId.fromJson(Map<String, dynamic> json) => ClientId(
-    address: json["address"] == null ? null : Address.fromJson(json["address"]),
-    id: json["_id"],
-    name: json["name"],
-    phoneNumber: json["phoneNumber"],
-    email: json["email"],
-    other: json["other"],
-    v: json["__v"],
-    humanClient: json["humanClient"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "address": address?.toJson(),
-    "_id": id,
-    "name": name,
-    "phoneNumber": phoneNumber,
-    "email": email,
-    "other": other,
-    "__v": v,
-    "humanClient": humanClient,
-  };
-}
-
-class Address {
-  final String? city;
-  final String? state;
-  final String? zip;
-
-  Address({
-    this.city,
-    this.state,
-    this.zip,
-  });
-
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-    city: json["city"],
-    state: json["state"],
-    zip: json["zip"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "city": city,
-    "state": state,
-    "zip": zip,
-  };
-}
-
-class ServiceId {
+class GetAllTreatmentModels {
   final String? id;
   final String? clientId;
   final List<String>? areaOfConcern;
@@ -164,7 +18,7 @@ class ServiceId {
   final int? finalCost;
   final bool? isPaid;
   final List<String>? points;
-  final List<String>? concernImages;
+  final List<dynamic>? concernImages;
   final DateTime? apDate;
   final String? apStartTime;
   final String? apEndTime;
@@ -179,7 +33,7 @@ class ServiceId {
   final DateTime? updatedAt;
   final int? v;
 
-  ServiceId({
+  GetAllTreatmentModels({
     this.id,
     this.clientId,
     this.areaOfConcern,
@@ -215,7 +69,7 @@ class ServiceId {
     this.v,
   });
 
-  factory ServiceId.fromJson(Map<String, dynamic> json) => ServiceId(
+  factory GetAllTreatmentModels.fromJson(Map<String, dynamic> json) => GetAllTreatmentModels(
     id: json["_id"],
     clientId: json["clientId"],
     areaOfConcern: json["areaOfConcern"] == null ? [] : List<String>.from(json["areaOfConcern"]!.map((x) => x)),
@@ -235,7 +89,7 @@ class ServiceId {
     finalCost: json["finalCost"],
     isPaid: json["isPaid"],
     points: json["points"] == null ? [] : List<String>.from(json["points"]!.map((x) => x)),
-    concernImages: json["Concern_images"] == null ? [] : List<String>.from(json["Concern_images"]!.map((x) => x)),
+    concernImages: json["Concern_images"] == null ? [] : List<dynamic>.from(json["Concern_images"]!.map((x) => x)),
     apDate: json["ApDate"] == null ? null : DateTime.parse(json["ApDate"]),
     apStartTime: json["ApStartTime"],
     apEndTime: json["ApEndTime"],
