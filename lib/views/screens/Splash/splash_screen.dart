@@ -11,8 +11,6 @@ import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 
-
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

@@ -72,6 +72,13 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
+              leading: SvgPicture.asset(AppIcons.subscriptionIcon),
+              title: Text('Subscription',style: TextStyle(color: AppColors.whiteColor),),
+              onTap: () {
+                Get.toNamed(AppRoutes.subscriptionScreen);
+              },
+            ),
+            ListTile(
               leading: SvgPicture.asset(AppIcons.unPaidIcon),
               title: Text('Feedback',style: TextStyle(color: AppColors.whiteColor),),
               onTap: () {
