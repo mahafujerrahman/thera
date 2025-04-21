@@ -11,8 +11,6 @@ import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 
-
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -76,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (isLogged != null && isLogged) {
                 Get.offAllNamed(AppRoutes.homeScreen);
           } else {
-            Get.offAllNamed(AppRoutes.onboardingScreen);
+            Get.offAllNamed(AppRoutes.homeScreen);
           }
         });
       }

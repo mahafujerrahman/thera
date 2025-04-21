@@ -95,6 +95,7 @@ class AuthController extends GetxController {
 
       print("============> Response Body: ${response.body}, Status Code: ${response.statusCode}");
       if (response.statusCode == 200 || response.statusCode == 201) {
+        signInLoading(false);
          PrefsHelper.setBool(AppConstants.isLogged, true);
          PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['attributes']['tokens']['accessToken']);
 
@@ -102,9 +103,11 @@ class AuthController extends GetxController {
         Get.snackbar('Successfully', 'Logged In');
       } else {
         ApiChecker.checkApi(response);
+        signInLoading(false);
         Get.snackbar('Error', response.body['message'] ?? 'An error occurred');
       }
     } catch (e) {
+      signInLoading(false);
       print("=============================> Error: $e");
       Get.snackbar('Error', 'An unexpected error occurred');
     } finally {

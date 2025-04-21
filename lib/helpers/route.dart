@@ -40,6 +40,7 @@ import 'package:thera_track_app/views/screens/appDrawer/AccountSetUp/accountSetU
 import 'package:thera_track_app/views/screens/appDrawer/advance_setting/advance_settings_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/feedback/feedback_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/unpaid/undPaidDetails_screen.dart';
 import '../views/screens/appDrawer/yourDetails/yourDetails_screen.dart';
@@ -88,6 +89,7 @@ class AppRoutes{
   static String equipmentScreen = "/equipmentScreen";
   static String humanContactsScreen = "/humanContactsScreen";
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
+  static String subscriptionScreen = "/subscriptionScreen";
 
 
 
@@ -163,5 +165,8 @@ class AppRoutes{
    // EquipmentScreen
    GetPage(name:equipmentScreen, page: ()=> EquipmentScreen(),transition: Transition.noTransition),
    GetPage(name:appointmentDetailsScreen, page: ()=> AppointmentDetailsScreen(),transition: Transition.noTransition),
+
+   //Subscription Screen
+   GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
   ];
 }
