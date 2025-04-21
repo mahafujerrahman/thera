@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (isLogged != null && isLogged) {
                 Get.offAllNamed(AppRoutes.homeScreen);
           } else {
-            Get.offAllNamed(AppRoutes.homeScreen);
+            Get.offAllNamed(AppRoutes.onboardingScreen);
           }
         });
       }
