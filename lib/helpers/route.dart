@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:thera_track_app/views/screens/Auth/SignIn/sign_in_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/SignUp/sign_up_screen.dart';
@@ -169,7 +168,5 @@ class AppRoutes{
 
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
-
-
   ];
 }
