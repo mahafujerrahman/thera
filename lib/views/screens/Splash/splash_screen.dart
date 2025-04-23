@@ -43,7 +43,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.cover,
               ),
               SizedBox(height: 80.h),
-
             ],
           ),
         ),

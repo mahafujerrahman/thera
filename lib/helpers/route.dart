@@ -90,6 +90,7 @@ class AppRoutes{
   static String humanContactsScreen = "/humanContactsScreen";
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
   static String subscriptionScreen = "/subscriptionScreen";
+  static String stripePaymentScreen = "/stripePaymentScreen";
 
 
 
@@ -168,5 +169,7 @@ class AppRoutes{
 
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
+
+
   ];
 }

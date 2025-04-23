@@ -169,10 +169,10 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 250.h,
-        padding: EdgeInsets.all(16),
+        height: 260.h,
+        padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(4.r),
           color: AppColors.secondaryColor,
         ),
         child: Column(

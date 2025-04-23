@@ -48,7 +48,6 @@ class _AppoinmentCalenderScreenState extends State<AppoinmentCalenderScreen> {
             children: [
               // Calendar Widget
               Container(
-                height: 350.h,
                 decoration: BoxDecoration(
                   color: AppColors.colorE9F5FE,
                   borderRadius: BorderRadius.circular(8.r),

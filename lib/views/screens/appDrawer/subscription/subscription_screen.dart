@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:thera_track_app/controller/payment/payment_controller.dart';
+import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscriptionCard.dart';
 
 class SubscriptionScreen extends StatefulWidget {
@@ -10,6 +15,9 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
+  PaymentController paymentController = Get.put(PaymentController());
+
+
   final List<Map<String, dynamic>> subscriptionPlans = [
     {
       'planName': '12 Month',
@@ -39,8 +47,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subscription Plans'),
-        backgroundColor: Colors.blue,
+        title: Text('Subscription',style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: subscriptionPlans.length,
@@ -51,12 +59,22 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SubscriptionCard(
-                  planName: plan['planName'],
-                  price: plan['price'],
-                  feature: plan['feature'],
-                  billingCycle: plan['billingCycle'],
-                  isCurrentPlan: plan['currentPlan'],
+                child: InkWell(
+                  onTap: (){
+                    print('Pay Now  : ${plan['price']}');
+                    paymentController.paymentSheetInitialization(
+                        plan['price'].toString(),
+                      "USD",
+                      context
+                    );
+                  },
+                  child: SubscriptionCard(
+                    planName: plan['planName'],
+                    price: plan['price'],
+                    feature: plan['feature'],
+                    billingCycle: plan['billingCycle'],
+                    isCurrentPlan: plan['currentPlan'],
+                  ),
                 ),
               ),
               // Current Plan Label

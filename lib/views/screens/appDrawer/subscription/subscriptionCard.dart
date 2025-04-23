@@ -25,10 +25,10 @@ class SubscriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(8.r),
       width: 300,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.primaryColor),
       ),
       child: Column(

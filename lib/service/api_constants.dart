@@ -1,6 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = "http://10.0.60.71:8083/api/v1";
-  static const String imageBaseUrl = "http://10.0.60.71:8083";
+  static const String baseUrl = "http://10.0.80.71:5000/api/v1";
+  static const String imageBaseUrl = "http://10.0.80.71:5000";
 
 /*  http://192.168.10.163:8081/api/v1
   http://192.168.10.163:8081/api/v1*/

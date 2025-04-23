@@ -92,7 +92,7 @@ class AppDrawer extends StatelessWidget {
                   Get.toNamed(AppRoutes.advanceSettingsScreen);
               },
             ),
-            SizedBox(height: 100.h),
+            SizedBox(height: 50.h),
             // ================================== >>>>
             ListTile(
               leading: SvgPicture.asset(AppIcons.logOut),
