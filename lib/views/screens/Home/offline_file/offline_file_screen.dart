@@ -57,7 +57,7 @@ class _OffLineFileScreenState extends State<OffLineFileScreen> {
                       );
                     },
                     child: ChartCard(
-                      id: item['id'],
+                      id: item['id'].toString(),
                       date: item['date'],
                       name: item['name'],
                       price: item['price'],
@@ -68,7 +68,7 @@ class _OffLineFileScreenState extends State<OffLineFileScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.r),
               child: CustomButton(
                 onTap: () {},
                 text: 'Sync',

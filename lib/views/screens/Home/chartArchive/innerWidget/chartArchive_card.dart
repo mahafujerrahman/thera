@@ -25,7 +25,7 @@ class ChartCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.color99CFF9,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(4.r),
         border: Border.all(
           color: paidStatus ? AppColors.primaryColor : AppColors.redColor,
         ),
@@ -42,14 +42,14 @@ class ChartCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding:  EdgeInsets.symmetric(horizontal: 8.w),
             child: Text(
               date,
               style: AppStyles.fontSize14(color: AppColors.color424242),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding:  EdgeInsets.symmetric(horizontal: 8.w),
             child: Text(
               name,
               style: AppStyles.fontSize18(color: AppColors.color424242, fontWeight: FontWeight.w500),
@@ -59,9 +59,9 @@ class ChartCard extends StatelessWidget {
             Container(
               width: double.infinity,
               color: AppColors.secondaryColor,
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding:  EdgeInsets.symmetric(horizontal: 8.w),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding:  EdgeInsets.symmetric(horizontal: 8.w),
                 child: Text(
                   '$price \$',
                   style: AppStyles.fontSize18(color: AppColors.color424242, fontWeight: FontWeight.w500),
