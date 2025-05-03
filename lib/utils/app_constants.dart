@@ -6,6 +6,7 @@ class AppConstants{
 
   static const String phoneNumber = "PhoneNumber";
   static String isLogged = "IsLogged";
+  static String isHuman = "isHuman";
 
   static String userId="userId";
   // share preference Key
@@ -30,6 +31,7 @@ class AppConstants{
   static String role = "Role";
   static String selectedOption = "selectedOption";
   static String fcmToken = "fcmToken";
+
 
 
 

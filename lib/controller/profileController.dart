@@ -130,6 +130,7 @@ class ProfileController extends GetxController  implements GetxService{
 //============== All treatment
   RxList<GetAllTreatMentModel> getAllTreatMentList = <GetAllTreatMentModel>[].obs;
 
+  RxList<GetAllTreatMentModel> selectedList = <GetAllTreatMentModel>[].obs;
 
   getAllTreatment() async {
     isLoading(true);
@@ -171,6 +172,8 @@ class ProfileController extends GetxController  implements GetxService{
     if (response.statusCode == 200 || response.statusCode == 201) {
       profileInformationModel.value = ProfileInformationModel.fromJson(response.body['data']['attributes']);
       profileInformationModel.refresh();
+      PrefsHelper.setString(AppConstants.isHuman, response.body['data']['attributes']['isHumanTrue']);
+
       Get.back();
       Get.snackbar('Successfully', 'Setting Updated');
     } else {

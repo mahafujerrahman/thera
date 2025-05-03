@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -32,6 +34,11 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
       _clientController.addController.clear();
     }
   }
+/*  @override
+  void initState() async {
+    await PrefsHelper.getString(AppConstants.i);
+    super.initState();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -155,10 +162,12 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
                 children: [
                   Expanded(flex: 2, child: CustomTextField(controller: _clientController.addController)),
                   SizedBox(width: 10.w),
-                  SizedBox(
-                    height: 60.h,
-                    width: 80.w,
-                    child: CustomButton(onTap: _addAreaOfConcern, text: 'Add'),
+                  Expanded(
+                    child: SizedBox(
+                      height: 60.h,
+                      width: 80.w,
+                      child: CustomButton(onTap: _addAreaOfConcern, text: 'Add'),
+                    ),
                   ),
                 ],
               ),
