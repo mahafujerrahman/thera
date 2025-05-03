@@ -18,6 +18,10 @@ import 'package:thera_track_app/views/screens/Home/contacts/human/edit_contact_d
 import 'package:thera_track_app/views/screens/Home/contacts/human/human_client_contact_screen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/appoinmentCalenderScreen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/createNewChartDetails.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFive.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFour.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepTwo.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepthree.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFive.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepOne.dart';
@@ -90,6 +94,10 @@ class AppRoutes{
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
   static String subscriptionScreen = "/subscriptionScreen";
   static String stripePaymentScreen = "/stripePaymentScreen";
+  static String humanStepTwo = "/humanStepTwo";
+  static String humanStepThree = "/humanStepThree";
+  static String humanStepFour = "/humanStepFour";
+  static String humanStepFive = "/HumanStepFive";
 
 
 
@@ -168,5 +176,11 @@ class AppRoutes{
 
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
+
+   //human Step
+   GetPage(name:humanStepTwo, page: ()=> HumanStepTwo(),transition: Transition.noTransition),
+   GetPage(name:humanStepThree, page: ()=> HumanStepThree(),transition: Transition.noTransition),
+   GetPage(name:humanStepFour, page: ()=> HumanStepFour(),transition: Transition.noTransition),
+   GetPage(name:humanStepFive, page: ()=> HumanStepFive(),transition: Transition.noTransition),
   ];
 }

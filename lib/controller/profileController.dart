@@ -172,7 +172,6 @@ class ProfileController extends GetxController  implements GetxService{
     if (response.statusCode == 200 || response.statusCode == 201) {
       profileInformationModel.value = ProfileInformationModel.fromJson(response.body['data']['attributes']);
       profileInformationModel.refresh();
-      PrefsHelper.setString(AppConstants.isHuman, response.body['data']['attributes']['isHumanTrue']);
 
       Get.back();
       Get.snackbar('Successfully', 'Setting Updated');

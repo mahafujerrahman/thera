@@ -6,7 +6,7 @@ class AppConstants{
 
   static const String phoneNumber = "PhoneNumber";
   static String isLogged = "IsLogged";
-  static String isHuman = "isHuman";
+
 
   static String userId="userId";
   // share preference Key

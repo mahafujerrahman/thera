@@ -17,16 +17,15 @@ import 'package:thera_track_app/views/base/custom_text_field.dart';
 import 'package:thera_track_app/views/base/dotted_border_container.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/innerWidget/addpoint_textBox.dart';
 
-class CreateNewChartStepFourScreen extends StatefulWidget {
+class HumanStepTwo extends StatefulWidget {
   @override
-  _CreateNewChartStepFourScreenState createState() => _CreateNewChartStepFourScreenState();
+  _HumanStepTwoState createState() => _HumanStepTwoState();
 }
 
-class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScreen> {
+class _HumanStepTwoState extends State<HumanStepTwo> {
   final ClientController _clientController = Get.put(ClientController());
 
   Uint8List? _image;
-
 
 
   void _addAreaOfConcern() {
@@ -35,13 +34,18 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
       _clientController.addController.clear();
     }
   }
+  @override
+  void initState()  {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
-        title: Text('Animal - Step 4' ,
+        title: Text(
+           'Step 2 : Human ',
             style: AppStyles.fontSize16()
         ),
         centerTitle: true,
@@ -223,7 +227,7 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
             SizedBox(height: 10.h),
 
             // Next Button
-            CustomButton(onTap: () => Get.toNamed(AppRoutes.createNewChartStepFiveScreen), text: 'Next'),
+            CustomButton(onTap: () => Get.toNamed(AppRoutes.humanStepThree), text: 'Next'),
 
             SizedBox(height: 10.h),
           ],

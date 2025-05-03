@@ -103,7 +103,7 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
                               trailing: SvgPicture.asset(AppIcons.rightArrow),
                               onTap: () {
                                 if(clientData.humanClient == true){
-                                  Get.toNamed(AppRoutes.createNewChartStepFourScreen);
+                                  Get.toNamed(AppRoutes.humanStepTwo);
                                 }
                                 if(clientData.humanClient == false){
                                   Get.toNamed(AppRoutes.horseDetailsScreen,parameters: {
@@ -177,7 +177,7 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
                               trailing: SvgPicture.asset(AppIcons.rightArrow),
                               onTap: () {
                                 if(clientData.humanClient == true){
-                                  Get.toNamed(AppRoutes.horseDetailsScreen); //human
+                                  Get.toNamed(AppRoutes.humanStepTwo); //human
                                 }
                                 if(clientData.humanClient == false){
                                   Get.toNamed(AppRoutes.createNewChartStepThreeScreen,parameters: {

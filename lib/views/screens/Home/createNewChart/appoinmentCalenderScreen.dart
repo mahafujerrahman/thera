@@ -31,7 +31,7 @@ class _AppoinmentCalenderScreenState extends State<AppoinmentCalenderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Step 6',
+          'Appointment Calender',
           style: TextStyle(fontSize: 16.sp),
         ),
         centerTitle: true,
