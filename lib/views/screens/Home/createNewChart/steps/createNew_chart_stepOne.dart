@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_icons.dart';
@@ -101,7 +103,8 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
                             ListTile(
                               title: Text(clientData.name ?? 'N/A',style: AppStyles.fontSize16(color: AppColors.blackColor)),
                               trailing: SvgPicture.asset(AppIcons.rightArrow),
-                              onTap: () {
+                              onTap: () async {
+                                await PrefsHelper.setString(AppConstants.createdServiceClientId, clientData.id);
                                 if(clientData.humanClient == true){
                                   Get.toNamed(AppRoutes.humanStepTwo);
                                 }

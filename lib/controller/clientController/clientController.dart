@@ -188,34 +188,6 @@ class ClientController extends GetxController {
 
 
 
-  ///================================ >> Add Animal To The Service << ================================
-
-  TextEditingController addAnimal = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController age = TextEditingController();
-  TextEditingController breed = TextEditingController();
-  TextEditingController gender = TextEditingController();
-  TextEditingController height = TextEditingController();
-  TextEditingController color = TextEditingController();
-  TextEditingController addController = TextEditingController();
-
-  List<String> animals = ['Horse', 'Dog'];
-
-  RxString selectedAnimal = ''.obs;
-
- var areaOfConcernList = ['Joints', 'Spine/Back','Paws','Muscles','Neck','Ears'].obs;
-  var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController = TextEditingController();
-
-  List<String> pointList = [];
-  final TextEditingController pointController = TextEditingController();
-
-  File? selectedImage;
-
-
-
-
-
 
 
 

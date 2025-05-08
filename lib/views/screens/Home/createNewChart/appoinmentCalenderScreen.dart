@@ -1,37 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:intl/intl.dart';
+import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/timePicker.dart';
+
+
+class AppColors {
+  static const Color cardColor = Colors.blue;
+  static const Color blackColor = Colors.black;
+  static const Color whiteColor = Colors.white;
+}
 
 class AppoinmentCalenderScreen extends StatefulWidget {
+  const AppoinmentCalenderScreen({super.key});
+
   @override
   _AppoinmentCalenderScreenState createState() => _AppoinmentCalenderScreenState();
 }
 
 class _AppoinmentCalenderScreenState extends State<AppoinmentCalenderScreen> {
+
   DateTime selectedStartDate = DateTime.now();
-  DateTime selectedEndDate = DateTime.now();
-  TimeOfDay selectedStartTime = TimeOfDay(hour: 0, minute: 0);
-  TimeOfDay selectedEndTime = TimeOfDay(hour: 12, minute: 0);
 
-
-  String selectedReminder = "Reminder";
-
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  // List of reminders
   List<String> reminderOptions = [
-    "Reminder",
-    "10 minutes before",
-    "30 minutes before",
-    "1 hour before",
+    "12 hour before",
+    "1 Day before",
+    "2 Day before",
+    "1 week before",
   ];
+
+  // Map to track selected reminder options
+  Map<String, bool> selectedReminders = {};
+
+  @override
+  void initState() {
+    super.initState();
+
+    for (var option in reminderOptions) {
+      selectedReminders[option] = false;
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Appointment Calender',
+          'Appointment Calendar',
           style: TextStyle(fontSize: 16.sp),
         ),
         centerTitle: true,
@@ -49,69 +71,98 @@ class _AppoinmentCalenderScreenState extends State<AppoinmentCalenderScreen> {
               // Calendar Widget
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.colorE9F5FE,
+                  color: Colors.blue.shade50, // You can adjust this color as needed
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: TableCalendar(
-                  firstDay: DateTime.utc(2010, 10, 16),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: DateTime.now(),
-                  calendarFormat: CalendarFormat.month,
-                  availableCalendarFormats: const {
-                    CalendarFormat.month: 'Month',
+                child:  TableCalendar(
+                  firstDay: DateTime.utc(2024, 10, 20),
+                  lastDay: DateTime.utc(2030, 10, 20),
+                  focusedDay: _focusedDay,
+                  calendarFormat: _calendarFormat,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
                   },
-                  headerStyle: HeaderStyle(
-                    formatButtonVisible: false,
-                    titleCentered: true,
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+                  },
+                  onFormatChanged: (format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                  calendarStyle: CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                        color: AppColors.cardColor,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(5.r),
+                        border: Border.all(color: AppColors.blackColor)),
+                    selectedTextStyle: TextStyle(color: AppColors.blackColor),
+                    todayDecoration: BoxDecoration(
+                      color: AppColors.blackColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    defaultDecoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    weekendDecoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
                   ),
+                  headerStyle: HeaderStyle(
+                    titleCentered: true,
+                    formatButtonVisible: false,
+                    titleTextFormatter:
+                        (date, locale) => DateFormat.yMMMM(locale).format(date),
+                  ),
+
                 ),
               ),
               SizedBox(height: 16.h),
 
-              // All-Day Checkbox
+              // Display
+              Text(
+                'Selected Date: $_selectedDay}.',
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              ),
 
               SizedBox(height: 16.h),
 
-              // Start and End Time
-              TimePickerWidget(),
-              SizedBox(height: 16.h),
-
-              // Reminder Dropdown
+              // Reminder Checkboxes
               Container(
-                width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 12.w),
                 decoration: BoxDecoration(
-                  color: AppColors.colorE9F5FE,
+                  color: Colors.blue.shade50,
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedReminder,
-                    items: reminderOptions
-                        .map((option) => DropdownMenuItem(
-                      value: option,
-                      child: Text(option,
-                          style: TextStyle(fontSize: 14.sp)),
-                    ))
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedReminder = value!;
-                      });
-                    },
-                  ),
+                child: Column(
+                  children: reminderOptions.map((option) {
+                    return CheckboxListTile(
+                      title: Text(option),
+                      value: selectedReminders[option],
+                      onChanged: (bool? value) {
+                        setState(() {
+                          selectedReminders[option] = value!;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 16.h),
-
-              // Done Button
-              CustomButton(onTap: () {}, text: 'Done'),
+              CustomButton(onTap: (){}, text: 'Done')
             ],
           ),
         ),
       ),
     );
   }
-
-
 }

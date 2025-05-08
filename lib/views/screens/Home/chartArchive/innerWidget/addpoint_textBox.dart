@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_icons.dart';
 
@@ -14,13 +15,13 @@ class TextBoxList extends StatefulWidget {
 
 class _TextBoxListState extends State<TextBoxList> {
   List<TextBox> textBoxes = [];
-  ClientController _clientController = Get.put(ClientController());
+  ServiceController serviceController = Get.put(ServiceController());
 
   void addTextBox() {
     setState(() {
       int newIndex = textBoxes.length;
       TextEditingController newController = TextEditingController();
-      _clientController.pointList.add("");
+      serviceController.pointList.add("");
       textBoxes.add(TextBox(
         index: newIndex,
         controller: newController,
@@ -33,7 +34,7 @@ class _TextBoxListState extends State<TextBoxList> {
   void removeTextBox(int index) {
     setState(() {
       textBoxes.removeAt(index);
-      _clientController.pointList.removeAt(index);
+      serviceController.pointList.removeAt(index);
 
       // Update indexes
       for (int i = 0; i < textBoxes.length; i++) {
@@ -44,7 +45,7 @@ class _TextBoxListState extends State<TextBoxList> {
 
   void updateTextValue(int index, String value) {
     setState(() {
-      _clientController.pointList[index] = value;
+      serviceController.pointList[index] = value;
     });
   }
 

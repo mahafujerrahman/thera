@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -16,7 +17,8 @@ class HorseDetailsScreen extends StatefulWidget {
 }
 
 class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
-  final ClientController _clientController = Get.put(ClientController());
+
+  final ServiceController serviceController = Get.put(ServiceController());
 
   TextEditingController _addAnimalController = TextEditingController();
   int? selectedIndex;
@@ -24,7 +26,7 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
   void _addAnimal() {
     setState(() {
       if (_addAnimalController.text.isNotEmpty) {
-        _clientController.animals.add(_addAnimalController.text);
+        serviceController.animals.add(_addAnimalController.text);
         _addAnimalController.clear();
       }
     });
@@ -45,11 +47,11 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Horse Details
-              AnimalAddDetailsRow(titelText: 'Age', controller: _clientController.age),
-              AnimalAddDetailsRow(titelText: 'Breed', controller: _clientController.breed),
-              AnimalAddDetailsRow(titelText: 'Gender', controller: _clientController.gender),
-              AnimalAddDetailsRow(titelText: 'Height', controller: _clientController.height),
-              AnimalAddDetailsRow(titelText: 'Color', controller: _clientController.color),
+              AnimalAddDetailsRow(titelText: 'Age', controller: serviceController.age),
+              AnimalAddDetailsRow(titelText: 'Breed', controller: serviceController.breed),
+              AnimalAddDetailsRow(titelText: 'Gender', controller: serviceController.gender),
+              AnimalAddDetailsRow(titelText: 'Height', controller: serviceController.height),
+              AnimalAddDetailsRow(titelText: 'Color', controller: serviceController.color),
 
               // Selection Animal
               SizedBox(height: 20.h),
@@ -67,7 +69,7 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
                   mainAxisSpacing: 2.h,
                   childAspectRatio: 3,
                 ),
-                itemCount: _clientController.animals.length,
+                itemCount: serviceController.animals.length,
                 itemBuilder: (context, index) {
                   bool isSelected = selectedIndex == index;
 
@@ -78,12 +80,12 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
                         setState(() {
                           if (isSelected) {
                             selectedIndex = null;
-                            _clientController.selectedAnimal.value = '';
+                            serviceController.selectedAnimal.value = '';
                           } else {
                             selectedIndex = index;
-                            _clientController.selectedAnimal.value = _clientController.animals[index]; // Update selection
+                            serviceController.selectedAnimal.value = serviceController.animals[index]; // Update selection
                           }
-                          print('Selected Animal==================>>> ${_clientController.selectedAnimal.value}');
+                          print('Selected Animal ================== >>>> ${serviceController.selectedAnimal.value}');
                         });
                       },
                       child: Container(
@@ -98,7 +100,7 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            _clientController.animals[index],
+                            serviceController.animals[index],
                             style: AppStyles.fontSize16(
                               color: isSelected ? AppColors.whiteColor : AppColors.primaryColor,
                               fontWeight: FontWeight.w400,

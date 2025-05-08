@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -23,15 +24,16 @@ class HumanStepTwo extends StatefulWidget {
 }
 
 class _HumanStepTwoState extends State<HumanStepTwo> {
-  final ClientController _clientController = Get.put(ClientController());
+
+  final ServiceController serviceController = Get.put(ServiceController());
 
   Uint8List? _image;
 
 
   void _addAreaOfConcern() {
-    if (_clientController.addController.text.isNotEmpty) {
-      _clientController.areaOfConcernList.add(_clientController.addController.text);
-      _clientController.addController.clear();
+    if (serviceController.addController.text.isNotEmpty) {
+      serviceController.areaOfConcernList.add(serviceController.addController.text);
+      serviceController.addController.clear();
     }
   }
   @override
@@ -115,20 +117,20 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
                   mainAxisSpacing: 5,
                   childAspectRatio: 2,
                 ),
-                itemCount: _clientController.areaOfConcernList.length,
+                itemCount: serviceController.areaOfConcernList.length,
                 itemBuilder: (context, index) {
                   return Obx(() {
-                    String currentItem = _clientController.areaOfConcernList[index];
-                    bool isSelected = _clientController.selectedAreaOfConcern.contains(currentItem);
+                    String currentItem = serviceController.areaOfConcernList[index];
+                    bool isSelected = serviceController.selectedAreaOfConcern.contains(currentItem);
 
                     return GestureDetector(
                       onTap: () {
                         if (isSelected) {
-                          _clientController.selectedAreaOfConcern.remove(currentItem);
+                          serviceController.selectedAreaOfConcern.remove(currentItem);
                         } else {
-                          _clientController.selectedAreaOfConcern.add(currentItem);
+                          serviceController.selectedAreaOfConcern.add(currentItem);
                         }
-                        print('Selected Items: ${_clientController.selectedAreaOfConcern.map((item) => '"$item"').toList()}');
+                        print('Selected Items: ${serviceController.selectedAreaOfConcern.map((item) => '"$item"').toList()}');
 
                       },
                       child: AnimatedContainer(
@@ -162,7 +164,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
               padding: EdgeInsets.symmetric(vertical: 4.h),
               child: Row(
                 children: [
-                  Expanded(flex: 2, child: CustomTextField(controller: _clientController.addController)),
+                  Expanded(flex: 2, child: CustomTextField(controller: serviceController.addController)),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: SizedBox(
@@ -201,7 +203,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFormField(
-                          controller: _clientController.descriptionTextController,
+                          controller: serviceController.descriptionTextController,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                           inputFormatters: [
@@ -299,7 +301,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
     await ImagePicker().pickImage(source: ImageSource.gallery);
     if (returnImage == null) return;
     setState(() {
-      _clientController.selectedImage = File(returnImage.path);
+      serviceController.selectedImage = File(returnImage.path);
       _image = File(returnImage.path).readAsBytesSync();
     });
     Get.back();
@@ -311,7 +313,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
     await ImagePicker().pickImage(source: ImageSource.camera);
     if (returnImage == null) return;
     setState(() {
-      _clientController.selectedImage = File(returnImage.path);
+      serviceController.selectedImage = File(returnImage.path);
       _image = File(returnImage.path).readAsBytesSync();
     });
     Get.back();

@@ -33,9 +33,9 @@ class AppConstants{
   static String fcmToken = "fcmToken";
 
 
+  static String createdServiceClientId="createdServiceClientId";
 
 
-  static String productId="productId";
   static String userLat="userLat";
   static String userLag="userLag";
 
