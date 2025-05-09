@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -15,6 +16,7 @@ class CreateNewChartStepFiveScreen extends StatefulWidget {
 class _CreateNewChartStepFiveScreenState
     extends State<CreateNewChartStepFiveScreen> {
   final ProfileController profileController = Get.put(ProfileController());
+  final ServiceController serviceController = Get.put(ServiceController());
 
   var selectedTreatments = <bool>[].obs; // Track selected checkboxes
   var isLoading = true.obs; // Loading indicator
@@ -108,15 +110,15 @@ class _CreateNewChartStepFiveScreenState
                                     setState(() {
                                       selectedTreatments[index] = value!;
 
-                                      profileController.selectedList.clear();
+                                      serviceController.selectedList.clear();
                                       for (int i = 0; i < selectedTreatments.length; i++) {
                                         if (selectedTreatments[i]) {
-                                          profileController.selectedList.add(
+                                          serviceController.selectedList.add(
                                               profileController.getAllTreatMentList[i]);
                                         }
                                       }
 
-                                      print('Selected items count: ${profileController.selectedList.length}');
+                                      print('Selected items count: ${serviceController.selectedList.length}');
                                     });
                                   }
                                 },

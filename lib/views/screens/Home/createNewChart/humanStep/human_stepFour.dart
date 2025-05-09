@@ -27,7 +27,7 @@ class _HumanStepFourState
   Widget build(BuildContext context) {
 
     // Calculate the full cost
-    double totalCost = _profileController.selectedList.fold(0, (sum, item) {
+    double totalCost = serviceController.selectedList.fold(0, (sum, item) {
       return sum + (item.price ?? 0);
     });
 
@@ -57,13 +57,13 @@ class _HumanStepFourState
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return PriceDetailWidget(
-                        title: _profileController.selectedList[index].treatmentTitle,
-                        price: _profileController.selectedList[index].price.toString());
+                        title: serviceController.selectedList[index].treatmentTitle,
+                        price: serviceController.selectedList[index].price.toString());
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox();
                   },
-                  itemCount: _profileController.selectedList.length),
+                  itemCount: serviceController.selectedList.length),
         
               Divider(color: AppColors.blackColor),
               PriceDetailWidget(title: 'Full Cost', price: '$totalCost'),

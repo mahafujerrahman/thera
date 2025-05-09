@@ -10,15 +10,12 @@ import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_images.dart';
-import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
-import 'package:thera_track_app/views/base/custom_list_tile.dart';
 import 'package:thera_track_app/views/base/custom_row.dart';
 import 'package:thera_track_app/views/base/dotted_border_container.dart';
 import 'package:thera_track_app/views/base/price_details_row.dart';
-import 'package:thera_track_app/views/screens/Home/chartArchive/innerWidget/addpoint_textBox.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/innerWidget/detailsRow_widget.dart';
+
 
 class HumanStepFive extends StatefulWidget {
   const HumanStepFive({super.key});
@@ -37,14 +34,9 @@ class _HumanStepFiveState extends State<HumanStepFive> {
 
   final ProfileController _profileController = Get.find();
 
-  bool isPaid = false;
 
 
-  void togglePaidStatus(bool value) {
-    setState(() {
-      isPaid = value;
-    });
-  }
+
 
   @override
   void initState() {
@@ -178,20 +170,20 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return PriceDetailWidget(
-                      title: _profileController.selectedList[index].treatmentTitle,
-                      price: _profileController.selectedList[index].price.toString(),
+                      title: serviceController.selectedList[index].treatmentTitle,
+                      price: serviceController.selectedList[index].price.toString(),
                     );
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox();
                   },
-                  itemCount: _profileController.selectedList.length,
+                  itemCount: serviceController.selectedList.length,
                 ),
                 Divider(color: AppColors.blackColor),
-                PriceDetailWidget(title: 'Full Cost', price: '800'),
-                PriceDetailWidget(title: 'Discount ', price: '80'),
+                PriceDetailWidget(title: 'Full Cost', price: serviceController.fullCost.value.toString()),
+                PriceDetailWidget(title: 'Discount ', price: serviceController.discount.value.toString()),
                 Divider(),
-                PriceDetailWidget(title: 'Final Cost', price: '720'),
+                PriceDetailWidget(title: 'Final Cost',  price: serviceController.finalCost.value.toString()),
                 SizedBox(height: 20.h),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -254,7 +246,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isPaid = true;
+                                  serviceController.isPaid.value  = true;
                                 });
                               },
                               child: Container(
@@ -270,10 +262,10 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                                     Transform.scale(
                                       scale: 1.2,
                                       child: Checkbox(
-                                        value: isPaid,
+                                        value: serviceController.isPaid.value,
                                         onChanged: (bool? value) {
                                           setState(() {
-                                            isPaid = value ?? false;
+                                            serviceController.isPaid.value = value ?? false;
                                           });
                                         },
                                         activeColor: AppColors.primaryColor,
@@ -294,7 +286,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isPaid = false;
+                                  serviceController.isPaid.value = false;
                                 });
                               },
                               child: Container(
@@ -310,10 +302,10 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                                     Transform.scale(
                                       scale: 1.2,
                                       child: Checkbox(
-                                          value: !isPaid,
+                                          value: !serviceController.isPaid.value,
                                           onChanged: (bool? value) {
                                             setState(() {
-                                              isPaid = !(value ?? false);
+                                              serviceController.isPaid.value = !(value ?? false);
                                             });
                                           },
                                           activeColor: AppColors.redColor),
@@ -333,11 +325,19 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                   ],
                 ),
                 SizedBox(height: 10.h),
+              /*  Obx((){
+                  return CustomButton(
+                    //  loading: serviceController.createServiceLoading.value,
+                      onTap: () {
+                        serviceController.createServiceClient();
+                      },
+                      text: 'Finished');
+                }*/
                 CustomButton(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.createNewChartStepFiveScreen);
-                    },
-                    text: 'Finished'),
+                onTap: () {
+                  serviceController.createServiceClient();
+                  },
+                text: 'Finished'),
                 SizedBox(height: 10.h),
               ],
             );

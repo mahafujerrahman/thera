@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart' show ServiceController;
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -20,6 +21,7 @@ class _CreateNewChartStepSixScreenState
     extends State<CreateNewChartStepSixScreen> {
   final TextEditingController _controller = TextEditingController();
   final ProfileController _profileController = Get.find();
+  final ServiceController serviceController = Get.put(ServiceController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +46,15 @@ class _CreateNewChartStepSixScreenState
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return PriceDetailWidget(
-                      title: _profileController.selectedList[index].treatmentTitle,
-                      price: _profileController.selectedList[index].price.toString());
+                      title: serviceController.selectedList[index].treatmentTitle,
+                      price: serviceController.selectedList[index].price.toString());
                 },
                 separatorBuilder: (context, index) {
                   return SizedBox(
                     height: 16,
                   );
                 },
-                itemCount: _profileController.selectedList.length),
+                itemCount: serviceController.selectedList.length),
 
             Divider(color: AppColors.blackColor),
             PriceDetailWidget(title: 'Full Cost', price: '800'),

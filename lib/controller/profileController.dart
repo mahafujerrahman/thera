@@ -130,7 +130,7 @@ class ProfileController extends GetxController  implements GetxService{
 //============== All treatment
   RxList<GetAllTreatMentModel> getAllTreatMentList = <GetAllTreatMentModel>[].obs;
 
-  RxList<GetAllTreatMentModel> selectedList = <GetAllTreatMentModel>[].obs;
+
 
   getAllTreatment() async {
     isLoading(true);

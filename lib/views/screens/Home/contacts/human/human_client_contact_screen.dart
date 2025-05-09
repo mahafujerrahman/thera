@@ -20,7 +20,7 @@ class _HumanContactsScreenState extends State<HumanContactsScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_){
      // _clientController.getAllClientInfo();
-      // _clientController.getClientWithAnimal('Cat');
+    // _clientController.getClientWithAnimal('Cat');
     });
     // TODO: implement initState
     super.initState();

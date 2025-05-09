@@ -39,6 +39,7 @@ class ApiConstants {
   static const String getAllWalletEndPoint = "/travel/get-all-travel-expenses";
   static const String addTravelCostEndPoint = "/travel/create-travel-expenses";
   static const String getOneTravelExpensesEndPoint = "/travel/get-one-travel-expenses";
+  static const String createServiceEndPoint = "/patient/create-service";
 
 
 //============================>> Chart Archive  <<=================================

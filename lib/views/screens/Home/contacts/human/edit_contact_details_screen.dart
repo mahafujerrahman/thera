@@ -191,7 +191,9 @@ class _EditContactDetailsScreenState extends State<EditContactDetailsScreen> {
 
               SizedBox(height: 12.h),
               CustomButton(
-                  onTap: (){},
+                  onTap: (){
+
+                  },
                   text: 'Update'),
               SizedBox(height: 50.h),
             ],
