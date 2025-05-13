@@ -154,6 +154,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   child: Container(
                     height: 40.h,
                     child: CustomTextField(
+                      keyboardType: TextInputType.text,
                       controller: inventoryController.productName,
                       contentPaddingVertical: 5,
                     ),
@@ -164,6 +165,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   child: Container(
                     height: 40.h,
                     child: CustomTextField(
+                      keyboardType: TextInputType.number,
                       controller: inventoryController.pricePerOne,
                       contentPaddingVertical: 5,
                     ),
@@ -174,6 +176,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   child: Container(
                     height: 40.h,
                     child: CustomTextField(
+                      keyboardType: TextInputType.number,
                       controller: inventoryController.quantity,
                       contentPaddingVertical: 5,
                     ),

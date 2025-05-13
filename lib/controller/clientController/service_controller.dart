@@ -73,10 +73,10 @@ class ServiceController extends GetxController {
 
 
 
-  Future<void> createServiceClient() async {
+/* createServiceClient() async {
     createServiceLoading(true);
     var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
-
+    List<MultipartBody> multipartBody = selectedImage == null ? [] : [MultipartBody("Concern_images", selectedImage!)];
 
     Map<String, dynamic> body = {
       "clientId": clientId,
@@ -84,9 +84,7 @@ class ServiceController extends GetxController {
       "treatments": selectedList.value,
       "finalCost": finalCost.value,
       "discount": discount.value,
-      "discount": discount.value,
       "description": descriptionTextController.text.trim(),
-      "points": pointList,
       "points": pointList,
       "isPaid": isPaid.value,
       "ApDate": selectedAppointmentDay,
@@ -97,7 +95,7 @@ class ServiceController extends GetxController {
       "reOneDayBefore": reOneDayBefore.value,
       "reTwoDayBefore": reTwoDayBefore.value,
       "reOneWeekBefore": reOneWeekBefore.value,
-      "Concern_images": selectedImage,
+
 
 
     };
@@ -110,9 +108,10 @@ class ServiceController extends GetxController {
     };
 
 
-    var response = await ApiClient.postData(
+    var response = await ApiClient.postMultipartData(
       ApiConstants.createServiceEndPoint,
       body,
+      multipartBody: multipartBody,
       headers: headers,
     );
 
@@ -123,6 +122,6 @@ class ServiceController extends GetxController {
       ApiChecker.checkApi(response);
       Get.snackbar('Error!', 'Something Wrong');
     }
-  }
+  }*/
 
 }

@@ -80,11 +80,12 @@ class _HumanStepFourState
                   children: [
                     Text(
                       "Discount",
-                      style: TextStyle(fontSize: 16, color: Colors.black54),
+                      style: AppStyles.fontSize16(color: AppColors.color424242),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Container(
                       width: 80.w,
-                      height: 40.h,
+                      height: 30.h,
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
                         color: Colors.white,
