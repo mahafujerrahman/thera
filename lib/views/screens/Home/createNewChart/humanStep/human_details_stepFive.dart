@@ -325,7 +325,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                   ],
                 ),
                 SizedBox(height: 10.h),
-              /*  Obx((){
+           /*     Obx((){
                   return CustomButton(
                     //  loading: serviceController.createServiceLoading.value,
                       onTap: () {
@@ -335,7 +335,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                 }*/
                 CustomButton(
                 onTap: () {
-                  //serviceController.createServiceClient();
+                  serviceController.createServiceClient();
                   },
                 text: 'Finished'),
                 SizedBox(height: 10.h),

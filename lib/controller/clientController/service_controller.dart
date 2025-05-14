@@ -11,8 +11,9 @@ import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 
-class ServiceController extends GetxController {
+import '../../service/api_service_client.dart';
 
+class ServiceController extends GetxController {
   ///Service Given Api
   ///================================ >> Add Animal To The Service << ================================
 
@@ -29,8 +30,8 @@ class ServiceController extends GetxController {
 
   RxString selectedAnimal = ''.obs;
 
-
-  var areaOfConcernList = ['Joints', 'Spine/Back','Paws','Muscles','Neck','Ears'].obs;
+  var areaOfConcernList =
+      ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
 
   //for Human Section
   DateTime? selectedAppointmentDay;
@@ -47,16 +48,16 @@ class ServiceController extends GetxController {
   RxString apEndTime = ''.obs;
 
   var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
-  RxList<GetAllTreatMentModel> selectedList = <GetAllTreatMentModel>[].obs;
+ var selectedList = <GetAllTreatMentModel>[].obs;
 
   var fullCost = 0.0.obs;
   var discount = 0.0.obs;
   var finalCost = 0.0.obs;
-
 
   void calculateFinalCost() {
     finalCost.value = fullCost.value - discount.value;
@@ -71,57 +72,62 @@ class ServiceController extends GetxController {
 
   File? selectedImage;
 
+  createServiceClient() async {
 
 
-/* createServiceClient() async {
     createServiceLoading(true);
-    var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
-    List<MultipartBody> multipartBody = selectedImage == null ? [] : [MultipartBody("Concern_images", selectedImage!)];
+    var clientId =
+    await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
-    Map<String, dynamic> body = {
+    var files = <MultipartBody2>[
+      MultipartBody2('Concern_images', selectedImage!)
+    ];
+
+    var treat=[];
+    for(var x in selectedList ){
+      treat.add(x.treatmentTitle);
+    }
+
+
+    var body = {
       "clientId": clientId,
-      "areaOfConcern": selectedAreaOfConcern.value,
-      "treatments": selectedList.value,
+      "areaOfConcern": selectedAreaOfConcern,
+      "treatments": treat,
       "finalCost": finalCost.value,
       "discount": discount.value,
       "description": descriptionTextController.text.trim(),
       "points": pointList,
       "isPaid": isPaid.value,
-      "ApDate": selectedAppointmentDay,
-      "ApStartTime": apStartTime,
-      "ApEndTime": apEndTime,
+      "ApDate": selectedAppointmentDay.toString(),
+      "ApStartTime": apStartTime.value,
+      "ApEndTime": apEndTime.value,
       "reAllDay": isReminderAllDay.value,
       "reTwelveHourBefore": reTwelveHourBefore.value,
       "reOneDayBefore": reOneDayBefore.value,
       "reTwoDayBefore": reTwoDayBefore.value,
       "reOneWeekBefore": reOneWeekBefore.value,
-
-
-
     };
 
     var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
 
     var headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer $bearerToken'
     };
 
-
-    var response = await ApiClient.postMultipartData(
+    var response = await ApiServiceClient().postData(
       ApiConstants.createServiceEndPoint,
       body,
-      multipartBody: multipartBody,
+      files: files,
       headers: headers,
     );
-
     if (response.statusCode == 200) {
-      Get.snackbar('Success', response.body['message']);
+      // Ensure the response body is cast correctly
 
     } else {
       ApiChecker.checkApi(response);
-      Get.snackbar('Error!', 'Something Wrong');
+      Get.snackbar('Error!', 'Something Went Wrong');
     }
-  }*/
+  }
 
 }
