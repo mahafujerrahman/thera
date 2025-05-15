@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -8,10 +7,9 @@ import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
-import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
+import 'package:thera_track_app/service/api_service_client.dart' show ApiServiceClient, MultipartBody2;
 
-import '../../service/api_service_client.dart';
 
 class ServiceController extends GetxController {
   ///Service Given Api
@@ -111,7 +109,7 @@ class ServiceController extends GetxController {
     var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
 
     var headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/x-www-form-urlencoded b ',
       'Authorization': 'Bearer $bearerToken'
     };
 

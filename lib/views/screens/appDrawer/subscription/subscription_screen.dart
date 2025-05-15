@@ -29,14 +29,14 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     {
       'planName': '6 Month',
       'price': 49.00,
-      'feature': '50 Charts',
+      'feature': 'Unlimited Chart',
       'billingCycle': 'Monthly',
       'currentPlan': false,
     },
     {
       'planName': '1 Month',
       'price': 19.00,
-      'feature': '10 Charts',
+      'feature': 'Unlimited Chart',
       'billingCycle': 'Monthly',
       'currentPlan': false,
     },

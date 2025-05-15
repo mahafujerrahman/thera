@@ -84,7 +84,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                 CustomRow(title: 'Name', displayData: clientInfo.name ?? 'N/A'),
                 CustomRow(title: 'Email', displayData: clientInfo.email ?? 'N/A'),
                 CustomRow(title: 'Mobile', displayData: clientInfo.phoneNumber ?? 'N/A'),
-                CustomRow(title: 'Address', displayData: clientInfo.address?.city ?? 'N/A'),
+                CustomRow(title: 'Address', displayData: clientInfo.city ?? 'N/A'),
                 SizedBox(height: 10.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 12.w),

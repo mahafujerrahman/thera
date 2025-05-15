@@ -20,6 +20,7 @@ class ApiConstants {
   static const String getProfileDataEndPoint = "/user/profile";
   static const String editProfileEndPoint = "/user/profile";
   static const String updateAdvanceSettingEndPoint = "/user/change-user-status";
+  static const String updateClientProfileEndPoint = "/client/update-client";
 
 
   //============================>> Create Clients <<=================================

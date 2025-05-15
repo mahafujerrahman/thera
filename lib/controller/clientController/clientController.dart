@@ -32,11 +32,9 @@ class ClientController extends GetxController {
     addClientLoading(true);
     Map<String, dynamic> body = {
       'name': nameCtrl.text.trim(),
-      "address": {
         "city": cityCtrl.text.trim(),
         "state": stateCtrl.text.trim(),
         "zip": zipCtrl.text.trim(),
-      },
       'phoneNumber': phoneNumberCtrl.text.trim(),
       'email': emailCtrl.text.trim(),
       'other': otherCtrl.text.trim(),
@@ -186,14 +184,61 @@ class ClientController extends GetxController {
     }
   }
 
+// ======================= Client Profile Update ==========================
 
+  Future<void> editClientProfile(
+  {
+    required String clientId,
+    required String name,
+    required String city,
+    required String state,
+    required String zip,
+    required String phoneNumber,
+    required String email,
+    required String other,
+  }) async {
+    loading (true);
 
+    var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+    var headers = {
+      'Authorization': 'Bearer $bearerToken',
+    };
 
+    Map<String, String> body = {
+      "name": name,
+      "city": city,
+      "state": state,
+      "zip": zip,
+      "phoneNumber": phoneNumber,
+      "email": email,
+      "other": other,
 
+    };
 
+    var response = await ApiClient.patchData(
+      '${ApiConstants.updateClientProfileEndPoint}/$clientId',
+      body: body,
+      headers: headers,
 
+    );
 
+    print("===========response body : ${response.body} \nand status code : ${response.statusCode}");
 
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getClientInfoByIdModel.value = GetClientInfoByIdModel.fromJson(response.body['data']['attributes']);
+      loading (false);
+      getClientInfoByIdModel.refresh();
+      Get.back();
+      Get.snackbar('Error',  response.body['message']);
+      }
+    else {
+      ApiChecker.checkApi;
+      Get.snackbar('Error',  response.body['message']);
+      loading (false);
+    }
 
-}
+    }
+
+  }
+
 

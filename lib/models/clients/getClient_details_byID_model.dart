@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 class GetClientInfoByIdModel {
-  final Address? address;
   final String? id;
+  final String? userId;
   final String? name;
+  final String? city;
+  final String? state;
+  final String? zip;
   final String? phoneNumber;
   final String? email;
   final String? other;
@@ -9,9 +14,12 @@ class GetClientInfoByIdModel {
   final bool? humanClient;
 
   GetClientInfoByIdModel({
-    this.address,
     this.id,
+    this.userId,
     this.name,
+    this.city,
+    this.state,
+    this.zip,
     this.phoneNumber,
     this.email,
     this.other,
@@ -19,10 +27,17 @@ class GetClientInfoByIdModel {
     this.humanClient,
   });
 
+  factory GetClientInfoByIdModel.fromRawJson(String str) => GetClientInfoByIdModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory GetClientInfoByIdModel.fromJson(Map<String, dynamic> json) => GetClientInfoByIdModel(
-    address: json["address"] == null ? null : Address.fromJson(json["address"]),
     id: json["_id"],
+    userId: json["userId"],
     name: json["name"],
+    city: json["city"],
+    state: json["state"],
+    zip: json["zip"],
     phoneNumber: json["phoneNumber"],
     email: json["email"],
     other: json["other"],
@@ -31,37 +46,16 @@ class GetClientInfoByIdModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "address": address?.toJson(),
     "_id": id,
+    "userId": userId,
     "name": name,
+    "city": city,
+    "state": state,
+    "zip": zip,
     "phoneNumber": phoneNumber,
     "email": email,
     "other": other,
     "__v": v,
     "humanClient": humanClient,
-  };
-}
-
-class Address {
-  final String? city;
-  final String? state;
-  final String? zip;
-
-  Address({
-    this.city,
-    this.state,
-    this.zip,
-  });
-
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-    city: json["city"],
-    state: json["state"],
-    zip: json["zip"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "city": city,
-    "state": state,
-    "zip": zip,
   };
 }

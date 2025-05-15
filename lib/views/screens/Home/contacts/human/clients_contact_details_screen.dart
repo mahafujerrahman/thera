@@ -83,17 +83,13 @@ class _ClientsContactDetailsScreenState extends State<ClientsContactDetailsScree
                 SizedBox(height: 8.h),
                 CustomListTile(title: '${clientInfo.name}'),
                 //Address
-                Text('Address',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
+                Text('City',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
                 SizedBox(height: 8.h),
-                CustomListTile(title: '${clientInfo.address?.city}'),
-                //PostCode
-                Text('Postcode', style: AppStyles.fontSize16(fontWeight: FontWeight.w400,color: AppColors.color424242)),
+                CustomListTile(title: '${clientInfo.city}'),
+                //State
+                Text('Zip Code', style: AppStyles.fontSize16(fontWeight: FontWeight.w400,color: AppColors.color424242)),
                 SizedBox(height: 8.h),
-                CustomListTile(title: '${clientInfo.address?.zip}'),
-                //Telephone
-                Text('Telephone', style: AppStyles.fontSize16(fontWeight: FontWeight.w400,color: AppColors.color424242)),
-                SizedBox(height: 8.h),
-                CustomListTile(title: '${clientInfo.phoneNumber}'),
+                CustomListTile(title: '${clientInfo.zip}'),
                 // Mobile
                 SizedBox(height: 8.h),
                 Text('Mobile', style: AppStyles.fontSize16(fontWeight: FontWeight.w400,color: AppColors.color424242)),

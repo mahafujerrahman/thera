@@ -42,6 +42,8 @@ import 'package:thera_track_app/views/screens/Splash/splash_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/AccountSetUp/accountSetUp_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/advance_setting/advance_settings_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/feedback/feedback_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/edit_invoiceSetup.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/invoiceSetupScreen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
@@ -73,7 +75,7 @@ class AppRoutes{
   static String animalContactsScreen= "/animalContactsScreen";
   static String contactSearchScreen= "/contactSearchScreen";
   static String clientsContactDetailsScreen= "/clientsContactDetailsScreen";
-  static String editContactDetailsScreen= "/editContactDetailsScreen";
+  static String editContactDetailsScreen= "/human_editContactDetailsScreen";
   static String offLineFileScreen= "/offLineFileScreen";
   static String animalContactDetailsScreen= "/animalContactDetailsScreen";
   static String animalListScreen= "/animalListScreen";
@@ -98,6 +100,8 @@ class AppRoutes{
   static String humanStepThree = "/humanStepThree";
   static String humanStepFour = "/humanStepFour";
   static String humanStepFive = "/HumanStepFive";
+  static String invoiceSetupScreen = "/invoice_setupScreen";
+  static String editInvoiceSetupScreen = "/edit_InvoiceSetupScreen";
 
 
 
@@ -119,6 +123,8 @@ class AppRoutes{
    //App Drawer
    GetPage(name:accountSetUpScreen, page: ()=> AccountSetUpScreen(),transition: Transition.noTransition),
    GetPage(name:yourDetailsScreen, page: ()=> YourDetailsScreen(),transition: Transition.noTransition),
+   GetPage(name:invoiceSetupScreen, page: ()=> InvoiceSetupScreen(),transition: Transition.noTransition),
+   GetPage(name:editInvoiceSetupScreen, page: ()=> EditInvoiceSetupScreen(),transition: Transition.noTransition),
    GetPage(name:treatmentScreen, page: ()=> TreatmentScreen(),transition: Transition.noTransition),
    GetPage(name:advanceSettingsScreen, page: ()=> AdvanceSettingsScreen(),transition: Transition.noTransition),
    GetPage(name:paidDetailsScreen, page: ()=> PaidDetailsScreen(),transition: Transition.noTransition),
