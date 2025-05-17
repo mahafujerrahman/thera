@@ -121,7 +121,7 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                               children: [
                                 ClientRowWidget(
                                   status: 'paid',
-                                  name: displayData.name ?? 'N/A',
+                                 name: displayData.name ?? 'N/A',
                                   date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
                                   amount: int.parse(displayData.finalCost.toString()),
                                 ),

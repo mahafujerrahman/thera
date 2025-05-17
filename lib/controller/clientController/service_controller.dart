@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
+import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_constants.dart';
@@ -114,7 +115,8 @@ class ServiceController extends GetxController {
         ApiConstants.createServiceEndPoint, body,
         files: files, headers: headers);
     if (response.statusCode == 200) {
-      // Handle success
+      resetAllFields();
+      Get.toNamed(AppRoutes.homeScreen);
       createServiceLoading(false);
       Get.snackbar('Success', 'Service created successfully');
       // Additional success handling...
@@ -124,4 +126,42 @@ class ServiceController extends GetxController {
       Get.snackbar('Error!', 'Something Went Wrong');
     }
   }
+
+
+  void resetAllFields() {
+    addAnimal.clear();
+    name.clear();
+    age.clear();
+    breed.clear();
+    gender.clear();
+    height.clear();
+    color.clear();
+    addController.clear();
+    descriptionTextController.clear();
+    discountController.clear();
+    pointController.clear();
+
+    selectedAnimal.value = '';
+    selectedAreaOfConcern.clear();
+    selectedList.clear();
+    pointList.clear();
+
+    fullCost.value = 0.0;
+    discount.value = 0.0;
+    finalCost.value = 0.0;
+
+    selectedAppointmentDay = null;
+    isReminderAllDay.value = false;
+    reTwelveHourBefore.value = false;
+    reOneDayBefore.value = false;
+    reTwoDayBefore.value = false;
+    reOneWeekBefore.value = false;
+    isPaid.value = false;
+
+    apStartTime.value = '';
+    apEndTime.value = '';
+
+    selectedImage = null;
+  }
+
 }

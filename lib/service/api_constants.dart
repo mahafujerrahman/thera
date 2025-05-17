@@ -15,6 +15,7 @@ class ApiConstants {
   static const String forgotPasswordEndPoint = "/auth/forgot-password";
   static const String resetPasswordEndPoint = "/auth/reset-password";
   static const String resendOTPEndPoint = "/auth/resend-otp";
+  static const String geNotificationEndPoint = "/notifications/get-all-notifications";
 
   //ProfileInfo
   static const String getProfileDataEndPoint = "/user/profile";

@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 class GetAllTreatmentModels {
   final String? id;
   final String? clientId;
+  final String? userId;
   final List<String>? areaOfConcern;
-  final List<Treatment>? treatments;
-  final List<InventoryAcc>? inventoryAcc;
+  final List<dynamic>? inventoryAcc;
   final String? description;
   final int? fullCost;
   final String? name;
@@ -12,13 +14,13 @@ class GetAllTreatmentModels {
   final bool? isAnimal;
   final String? breed;
   final String? gender;
-  final dynamic height;
+  final int? height;
   final String? color;
   final int? discount;
   final int? finalCost;
   final bool? isPaid;
   final List<String>? points;
-  final List<dynamic>? concernImages;
+  final List<String>? concernImages;
   final DateTime? apDate;
   final String? apStartTime;
   final String? apEndTime;
@@ -36,8 +38,8 @@ class GetAllTreatmentModels {
   GetAllTreatmentModels({
     this.id,
     this.clientId,
+    this.userId,
     this.areaOfConcern,
-    this.treatments,
     this.inventoryAcc,
     this.description,
     this.fullCost,
@@ -69,12 +71,16 @@ class GetAllTreatmentModels {
     this.v,
   });
 
+  factory GetAllTreatmentModels.fromRawJson(String str) => GetAllTreatmentModels.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory GetAllTreatmentModels.fromJson(Map<String, dynamic> json) => GetAllTreatmentModels(
     id: json["_id"],
     clientId: json["clientId"],
+    userId: json["userId"],
     areaOfConcern: json["areaOfConcern"] == null ? [] : List<String>.from(json["areaOfConcern"]!.map((x) => x)),
-    treatments: json["treatments"] == null ? [] : List<Treatment>.from(json["treatments"]!.map((x) => Treatment.fromJson(x))),
-    inventoryAcc: json["inventoryAcc"] == null ? [] : List<InventoryAcc>.from(json["inventoryAcc"]!.map((x) => InventoryAcc.fromJson(x))),
+    inventoryAcc: json["inventoryAcc"] == null ? [] : List<dynamic>.from(json["inventoryAcc"]!.map((x) => x)),
     description: json["description"],
     fullCost: json["fullCost"],
     name: json["name"],
@@ -89,7 +95,7 @@ class GetAllTreatmentModels {
     finalCost: json["finalCost"],
     isPaid: json["isPaid"],
     points: json["points"] == null ? [] : List<String>.from(json["points"]!.map((x) => x)),
-    concernImages: json["Concern_images"] == null ? [] : List<dynamic>.from(json["Concern_images"]!.map((x) => x)),
+    concernImages: json["Concern_images"] == null ? [] : List<String>.from(json["Concern_images"]!.map((x) => x)),
     apDate: json["ApDate"] == null ? null : DateTime.parse(json["ApDate"]),
     apStartTime: json["ApStartTime"],
     apEndTime: json["ApEndTime"],
@@ -108,9 +114,9 @@ class GetAllTreatmentModels {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "clientId": clientId,
+    "userId": userId,
     "areaOfConcern": areaOfConcern == null ? [] : List<dynamic>.from(areaOfConcern!.map((x) => x)),
-    "treatments": treatments == null ? [] : List<dynamic>.from(treatments!.map((x) => x.toJson())),
-    "inventoryAcc": inventoryAcc == null ? [] : List<dynamic>.from(inventoryAcc!.map((x) => x.toJson())),
+    "inventoryAcc": inventoryAcc == null ? [] : List<dynamic>.from(inventoryAcc!.map((x) => x)),
     "description": description,
     "fullCost": fullCost,
     "name": name,
@@ -139,45 +145,5 @@ class GetAllTreatmentModels {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
-  };
-}
-
-class InventoryAcc {
-  final String? productName;
-  final int? quantity;
-
-  InventoryAcc({
-    this.productName,
-    this.quantity,
-  });
-
-  factory InventoryAcc.fromJson(Map<String, dynamic> json) => InventoryAcc(
-    productName: json["productName"],
-    quantity: json["quantity"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "productName": productName,
-    "quantity": quantity,
-  };
-}
-
-class Treatment {
-  final String? name;
-  final int? value;
-
-  Treatment({
-    this.name,
-    this.value,
-  });
-
-  factory Treatment.fromJson(Map<String, dynamic> json) => Treatment(
-    name: json["name"],
-    value: json["value"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "value": value,
   };
 }
