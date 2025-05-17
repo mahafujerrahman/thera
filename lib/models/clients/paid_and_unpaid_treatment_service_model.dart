@@ -2,9 +2,10 @@ import 'dart:convert';
 
 class GetAllTreatmentModels {
   final String? id;
-  final String? clientId;
+  final ClientId? clientId;
   final String? userId;
   final List<String>? areaOfConcern;
+  final List<String>? treatments;
   final List<dynamic>? inventoryAcc;
   final String? description;
   final int? fullCost;
@@ -40,6 +41,7 @@ class GetAllTreatmentModels {
     this.clientId,
     this.userId,
     this.areaOfConcern,
+    this.treatments,
     this.inventoryAcc,
     this.description,
     this.fullCost,
@@ -77,9 +79,10 @@ class GetAllTreatmentModels {
 
   factory GetAllTreatmentModels.fromJson(Map<String, dynamic> json) => GetAllTreatmentModels(
     id: json["_id"],
-    clientId: json["clientId"],
+    clientId: json["clientId"] == null ? null : ClientId.fromJson(json["clientId"]),
     userId: json["userId"],
     areaOfConcern: json["areaOfConcern"] == null ? [] : List<String>.from(json["areaOfConcern"]!.map((x) => x)),
+    treatments: json["treatments"] == null ? [] : List<String>.from(json["treatments"]!.map((x) => x)),
     inventoryAcc: json["inventoryAcc"] == null ? [] : List<dynamic>.from(json["inventoryAcc"]!.map((x) => x)),
     description: json["description"],
     fullCost: json["fullCost"],
@@ -113,9 +116,10 @@ class GetAllTreatmentModels {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "clientId": clientId,
+    "clientId": clientId?.toJson(),
     "userId": userId,
     "areaOfConcern": areaOfConcern == null ? [] : List<dynamic>.from(areaOfConcern!.map((x) => x)),
+    "treatments": treatments == null ? [] : List<dynamic>.from(treatments!.map((x) => x)),
     "inventoryAcc": inventoryAcc == null ? [] : List<dynamic>.from(inventoryAcc!.map((x) => x)),
     "description": description,
     "fullCost": fullCost,
@@ -145,5 +149,65 @@ class GetAllTreatmentModels {
     "createdAt": createdAt?.toIso8601String(),
     "updatedAt": updatedAt?.toIso8601String(),
     "__v": v,
+  };
+}
+
+class ClientId {
+  final String? id;
+  final String? userId;
+  final String? name;
+  final String? city;
+  final String? state;
+  final String? zip;
+  final String? phoneNumber;
+  final String? email;
+  final String? other;
+  final int? v;
+  final bool? humanClient;
+
+  ClientId({
+    this.id,
+    this.userId,
+    this.name,
+    this.city,
+    this.state,
+    this.zip,
+    this.phoneNumber,
+    this.email,
+    this.other,
+    this.v,
+    this.humanClient,
+  });
+
+  factory ClientId.fromRawJson(String str) => ClientId.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory ClientId.fromJson(Map<String, dynamic> json) => ClientId(
+    id: json["_id"],
+    userId: json["userId"],
+    name: json["name"],
+    city: json["city"],
+    state: json["state"],
+    zip: json["zip"],
+    phoneNumber: json["phoneNumber"],
+    email: json["email"],
+    other: json["other"],
+    v: json["__v"],
+    humanClient: json["humanClient"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "userId": userId,
+    "name": name,
+    "city": city,
+    "state": state,
+    "zip": zip,
+    "phoneNumber": phoneNumber,
+    "email": email,
+    "other": other,
+    "__v": v,
+    "humanClient": humanClient,
   };
 }

@@ -24,184 +24,160 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
   @override
   void initState() {
     super.initState();
-    clientController.getAllClientInfo();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      clientController.getAllClientInfo();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Step 1',style: AppStyles.fontSize16(),),
+        title: Text('Step 1 -main', style: AppStyles.fontSize16()),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.w),
           onPressed: () {
-            Get.toNamed(AppRoutes.homeScreen);
+            Get.back();
           },
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              CustomHeaderWithSearch(
-                titleText: 'Clients',
-                actionChild: InkWell(
-                    onTap: (){
-                    Get.toNamed(AppRoutes.createNewChartStepTwoScreen);
-                    },
-                    child: Text('Add Client',style: AppStyles.fontSize14(color: AppColors.primaryColor,fontWeight: FontWeight.w500))),
-                searchController: searchController),
-              // Recent Clients section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 50.h,
-                    color: AppColors.secondaryColor,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
-                          'Recent Clients',
-                          style: AppStyles.fontSize16(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Obx((){
-                    if (clientController.getClientInfoModel.value.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                'No Client Available at this time.',
-                                style: AppStyles.fontSize16(color: AppColors.greyColor),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: clientController.getClientInfoModel.length,
-                      itemBuilder: (context, index) {
-                        final clientData = clientController.getClientInfoModel[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Text(clientData.name ?? 'N/A',style: AppStyles.fontSize16(color: AppColors.blackColor)),
-                              trailing: SvgPicture.asset(AppIcons.rightArrow),
-                              onTap: () async {
-                                await PrefsHelper.setString(AppConstants.createdServiceClientId, clientData.id);
-                                if(clientData.humanClient == true){
-                                  Get.toNamed(AppRoutes.humanStepTwo);
-                                }
-                                if(clientData.humanClient == false){
-                                  Get.toNamed(AppRoutes.horseDetailsScreen,parameters: {
-                                    "clientID": '${clientData.id}'
-                                  }); //animal
-                                }
-                              },
-                            ),
-                            Divider(color: AppColors.secondaryColor),
-                          ],
-                        );
-
-                      },
-                    );
-                  }
-                  ),
-                ],
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          children: [
+            CustomHeaderWithSearch(
+              titleText: 'Clients',
+              actionChild: InkWell(
+                onTap: () {
+                  Get.toNamed(AppRoutes.createNewChartStepTwoScreen);
+                },
+                child: Text(
+                  'Add Client',
+                  style: AppStyles.fontSize14(color: AppColors.primaryColor, fontWeight: FontWeight.w500),
+                ),
               ),
-              SizedBox(height: 20),
-
-              // ==========================>. All Clients section
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 50.h,
-                    color: AppColors.secondaryColor,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
+              searchController: searchController,
+            ),
+            // Recent Clients section
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50.h,
+                  color: AppColors.secondaryColor,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Text('Recent Clients', style: AppStyles.fontSize16()),
+                ),
+                SizedBox(height: 10.h),
+                Obx(() {
+                  if (clientController.loading.value) {
+                    return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
+                  }
+                  if (clientController.getClientInfoModel.value.isEmpty) {
+                    return Center(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.all(12.0),
                         child: Text(
-                          'All Clients',
-                          style: AppStyles.fontSize16(),
+                          'No Client Available at this time.',
+                          style: AppStyles.fontSize16(color: AppColors.greyColor),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Obx((){
-                    if (clientController.getClientInfoModel.value.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                'No Client Available at this time.',
-                                style: AppStyles.fontSize16(color: AppColors.greyColor),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: clientController.getClientInfoModel.length,
-                      itemBuilder: (context, index) {
-                        final clientData = clientController.getClientInfoModel[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Text(clientData.name ?? 'N/A',style: AppStyles.fontSize16(color: AppColors.blackColor)),
-                              trailing: SvgPicture.asset(AppIcons.rightArrow),
-                              onTap: () {
-                                if(clientData.humanClient == true){
-                                  Get.toNamed(AppRoutes.humanStepTwo); //human
-                                }
-                                if(clientData.humanClient == false){
-                                  Get.toNamed(AppRoutes.createNewChartStepThreeScreen,parameters: {
-                                    "clientID": '${clientData.id}'
-                                  }); //animal
-                                }
-
-                              },
-                            ),
-                            Divider(color: AppColors.secondaryColor),
-                          ],
-                        );
-
-                      },
                     );
                   }
-                  ),
-                ],
-              )
-            ],
-          ),
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: clientController.getClientInfoModel.length,
+                    itemBuilder: (context, index) {
+                      final clientData = clientController.getClientInfoModel[index];
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(clientData.name ?? 'N/A', style: AppStyles.fontSize16(color: AppColors.blackColor)),
+                            trailing: SvgPicture.asset(AppIcons.rightArrow),
+                            onTap: () async {
+                              await PrefsHelper.setString(AppConstants.createdServiceClientId, clientData.id);
+                              if (clientData.humanClient == true) {
+                                Get.toNamed(AppRoutes.humanStepTwo);
+                              } else {
+                                Get.toNamed(AppRoutes.animalStepThreeScreen);
+                              }
+                            },
+                          ),
+                          Divider(color: AppColors.secondaryColor),
+                        ],
+                      );
+                    },
+                  );
+                }),
+              ],
+            ),
+            SizedBox(height: 20.h),
+            // All Clients section
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 50.h,
+                  color: AppColors.secondaryColor,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Text('All Clients', style: AppStyles.fontSize16()),
+                ),
+                SizedBox(height: 10.h),
+                Obx(() {
+                  if (clientController.loading.value) {
+                    return Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
+                  }
+                  if (clientController.getClientInfoModel.value.isEmpty) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          'No Client Available at this time.',
+                          style: AppStyles.fontSize16(color: AppColors.greyColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: clientController.getClientInfoModel.length,
+                    itemBuilder: (context, index) {
+                      final clientData = clientController.getClientInfoModel[index];
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(clientData.name ?? 'N/A', style: AppStyles.fontSize16(color: AppColors.blackColor)),
+                            trailing: SvgPicture.asset(AppIcons.rightArrow),
+                            onTap: () {
+                              if (clientData.humanClient == true) {
+                                Get.toNamed(AppRoutes.humanStepTwo);
+                              } else {
+                                Get.toNamed(AppRoutes.animalStepThreeScreen);
+                              }
+                            },
+                          ),
+                          Divider(color: AppColors.secondaryColor),
+                        ],
+                      );
+                    },
+                  );
+                }),
+              ],
+            )
+          ],
         ),
       ),
     );
