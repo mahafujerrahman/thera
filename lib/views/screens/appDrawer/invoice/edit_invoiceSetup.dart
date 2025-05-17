@@ -9,10 +9,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
-import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
-import 'package:thera_track_app/views/base/custom_list_tile.dart';
 import 'package:thera_track_app/views/base/custom_text.dart';
 import 'package:thera_track_app/views/base/custom_text_field.dart';
 
