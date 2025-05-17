@@ -56,7 +56,7 @@ class ApiServiceClient extends GetxService {
         case 'PUT':
           response = await _client
               .put(Uri.parse(url),
-              headers: finalHeaders, body: jsonEncode(body))
+                  headers: finalHeaders, body: jsonEncode(body))
               .timeout(_timeout);
           break;
         case 'PATCH':
@@ -141,25 +141,25 @@ class ApiServiceClient extends GetxService {
 
   // POST
   Future<Response> postData(String uri, dynamic body,
-      {Map<String, String>? headers, List<MultipartBody2>? files}) =>
+          {Map<String, String>? headers, List<MultipartBody2>? files}) =>
       _makeRequest(ApiConstants.baseUrl + uri, 'POST', body,
           headers: headers, files: files);
 
   // PUT
   Future<Response> putData(String uri, dynamic body,
-      {Map<String, String>? headers, List<MultipartBody2>? files}) =>
+          {Map<String, String>? headers, List<MultipartBody2>? files}) =>
       _makeRequest(ApiConstants.baseUrl + uri, 'PUT', body,
           headers: headers, files: files);
 
   //PATCH
   Future<Response> patchData(String uri, dynamic body,
-      {Map<String, String>? headers, List<MultipartBody2>? files}) =>
+          {Map<String, String>? headers, List<MultipartBody2>? files}) =>
       _makeRequest(ApiConstants.baseUrl + uri, 'PATCH', body,
           headers: headers, files: files);
 
   // DELETE
   Future<Response> deleteData(String uri,
-      {Map<String, String>? headers, dynamic body}) =>
+          {Map<String, String>? headers, dynamic body}) =>
       _makeRequest(ApiConstants.baseUrl + uri, 'DELETE', body,
           headers: headers);
 }

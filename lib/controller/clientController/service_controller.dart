@@ -1,4 +1,4 @@
-
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,8 +8,8 @@ import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_constants.dart';
-import 'package:thera_track_app/service/api_service_client.dart' show ApiServiceClient, MultipartBody2;
-
+import 'package:thera_track_app/service/api_service_client.dart'
+    show ApiServiceClient, MultipartBody2;
 
 class ServiceController extends GetxController {
   ///Service Given Api
@@ -51,7 +51,7 @@ class ServiceController extends GetxController {
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
- var selectedList = <GetAllTreatMentModel>[].obs;
+  var selectedList = <GetAllTreatMentModel>[].obs;
 
   var fullCost = 0.0.obs;
   var discount = 0.0.obs;
@@ -71,61 +71,57 @@ class ServiceController extends GetxController {
   File? selectedImage;
 
   createServiceClient() async {
-
-
     createServiceLoading(true);
     var clientId =
-    await PrefsHelper.getString(AppConstants.createdServiceClientId);
+        await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
     var files = <MultipartBody2>[
       MultipartBody2('Concern_images', selectedImage!)
     ];
 
-    var treat=[];
-    for(var x in selectedList ){
+    var treat = [];
+    for (var x in selectedList) {
       treat.add(x.treatmentTitle);
     }
-
-
-    var body = {
-      "clientId": clientId,
-      "areaOfConcern": selectedAreaOfConcern,
-      "treatments": treat,
-      "finalCost": finalCost.value,
-      "discount": discount.value,
-      "description": descriptionTextController.text.trim(),
-      "points": pointList,
-      "isPaid": isPaid.value,
-      "ApDate": selectedAppointmentDay.toString(),
-      "ApStartTime": apStartTime.value,
-      "ApEndTime": apEndTime.value,
-      "reAllDay": isReminderAllDay.value,
-      "reTwelveHourBefore": reTwelveHourBefore.value,
-      "reOneDayBefore": reOneDayBefore.value,
-      "reTwoDayBefore": reTwoDayBefore.value,
-      "reOneWeekBefore": reOneWeekBefore.value,
-    };
-
     var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
 
     var headers = {
-      'Content-Type': 'application/x-www-form-urlencoded b ',
+      'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer $bearerToken'
     };
 
-    var response = await ApiServiceClient().postData(
-      ApiConstants.createServiceEndPoint,
-      body,
-      files: files,
-      headers: headers,
-    );
-    if (response.statusCode == 200) {
-      // Ensure the response body is cast correctly
+    // Convert all values to strings for the multipart request
+    var body = {
+      "clientId": clientId,
+      "areaOfConcern": jsonEncode(selectedAreaOfConcern),
+      "treatments": jsonEncode(treat),
+      "finalCost": finalCost.value.toString(),
+      "discount": discount.value.toString(),
+      "description": descriptionTextController.text.trim(),
+      "points": jsonEncode(pointList),
+      "isPaid": isPaid.value.toString(),
+      "ApDate": selectedAppointmentDay.toString(),
+      "ApStartTime": apStartTime.value,
+      "ApEndTime": apEndTime.value,
+      "reAllDay": isReminderAllDay.value.toString(),
+      "reTwelveHourBefore": reTwelveHourBefore.value.toString(),
+      "reOneDayBefore": reOneDayBefore.value.toString(),
+      "reTwoDayBefore": reTwoDayBefore.value.toString(),
+      "reOneWeekBefore": reOneWeekBefore.value.toString(),
+    };
 
+    var response = await ApiServiceClient().postData(
+        ApiConstants.createServiceEndPoint, body,
+        files: files, headers: headers);
+    if (response.statusCode == 200) {
+      // Handle success
+      createServiceLoading(false);
+      Get.snackbar('Success', 'Service created successfully');
+      // Additional success handling...
     } else {
+      createServiceLoading(false);
       ApiChecker.checkApi(response);
       Get.snackbar('Error!', 'Something Went Wrong');
     }
   }
-
 }
