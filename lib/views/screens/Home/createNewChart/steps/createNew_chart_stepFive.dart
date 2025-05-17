@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -9,13 +10,13 @@ import 'package:thera_track_app/views/base/custom_button.dart';
 
 class CreateNewChartStepFiveScreen extends StatefulWidget {
   @override
-  _CreateNewChartStepFiveScreenState createState() =>
-      _CreateNewChartStepFiveScreenState();
+  _CreateNewChartStepFiveScreenState createState() => _CreateNewChartStepFiveScreenState();
 }
 
 class _CreateNewChartStepFiveScreenState
     extends State<CreateNewChartStepFiveScreen> {
   final ProfileController profileController = Get.put(ProfileController());
+  final ServiceController serviceController = Get.put(ServiceController());
 
   var selectedTreatments = <bool>[].obs; // Track selected checkboxes
   var isLoading = true.obs; // Loading indicator
@@ -25,9 +26,7 @@ class _CreateNewChartStepFiveScreenState
     super.initState();
     profileController.getAllTreatment().then((_) {
       selectedTreatments.assignAll(
-          List.generate(
-              profileController.getAllTreatMentList.length, (index) => false
-          ));
+          List.generate(profileController.getAllTreatMentList.length, (index) => false));
     });
   }
 
@@ -59,7 +58,9 @@ class _CreateNewChartStepFiveScreenState
             Expanded(
               child: Obx(() {
                 if (profileController.isLoading.value) {
-                  return Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor));
+                  return Center(
+                      child: CupertinoActivityIndicator(
+                          radius: 32.r, color: AppColors.primaryColor));
                 }
                 if (profileController.getAllTreatMentList.isEmpty) {
                   return Center(
@@ -74,14 +75,17 @@ class _CreateNewChartStepFiveScreenState
                   shrinkWrap: true,
                   itemCount: profileController.getAllTreatMentList.length,
                   itemBuilder: (context, index) {
-                    var treatment = profileController.getAllTreatMentList[index];
+                    var treatment =
+                    profileController.getAllTreatMentList[index];
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
                       child: Container(
                         height: 50.h,
-                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 8.h),
                         decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.primaryColor, width: 1),
+                          border: Border.all(
+                              color: AppColors.primaryColor, width: 1),
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Row(
@@ -97,15 +101,25 @@ class _CreateNewChartStepFiveScreenState
                             ),
                             SizedBox(width: 10.w),
                             SizedBox(
-                              width: 24.w,
-                              height: 24.h,
+                              width: 60.w,
+                              height: 60.h,
                               child: Obx(() => Checkbox(
-                                value: selectedTreatments.isNotEmpty
-                                    ? selectedTreatments[index]
-                                    : false,
+                                value: selectedTreatments[index],
                                 onChanged: (bool? value) {
                                   if (selectedTreatments.isNotEmpty) {
-                                    selectedTreatments[index] = value!;
+                                    setState(() {
+                                      selectedTreatments[index] = value!;
+
+                                      serviceController.selectedList.clear();
+                                      for (int i = 0; i < selectedTreatments.length; i++) {
+                                        if (selectedTreatments[i]) {
+                                          serviceController.selectedList.add(
+                                              profileController.getAllTreatMentList[i]);
+                                        }
+                                      }
+
+                                      print('Selected items count: ${serviceController.selectedList.length}');
+                                    });
                                   }
                                 },
                                 activeColor: AppColors.primaryColor,
@@ -119,7 +133,6 @@ class _CreateNewChartStepFiveScreenState
                 );
               }),
             ),
-
             CustomButton(
               onTap: () {
                 Get.toNamed(AppRoutes.equipmentScreen);
@@ -133,3 +146,5 @@ class _CreateNewChartStepFiveScreenState
     );
   }
 }
+
+

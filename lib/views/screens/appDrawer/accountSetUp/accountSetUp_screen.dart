@@ -92,7 +92,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                                 width: 120.w,
                                 decoration: BoxDecoration(
                                   color: Colors.red,
-                                  shape: BoxShape.rectangle,
+                                  shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: MemoryImage(_image!),
                                     fit: BoxFit.cover,

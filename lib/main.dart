@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/controller/localization_controller.dart';
 import 'package:thera_track_app/controller/theme_controller.dart';
@@ -9,11 +10,16 @@ import 'package:thera_track_app/firebase_options.dart';
 import 'package:thera_track_app/service/firebase_service.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/message.dart';
+
+import 'controller/payment/keys.dart';
 import 'helpers/di.dart' as di;
 import 'helpers/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = publishableKey;
+  await Stripe.instance.applySettings();
+
   await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform);
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

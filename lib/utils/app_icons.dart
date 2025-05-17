@@ -32,5 +32,7 @@ class AppIcons{
   static String inventoryIcon ="$baseUrl/inventoryIcon.svg";
   static String walletIcon ="$baseUrl/walletAlt.svg";
   static String subscriptionIcon ="$baseUrl/subscriptionIcon.svg";
+  static String bottomArrow ="$baseUrl/bottomArrow.svg";
+  static String travel ="$baseUrl/travel.svg";
 
 }

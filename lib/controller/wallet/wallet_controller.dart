@@ -72,14 +72,14 @@ class WalletController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        walletLoading(false);
         print('================>>> ${response.statusCode}');
-       /* var newOne = GetAllWalletModel.fromJson(response.body['data']['attributes']);
-        getAllWalletModel.add(newOne);*/
         getAllWalletModel.refresh();
         Get.snackbar('Success', 'Travel Expenses added successfully.');
         clearFields();
         Get.toNamed(AppRoutes.homeScreen);
       } else {
+        walletLoading(false);
         ApiChecker.checkApi(response);
     }
   }

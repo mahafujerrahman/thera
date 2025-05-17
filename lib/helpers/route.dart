@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:thera_track_app/views/screens/Auth/SignIn/sign_in_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/SignUp/sign_up_screen.dart';
@@ -19,6 +18,10 @@ import 'package:thera_track_app/views/screens/Home/contacts/human/edit_contact_d
 import 'package:thera_track_app/views/screens/Home/contacts/human/human_client_contact_screen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/appoinmentCalenderScreen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/createNewChartDetails.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_details_stepFive.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFour.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepTwo.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepthree.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFive.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepOne.dart';
@@ -39,6 +42,8 @@ import 'package:thera_track_app/views/screens/Splash/splash_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/AccountSetUp/accountSetUp_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/advance_setting/advance_settings_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/feedback/feedback_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/edit_invoiceSetup.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/invoiceSetupScreen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
@@ -70,7 +75,7 @@ class AppRoutes{
   static String animalContactsScreen= "/animalContactsScreen";
   static String contactSearchScreen= "/contactSearchScreen";
   static String clientsContactDetailsScreen= "/clientsContactDetailsScreen";
-  static String editContactDetailsScreen= "/editContactDetailsScreen";
+  static String editContactDetailsScreen= "/human_editContactDetailsScreen";
   static String offLineFileScreen= "/offLineFileScreen";
   static String animalContactDetailsScreen= "/animalContactDetailsScreen";
   static String animalListScreen= "/animalListScreen";
@@ -90,6 +95,13 @@ class AppRoutes{
   static String humanContactsScreen = "/humanContactsScreen";
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
   static String subscriptionScreen = "/subscriptionScreen";
+  static String stripePaymentScreen = "/stripePaymentScreen";
+  static String humanStepTwo = "/humanStepTwo";
+  static String humanStepThree = "/humanStepThree";
+  static String humanStepFour = "/humanStepFour";
+  static String humanStepFive = "/HumanStepFive";
+  static String invoiceSetupScreen = "/invoice_setupScreen";
+  static String editInvoiceSetupScreen = "/edit_InvoiceSetupScreen";
 
 
 
@@ -111,6 +123,8 @@ class AppRoutes{
    //App Drawer
    GetPage(name:accountSetUpScreen, page: ()=> AccountSetUpScreen(),transition: Transition.noTransition),
    GetPage(name:yourDetailsScreen, page: ()=> YourDetailsScreen(),transition: Transition.noTransition),
+   GetPage(name:invoiceSetupScreen, page: ()=> InvoiceSetupScreen(),transition: Transition.noTransition),
+   GetPage(name:editInvoiceSetupScreen, page: ()=> EditInvoiceSetupScreen(),transition: Transition.noTransition),
    GetPage(name:treatmentScreen, page: ()=> TreatmentScreen(),transition: Transition.noTransition),
    GetPage(name:advanceSettingsScreen, page: ()=> AdvanceSettingsScreen(),transition: Transition.noTransition),
    GetPage(name:paidDetailsScreen, page: ()=> PaidDetailsScreen(),transition: Transition.noTransition),
@@ -168,5 +182,11 @@ class AppRoutes{
 
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
+
+   //human Step
+   GetPage(name:humanStepTwo, page: ()=> HumanStepTwo(),transition: Transition.noTransition),
+   GetPage(name:humanStepThree, page: ()=> HumanStepThree(),transition: Transition.noTransition),
+   GetPage(name:humanStepFour, page: ()=> HumanStepFour(),transition: Transition.noTransition),
+   GetPage(name:humanStepFive, page: ()=> HumanStepFive(),transition: Transition.noTransition),
   ];
 }

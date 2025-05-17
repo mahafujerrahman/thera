@@ -1,6 +1,6 @@
 class ApiConstants {
-  static const String baseUrl = "http://10.0.60.71:8083/api/v1";
-  static const String imageBaseUrl = "http://10.0.60.71:8083";
+  static const String baseUrl = "http://10.0.80.71:5000/api/v1";
+  static const String imageBaseUrl = "http://10.0.80.71:5000";
 
 /*  http://192.168.10.163:8081/api/v1
   http://192.168.10.163:8081/api/v1*/
@@ -20,6 +20,7 @@ class ApiConstants {
   static const String getProfileDataEndPoint = "/user/profile";
   static const String editProfileEndPoint = "/user/profile";
   static const String updateAdvanceSettingEndPoint = "/user/change-user-status";
+  static const String updateClientProfileEndPoint = "/client/update-client";
 
 
   //============================>> Create Clients <<=================================
@@ -39,6 +40,7 @@ class ApiConstants {
   static const String getAllWalletEndPoint = "/travel/get-all-travel-expenses";
   static const String addTravelCostEndPoint = "/travel/create-travel-expenses";
   static const String getOneTravelExpensesEndPoint = "/travel/get-one-travel-expenses";
+  static const String createServiceEndPoint = "/patient/create-service";
 
 
 //============================>> Chart Archive  <<=================================

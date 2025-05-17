@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thera_track_app/controller/wallet/wallet_controller.dart';
+import 'package:thera_track_app/helpers/imageHelper.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -42,210 +43,142 @@ File? selectedImage;
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0.r),
-        child: Column(
-          children: [
-
-            _buildTextField('Departure', walletController.departureController),
-            _buildTextField('Destination', walletController.destinationController),
-            _buildTextField('Distance', walletController.distanceController),
-            _buildTextField('Food', walletController.foodController),
-            _buildTextField('Gas', walletController.gasController),
-            _buildTextField('Other', walletController.otherController),
-            SizedBox(height: 20.h),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                _image != null
-                    ?  Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 16.w),
-                      child: GestureDetector(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildTextField('Departure', walletController.departureController, TextInputType.text),
+              _buildTextField('Destination', walletController.destinationController, TextInputType.text),
+              _buildTextField('Distance', walletController.distanceController, TextInputType.number),
+              _buildTextField('Food', walletController.foodController, TextInputType.number),
+              _buildTextField('Gas', walletController.gasController, TextInputType.number),
+              _buildTextField('Other', walletController.otherController, TextInputType.number),
+              SizedBox(height: 20.h),
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  _image != null
+                      ?  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 16.w),
+                        child: GestureDetector(
+                            onTap: () {
+                              ImagePickerHelper.showImagePickerOption(context, (File pickedImage) {
+                                setState(() {
+                                  selectedImage = pickedImage;
+                                  _image = pickedImage.readAsBytesSync();
+                                });
+                              });
+                            },
+                        child: DottedBorderContainer(
+                          child: Container(
+                            height: 200.h,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                border: Border.all(width: 2.w, color: AppColors.whiteColor),
+                                borderRadius: BorderRadius.circular(8.r),
+                                image: DecorationImage(
+                                    image: MemoryImage(_image!),
+                                    fit: BoxFit.cover)),
+                          )
+                        ) ),
+                      ):
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 16.w),
+                    child: InkWell(
                       onTap: () {
-                        showImagePickerOption(context);
+                        ImagePickerHelper.showImagePickerOption(context, (File pickedImage) {
+                          setState(() {
+                            selectedImage = pickedImage;
+                            _image = pickedImage.readAsBytesSync();
+                          });
+                        });
                       },
                       child: DottedBorderContainer(
-                        child: Container(
-                          height: 200.h,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 2.w, color: AppColors.whiteColor),
-                              borderRadius: BorderRadius.circular(8.r),
-                              image: DecorationImage(
-                                  image: MemoryImage(_image!),
-                                  fit: BoxFit.cover)),
-                        )
-                      ) ),
-                    ):
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h,horizontal: 16.w),
-                  child: InkWell(
-                    onTap: (){
-                      showImagePickerOption(context);
-                    },
-                    child: DottedBorderContainer(
-                        child: Container(
-                          height: 200.h,
-                          child: Center(
-                              child: Text('Click to browse or \ndrag and drop your files',textAlign: TextAlign.center)),
-                        )
+                          child: Container(
+                            height: 200.h,
+                            child: Center(
+                                child: Text('Click to browse or \ndrag and drop your files',textAlign: TextAlign.center)),
+                          )
+                      ),
                     ),
                   ),
-                ),
 
 
-              ],
-            ),
-            SizedBox(height: 20.h),
-            CustomButton(onTap: () {
-              if (selectedImage == null) {
-                Get.snackbar('Error', 'Please select a receipt image.');
-                return;
-              }
-              int? departure = int.tryParse(walletController.departureController.text.trim());
-              int? distance = int.tryParse(walletController.distanceController.text.trim());
-              int? food = int.tryParse(walletController.foodController.text.trim());
-              int? gas = int.tryParse(walletController.gasController.text.trim());
-              int? other = int.tryParse(walletController.otherController.text.trim());
+                ],
+              ),
+              SizedBox(height: 20.h),
+              CustomButton(onTap: () {
+                if (selectedImage == null) {
+                  Get.snackbar('Error', 'Please select a receipt image.');
+                  return;
+                }
+                int? departure = int.tryParse(walletController.departureController.text.trim());
+                int? distance = int.tryParse(walletController.distanceController.text.trim());
+                int? food = int.tryParse(walletController.foodController.text.trim());
+                int? gas = int.tryParse(walletController.gasController.text.trim());
+                int? other = int.tryParse(walletController.otherController.text.trim());
 
-              walletController.addTravelExpenses(
-                  departure: departure,
-                  destination: walletController.destinationController.text.trim(),
-                  distance: distance,
-                  food: food,
-                  gas: gas,
-                  other: other,
-                  receiptImages: selectedImage!
-              );
+                walletController.addTravelExpenses(
+                    departure: departure,
+                    destination: walletController.destinationController.text.trim(),
+                    distance: distance,
+                    food: food,
+                    gas: gas,
+                    other: other,
+                    receiptImages: selectedImage!
+                );
 
-            }, text: 'Save'),
-          ]
+              }, text: 'Save'),
+            ]
+          ),
         )
       )
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
-      child: Container(
-        height: 50.h,
-        color: Colors.blue.shade100,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Container(
-                padding: EdgeInsets.all(12.r),
-                color: Colors.blue.shade100,
-                child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
+Widget _buildTextField(String label, TextEditingController controller, TextInputType keyboardType) {
+  return Padding(
+    padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 4.w),
+    child: Container(
+      height: 50.h,
+      color: Colors.blue.shade100,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              padding: EdgeInsets.all(12.r),
+              color: Colors.blue.shade100,
+              child: Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
             ),
-            Expanded(
-              flex: 5,
-              child: Padding(
-                padding: EdgeInsets.all(8.0.r),
-                child: Container(
-                  color: Colors.white,
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white, width: 2),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 10.r),
+          ),
+          Expanded(
+            flex: 5,
+            child: Padding(
+              padding: EdgeInsets.all(8.0.r),
+              child: Container(
+                color: Colors.white,
+                child: TextFormField(
+                  keyboardType: keyboardType, // Use the passed keyboardType
+                  controller: controller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
                     ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white, width: 2),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 4.r, vertical: 4.r),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
-
-  //==================================> ShowImagePickerOption Function <===============================
-  void showImagePickerOption(BuildContext context) {
-    showModalBottomSheet(
-        backgroundColor: AppColors.whiteColor,
-        context: context,
-        builder: (builder) {
-          return Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 4.2,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        _pickImageFromGallery();
-                      },
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.image,
-                              size: 50.w,
-                              color: AppColors.primaryColor,
-                            ),
-                            CustomText(text: 'Gallery')
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        _pickImageFromCamera();
-                      },
-                      child: SizedBox(
-                        child: Column(
-                          children: [
-                            Icon(Icons.camera_alt,
-                                size: 50.w, color: AppColors.primaryColor),
-                            CustomText(text: 'Camera')
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  //==================================> Gallery <===============================
-  Future _pickImageFromGallery() async {
-    final returnImage =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnImage == null) return;
-    setState(() {
-      selectedImage = File(returnImage.path);
-      _image = File(returnImage.path).readAsBytesSync();
-    });
-    Get.back();
-  }
-
-//==================================> Camera <===============================
-  Future _pickImageFromCamera() async {
-    final returnImage =
-    await ImagePicker().pickImage(source: ImageSource.camera);
-    if (returnImage == null) return;
-    setState(() {
-     selectedImage = File(returnImage.path);
-      _image = File(returnImage.path).readAsBytesSync();
-    });
-    Get.back();
-  }
+    ),
+  );
+}
 }

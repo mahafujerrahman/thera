@@ -44,62 +44,72 @@ class _ContactSearchScreenState extends State<ContactSearchScreen> {
             children: [
               CustomHeaderWithSearch(
                 titleText: 'Clients',
-                actionChild: InkWell(
-                  onTap: () {
-                    // Get.toNamed(AppRoutes.createNewChartStepTwoScreen);
-                  },
-                  child: Text(
-                    'Add Client',
-                    style: AppStyles.fontSize14(
-                        color: AppColors.primaryColor, fontWeight: FontWeight.w500),
-                  ),
-                ),
+                actionChild: SizedBox(),
                 searchController: searchController,
               ),
               // Recent Contacts section
-              Obx((){
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: _clientController.getClientInfoModel.length,
-                      itemBuilder: (context, index) {
-                        var displayData =  _clientController.getClientInfoModel[index];
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Text('${displayData.name}'),
-                              trailing: SvgPicture.asset(AppIcons.rightArrow),
-                              onTap: () {
+            Obx(() {
+              if (_clientController.loading.value) {
+                return const Center(child: CircularProgressIndicator(color: Colors.black));
+              }
 
-                                // Navigate based on the type (human or animal)
+              if (_clientController.getClientInfoModel.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          'No Client Available at this time.',
+                          style: AppStyles.fontSize16(color: AppColors.greyColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _clientController.getClientInfoModel.length,
+                    itemBuilder: (context, index) {
+                      var displayData = _clientController.getClientInfoModel[index];
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text('${displayData.name}'),
+                            trailing: SvgPicture.asset(AppIcons.rightArrow),
+                            onTap: () {
                               if (displayData.humanClient == true) {
-                                Get.toNamed(AppRoutes.clientsContactDetailsScreen,
-                                parameters: {
-                                  "clientId": '${displayData.id}',
-                                }
+                                Get.toNamed(
+                                  AppRoutes.clientsContactDetailsScreen,
+                                  parameters: {"clientId": '${displayData.id}'},
                                 );
-                              } else if ((displayData.humanClient == false)) {
-                                Get.toNamed(AppRoutes.animalListScreen,
-                                    parameters: {
-                                      "clientId": '${displayData.id}',
-                                    }
+                              } else {
+                                Get.toNamed(
+                                  AppRoutes.animalListScreen,
+                                  parameters: {"clientId": '${displayData.id}'},
                                 );
                               }
-                              },
-                            ),
-                            Divider(color: AppColors.secondaryColor),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                );
-              }),
-              SizedBox(height: 20),
+                            },
+                          ),
+                          Divider(color: AppColors.secondaryColor),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              );
+            }),
+            SizedBox(height: 20),
             ],
           ),
         ),

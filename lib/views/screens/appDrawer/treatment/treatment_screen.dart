@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
 import 'package:thera_track_app/controller/profileController.dart';
+import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -18,6 +19,8 @@ class _TreatmentScreenState extends State<TreatmentScreen> {
 
   final ProfileController profileController = Get.put(ProfileController());
 
+
+  List<GetAllTreatMentModel> selectedTreatements=<GetAllTreatMentModel>[];
 
   @override
   void initState() {
@@ -143,26 +146,30 @@ class _TreatmentScreenState extends State<TreatmentScreen> {
                     ),
                   ),
                   SizedBox(width: 10.w),
-                  CustomButton(
-                    width: 8.w,
-                    height: 45.h,
-                    loading: profileController.addTreatmentLoading.value,
-                    onTap: (){
-                      if (profileController.treatmentName.text.isEmpty) {
-                        Get.snackbar('Error', 'Treatment name cannot be empty.');
-                        return;
-                      }
+                  Obx((){
+                    return CustomButton(
+                      width: 8.w,
+                      height: 45.h,
+                      loading: profileController.addTreatmentLoading.value,
+                      onTap: (){
+                        if (profileController.treatmentName.text.isEmpty) {
+                          Get.snackbar('Error', 'Treatment name cannot be empty.');
+                          return;
+                        }
 
-                      if (profileController.treatmentPrice.text.isEmpty || double.tryParse(profileController.treatmentPrice.text) == null) {
-                        Get.snackbar('Error', 'Invalid price format. Please enter a valid number.');
-                        return;
-                      }
-                      profileController.addTreatmentMethod(
+                        if (profileController.treatmentPrice.text.isEmpty || double.tryParse(profileController.treatmentPrice.text) == null) {
+                          Get.snackbar('Error', 'Invalid price format. Please enter a valid number.');
+                          return;
+                        }
+                        profileController.addTreatmentMethod(
                           treatmentTitle: profileController.treatmentName.text.trim(),
                           price:  profileController.treatmentPrice.text.trim(),
-                      );
-                    },
-                    text: 'Add',
+                        );
+                      },
+                      text: 'Add',
+                    );
+                  }
+
                   ),
                 ],
               ),

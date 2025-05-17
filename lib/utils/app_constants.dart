@@ -7,6 +7,7 @@ class AppConstants{
   static const String phoneNumber = "PhoneNumber";
   static String isLogged = "IsLogged";
 
+
   static String userId="userId";
   // share preference Key
   static String THEME ="theme";
@@ -32,8 +33,9 @@ class AppConstants{
   static String fcmToken = "fcmToken";
 
 
+  static String createdServiceClientId="createdServiceClientId";
 
-  static String productId="productId";
+
   static String userLat="userLat";
   static String userLag="userLag";
 

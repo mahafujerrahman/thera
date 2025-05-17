@@ -173,8 +173,8 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             GridViewTile(
-              child: SvgPicture.asset(AppIcons.walletIcon),
-              label: 'Wallet',
+              child: SvgPicture.asset(AppIcons.travel),
+              label: 'Travel',
               onTap: () {
                 Get.toNamed(AppRoutes.walletDetailsScreen);
               },

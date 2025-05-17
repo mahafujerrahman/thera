@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart' show ServiceController;
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 import 'package:thera_track_app/views/base/price_details_row.dart';
 
+import '../../../../../controller/profileController.dart';
 
 class CreateNewChartStepSixScreen extends StatefulWidget {
   @override
@@ -14,8 +17,11 @@ class CreateNewChartStepSixScreen extends StatefulWidget {
       _CreateNewChartStepSixScreenState();
 }
 
-class _CreateNewChartStepSixScreenState extends State<CreateNewChartStepSixScreen> {
+class _CreateNewChartStepSixScreenState
+    extends State<CreateNewChartStepSixScreen> {
   final TextEditingController _controller = TextEditingController();
+  final ProfileController _profileController = Get.find();
+  final ServiceController serviceController = Get.put(ServiceController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +42,20 @@ class _CreateNewChartStepSixScreenState extends State<CreateNewChartStepSixScree
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PriceDetailWidget(title: 'Cryotherapy', price: '200'),
-            PriceDetailWidget(title: 'Hydrotherapy', price: '200'),
-            PriceDetailWidget(title: 'Laser Therapy', price: '200'),
-            PriceDetailWidget(title: 'Osteopathy', price: '200'),
+            ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return PriceDetailWidget(
+                      title: serviceController.selectedList[index].treatmentTitle,
+                      price: serviceController.selectedList[index].price.toString());
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(
+                    height: 16,
+                  );
+                },
+                itemCount: serviceController.selectedList.length),
+
             Divider(color: AppColors.blackColor),
             PriceDetailWidget(title: 'Full Cost', price: '800'),
 
@@ -74,7 +90,8 @@ class _CreateNewChartStepSixScreenState extends State<CreateNewChartStepSixScree
                         contentPadding: EdgeInsets.zero,
                       ),
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

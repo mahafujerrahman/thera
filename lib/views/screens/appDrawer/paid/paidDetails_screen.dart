@@ -97,82 +97,80 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Paid Treatments',
-          style: AppStyles.fontSize16(),
-        ),
+        title: Text('Paid Treatments', style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Obx(() {
+        return Column(
           children: [
-            Obx(
-                  () => profileController.getAllPaidTreatmentModels.isEmpty
-                  ? Center(child: Text('No paid treatments added yet.', style: TextStyle(color: Colors.black)))
-                  : Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: profileController.getAllPaidTreatmentModels.length,
-                    itemBuilder: (context, index) {
-                      final displayData = profileController.getAllPaidTreatmentModels[index];
-                      return ClientRowWidget(
-                        status: 'paid',
-                        name: displayData.name ?? 'N/A',
-                        date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
-                        amount: int.parse(displayData.finalCost.toString()),
-                      );
-                    },
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    padding: EdgeInsets.all(12.r),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    profileController.getAllPaidTreatmentModels.isEmpty
+                        ? Center(child: Text('No paid treatments added yet.', style: TextStyle(color: Colors.black)))
+                        : Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              TimeFormatHelper.formatDate(DateTime.now()),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: profileController.getAllPaidTreatmentModels.length,
+                          itemBuilder: (context, index) {
+                            final displayData = profileController.getAllPaidTreatmentModels[index];
+                            return Column(
+                              children: [
+                                ClientRowWidget(
+                                  status: 'paid',
+                                  name: displayData.name ?? 'N/A',
+                                  date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
+                                  amount: int.parse(displayData.finalCost.toString()),
+                                ),
+                              ],
+                            );
+                          },
                         ),
-                        Obx(() => Text(
-                          '${profileController.paidTotalFinalCost} \$',
-                          style: TextStyle(
-                            color: AppColors.greenColor,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 16.h),
+                          padding: EdgeInsets.all(12.r),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Total', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  SizedBox(height: 4.h),
+                                  Text(TimeFormatHelper.formatDate(DateTime.now()), style: TextStyle(color: Colors.grey),),
+                                ],
+                              ),
+                              Text(
+                                '${profileController.paidTotalFinalCost} \$',
+                                style: TextStyle(color: AppColors.greenColor, fontWeight: FontWeight.bold,),
+                              )
+                            ],
                           ),
-                        )),
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+            _buildEmailInputSection(),
           ],
-        ),
-      ),
-      bottomNavigationBar: _buildEmailInputSection(),
+        );
+      }),
     );
   }
 
+
   Widget _buildEmailInputSection() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.r),
       child: Container(
-        height: 250.h,
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(4.r),
           color: AppColors.secondaryColor,
         ),
         child: Column(
@@ -196,7 +194,7 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
               style: TextStyle(color: AppColors.blackColor),
             ),
             SizedBox(height: 16.h),
-            Center(
+           /* Center(
               child: SizedBox(
                 width: 194.w,
                 child: ElevatedButton.icon(
@@ -219,7 +217,7 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                   ),
                 ),
               ),
-            ),
+            ),*/
             Center(
               child: SizedBox(
                 width: 194.w,
@@ -236,8 +234,8 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                       ),
                     );
                   },
-                  icon: Icon(Icons.share, color: AppColors.whiteColor),
-                  label: Text('Share', style: TextStyle(color: AppColors.whiteColor)),
+                  icon: Icon(Icons.send, color: AppColors.whiteColor),
+                  label: Text('Send', style: TextStyle(color: AppColors.whiteColor)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     shape: RoundedRectangleBorder(

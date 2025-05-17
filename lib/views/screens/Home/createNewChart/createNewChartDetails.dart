@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_images.dart';
@@ -30,7 +31,7 @@ class _CreateNewChartDetailsScreenState
   final TextEditingController emailCTRl = TextEditingController();
   final TextEditingController addressCTRl = TextEditingController();
 
-  final ClientController clientController = Get.put(ClientController());
+  final ServiceController serviceController = Get.put(ServiceController());
 
   bool isPaid = false;
   void togglePaidStatus(bool value) {
@@ -104,9 +105,9 @@ class _CreateNewChartDetailsScreenState
                             height: 200.h,
                             width: double.infinity,
                             child: Center(
-                              child: clientController.selectedImage != null
+                              child: serviceController.selectedImage != null
                                   ? Image.file(
-                                      clientController.selectedImage!,
+                                serviceController.selectedImage!,
                                       height: 200.h,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
@@ -143,8 +144,7 @@ class _CreateNewChartDetailsScreenState
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('${clientController.descriptionTextController.text.trim()}'),
-
+                                      Text('${serviceController.descriptionTextController.text.trim()}'),
                                     ],
                                   ),
                                 ],

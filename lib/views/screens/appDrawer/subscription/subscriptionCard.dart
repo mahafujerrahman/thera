@@ -25,20 +25,21 @@ class SubscriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(8.r),
       width: 300,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.primaryColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Row to display plan name and current plan label
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     padding: EdgeInsets.all(10),
@@ -53,14 +54,10 @@ class SubscriptionCard extends StatelessWidget {
                       width: 24.w,
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     planName,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
+                    style: AppStyles.fontSize16(color: AppColors.primaryColor)
                   ),
                 ],
               ),
@@ -73,17 +70,17 @@ class SubscriptionCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Current Plan',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: AppStyles.fontSize12(color: AppColors.whiteColor)
                   ),
                 ),
             ],
           ),
-          SizedBox(height: 20),
-
+          // Divider before the Price Section
+          Divider(
+            color: Colors.blue.withOpacity(0.5),
+            thickness: 1,
+            height: 20,
+          ),
           // Features List
           Row(
             children: [
@@ -93,24 +90,13 @@ class SubscriptionCard extends StatelessWidget {
             ],
           ),
 
-          // Divider before the Price Section
-          Divider(
-            color: Colors.blue.withOpacity(0.5),
-            thickness: 1,
-            height: 20,
-          ),
-
           // Price Section
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 '\$$price',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
+                style: AppStyles.fontSize24(fontWeight: FontWeight.w600,color: AppColors.primaryColor)
               ),
               SizedBox(width: 5),
               Text(

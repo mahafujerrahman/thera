@@ -52,7 +52,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
               const Divider(color: Colors.blue, thickness: 1),
               // Start Time
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -80,8 +80,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
                           }
                         },
                         child: _buildTimeContainer(
-                          text:
-                          "${selectedStartDate.day} ${_getMonthName(selectedStartDate.month)}, ${selectedStartDate.year}",
+                          text: "${selectedStartDate.day} ${_getMonthName(selectedStartDate.month)}, ${selectedStartDate.year}",
                         ),
                       ),
                     ),
@@ -108,67 +107,66 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
                   ],
                 ),
               ),
-              const Divider(color: Colors.blue, thickness: 1),
 
 
-              // End Time
-              Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "End",
-                        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      flex: 2,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: selectedEndDate,
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-                          if (pickedDate != null && pickedDate != selectedEndDate) {
-                            setState(() {
-                              selectedEndDate = pickedDate;
-                            });
-                          }
-                        },
-                        child: _buildTimeContainer(
-                          text:
-                          "${selectedEndDate.day} ${_getMonthName(selectedEndDate.month)}, ${selectedEndDate.year}",
+              // Conditionally render "End" section based on "All-Day" checkbox value
+              if (isAllDay)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "End",
+                          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    SizedBox(
-                      width: 100.w,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final TimeOfDay? pickedTime = await showTimePicker(
-                            context: context,
-                            initialTime: selectedEndTime,
-                          );
-                          if (pickedTime != null && pickedTime != selectedEndTime) {
-                            setState(() {
-                              selectedEndTime = pickedTime;
-                            });
-                          }
-                        },
-                        child: _buildTimeContainer(
-                          text: selectedEndTime.format(context),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        flex: 2,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: selectedEndDate,
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2100),
+                            );
+                            if (pickedDate != null && pickedDate != selectedEndDate) {
+                              setState(() {
+                                selectedEndDate = pickedDate;
+                              });
+                            }
+                          },
+                          child: _buildTimeContainer(
+                            text: "${selectedEndDate.day} ${_getMonthName(selectedEndDate.month)}, ${selectedEndDate.year}",
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8.w),
+                      SizedBox(
+                        width: 100.w,
+                        child: GestureDetector(
+                          onTap: () async {
+                            final TimeOfDay? pickedTime = await showTimePicker(
+                              context: context,
+                              initialTime: selectedEndTime,
+                            );
+                            if (pickedTime != null && pickedTime != selectedEndTime) {
+                              setState(() {
+                                selectedEndTime = pickedTime;
+                              });
+                            }
+                          },
+                          child: _buildTimeContainer(
+                            text: selectedEndTime.format(context),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -192,19 +190,9 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
 
   String _getMonthName(int month) {
     const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     return months[month - 1];
   }
 }
+
