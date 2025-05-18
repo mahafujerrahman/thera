@@ -121,7 +121,7 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                               children: [
                                 ClientRowWidget(
                                   status: 'paid',
-                                  name: displayData.name ?? 'N/A',
+                                 name: displayData.clientId?.name ?? 'N/A',
                                   date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
                                   amount: int.parse(displayData.finalCost.toString()),
                                 ),
@@ -188,36 +188,12 @@ class _PaidDetailsScreenState extends State<PaidDetailsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
               'Data will be sent to the email above.',
               style: TextStyle(color: AppColors.blackColor),
             ),
             SizedBox(height: 16.h),
-           /* Center(
-              child: SizedBox(
-                width: 194.w,
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    await _generateAndSendPDF();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("This PDF is ready for work"),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  },
-                  icon: Icon(Icons.send, color: AppColors.whiteColor),
-                  label: Text('Send', style: TextStyle(color: AppColors.whiteColor)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                ),
-              ),
-            ),*/
             Center(
               child: SizedBox(
                 width: 194.w,

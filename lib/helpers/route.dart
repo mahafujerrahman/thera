@@ -26,10 +26,10 @@ import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNe
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepOne.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepSix.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepThree.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/animalStep/animal_stepThree.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepTwo.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/equipmentScreen.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/horseDetailsScreen.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/steps/animal_horseDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/Home/home_screen.dart';
 import 'package:thera_track_app/views/screens/Home/inventory/inventory_screen.dart';
 import 'package:thera_track_app/views/screens/Home/notification/notificationScreen.dart';
@@ -66,8 +66,11 @@ class AppRoutes{
   static String paidDetailsScreen="/paidDetailsScreen";
   static String unPaidDetailsScreen="/unPaidDetailsScreen";
   static String feedbackScreen="/feedbackScreen";
+//animal
+  static String animalStepThreeScreen="/animalStepThreeScreen";
+
   static String createNewChartStepTwoScreen="/createNewChartStepTwoScreen";
-  static String createNewChartStepThreeScreen="/createNewChartStepThreeScreen";
+
   static String horseDetailsScreen="/horseDetailsScreen";
   static String chartArchiveScreen="/chartArchiveScreen";
   static String chartArchiveDetailsScreen="/chartArchiveDetailsScreen";
@@ -134,7 +137,7 @@ class AppRoutes{
    //Create New Chart Step
    GetPage(name:createNewChartStepOneScreen, page: ()=> CreateNewChartStepOneScreen(),transition: Transition.noTransition),
    GetPage(name:createNewChartStepTwoScreen, page: ()=> CreateNewChartStepTwoScreen(),transition: Transition.noTransition),
-   GetPage(name:createNewChartStepThreeScreen, page: ()=> CreateNewChartStepThreeScreen(),transition: Transition.noTransition),
+
    GetPage(name:createNewChartStepFourScreen, page: ()=> CreateNewChartStepFourScreen(),transition: Transition.noTransition),
    GetPage(name:createNewChartStepFiveScreen, page: ()=> CreateNewChartStepFiveScreen(),transition: Transition.noTransition),
    GetPage(name:createNewChartStepSixScreen, page: ()=> CreateNewChartStepSixScreen(),transition: Transition.noTransition),
@@ -188,5 +191,8 @@ class AppRoutes{
    GetPage(name:humanStepThree, page: ()=> HumanStepThree(),transition: Transition.noTransition),
    GetPage(name:humanStepFour, page: ()=> HumanStepFour(),transition: Transition.noTransition),
    GetPage(name:humanStepFive, page: ()=> HumanStepFive(),transition: Transition.noTransition),
+
+   //animal step
+   GetPage(name:animalStepThreeScreen, page: ()=> AnimalStepThreeScreen(),transition: Transition.noTransition),
   ];
 }

@@ -9,12 +9,12 @@ import 'package:thera_track_app/utils/app_icons.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/innerWidget/customHeaderWithSearch_widget.dart';
 
-class CreateNewChartStepThreeScreen extends StatefulWidget {
+class AnimalStepThreeScreen extends StatefulWidget {
   @override
-  _CreateNewChartStepThreeScreenState createState() => _CreateNewChartStepThreeScreenState();
+  _AnimalStepThreeScreenState createState() => _AnimalStepThreeScreenState();
 }
 
-class _CreateNewChartStepThreeScreenState extends State<CreateNewChartStepThreeScreen> {
+class _AnimalStepThreeScreenState extends State<AnimalStepThreeScreen> {
   TextEditingController searchController = TextEditingController();
   final ClientController clientController = Get.put(ClientController());
   var parameter = Get.parameters;

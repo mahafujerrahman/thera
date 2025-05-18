@@ -8,6 +8,8 @@ import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/innerWidget/clientRowWidget.dart';
 
 class UnPaidDetailsScreen extends StatefulWidget {
+  const UnPaidDetailsScreen({super.key});
+
   @override
   State<UnPaidDetailsScreen> createState() => _UnPaidDetailsScreenState();
 }
@@ -49,7 +51,7 @@ class _UnPaidDetailsScreenState extends State<UnPaidDetailsScreen> {
                               children: [
                                 ClientRowWidget(
                                   status: 'unpaid',
-                                  name: displayData.name ?? 'N/A',
+                                  name: displayData.clientId?.name ?? 'N/A',
                                   date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
                                   amount: int.parse(displayData.finalCost.toString()),
                                 ),

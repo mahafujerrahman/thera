@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 class GetAllTreatmentModels {
   final String? id;
-  final String? clientId;
+  final ClientId? clientId;
+  final String? userId;
   final List<String>? areaOfConcern;
-  final List<Treatment>? treatments;
-  final List<InventoryAcc>? inventoryAcc;
+  final List<String>? treatments;
+  final List<dynamic>? inventoryAcc;
   final String? description;
   final int? fullCost;
   final String? name;
@@ -12,13 +15,13 @@ class GetAllTreatmentModels {
   final bool? isAnimal;
   final String? breed;
   final String? gender;
-  final dynamic height;
+  final int? height;
   final String? color;
   final int? discount;
   final int? finalCost;
   final bool? isPaid;
   final List<String>? points;
-  final List<dynamic>? concernImages;
+  final List<String>? concernImages;
   final DateTime? apDate;
   final String? apStartTime;
   final String? apEndTime;
@@ -36,6 +39,7 @@ class GetAllTreatmentModels {
   GetAllTreatmentModels({
     this.id,
     this.clientId,
+    this.userId,
     this.areaOfConcern,
     this.treatments,
     this.inventoryAcc,
@@ -69,12 +73,17 @@ class GetAllTreatmentModels {
     this.v,
   });
 
+  factory GetAllTreatmentModels.fromRawJson(String str) => GetAllTreatmentModels.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory GetAllTreatmentModels.fromJson(Map<String, dynamic> json) => GetAllTreatmentModels(
     id: json["_id"],
-    clientId: json["clientId"],
+    clientId: json["clientId"] == null ? null : ClientId.fromJson(json["clientId"]),
+    userId: json["userId"],
     areaOfConcern: json["areaOfConcern"] == null ? [] : List<String>.from(json["areaOfConcern"]!.map((x) => x)),
-    treatments: json["treatments"] == null ? [] : List<Treatment>.from(json["treatments"]!.map((x) => Treatment.fromJson(x))),
-    inventoryAcc: json["inventoryAcc"] == null ? [] : List<InventoryAcc>.from(json["inventoryAcc"]!.map((x) => InventoryAcc.fromJson(x))),
+    treatments: json["treatments"] == null ? [] : List<String>.from(json["treatments"]!.map((x) => x)),
+    inventoryAcc: json["inventoryAcc"] == null ? [] : List<dynamic>.from(json["inventoryAcc"]!.map((x) => x)),
     description: json["description"],
     fullCost: json["fullCost"],
     name: json["name"],
@@ -89,7 +98,7 @@ class GetAllTreatmentModels {
     finalCost: json["finalCost"],
     isPaid: json["isPaid"],
     points: json["points"] == null ? [] : List<String>.from(json["points"]!.map((x) => x)),
-    concernImages: json["Concern_images"] == null ? [] : List<dynamic>.from(json["Concern_images"]!.map((x) => x)),
+    concernImages: json["Concern_images"] == null ? [] : List<String>.from(json["Concern_images"]!.map((x) => x)),
     apDate: json["ApDate"] == null ? null : DateTime.parse(json["ApDate"]),
     apStartTime: json["ApStartTime"],
     apEndTime: json["ApEndTime"],
@@ -107,10 +116,11 @@ class GetAllTreatmentModels {
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "clientId": clientId,
+    "clientId": clientId?.toJson(),
+    "userId": userId,
     "areaOfConcern": areaOfConcern == null ? [] : List<dynamic>.from(areaOfConcern!.map((x) => x)),
-    "treatments": treatments == null ? [] : List<dynamic>.from(treatments!.map((x) => x.toJson())),
-    "inventoryAcc": inventoryAcc == null ? [] : List<dynamic>.from(inventoryAcc!.map((x) => x.toJson())),
+    "treatments": treatments == null ? [] : List<dynamic>.from(treatments!.map((x) => x)),
+    "inventoryAcc": inventoryAcc == null ? [] : List<dynamic>.from(inventoryAcc!.map((x) => x)),
     "description": description,
     "fullCost": fullCost,
     "name": name,
@@ -142,42 +152,62 @@ class GetAllTreatmentModels {
   };
 }
 
-class InventoryAcc {
-  final String? productName;
-  final int? quantity;
-
-  InventoryAcc({
-    this.productName,
-    this.quantity,
-  });
-
-  factory InventoryAcc.fromJson(Map<String, dynamic> json) => InventoryAcc(
-    productName: json["productName"],
-    quantity: json["quantity"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "productName": productName,
-    "quantity": quantity,
-  };
-}
-
-class Treatment {
+class ClientId {
+  final String? id;
+  final String? userId;
   final String? name;
-  final int? value;
+  final String? city;
+  final String? state;
+  final String? zip;
+  final String? phoneNumber;
+  final String? email;
+  final String? other;
+  final int? v;
+  final bool? humanClient;
 
-  Treatment({
+  ClientId({
+    this.id,
+    this.userId,
     this.name,
-    this.value,
+    this.city,
+    this.state,
+    this.zip,
+    this.phoneNumber,
+    this.email,
+    this.other,
+    this.v,
+    this.humanClient,
   });
 
-  factory Treatment.fromJson(Map<String, dynamic> json) => Treatment(
+  factory ClientId.fromRawJson(String str) => ClientId.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory ClientId.fromJson(Map<String, dynamic> json) => ClientId(
+    id: json["_id"],
+    userId: json["userId"],
     name: json["name"],
-    value: json["value"],
+    city: json["city"],
+    state: json["state"],
+    zip: json["zip"],
+    phoneNumber: json["phoneNumber"],
+    email: json["email"],
+    other: json["other"],
+    v: json["__v"],
+    humanClient: json["humanClient"],
   );
 
   Map<String, dynamic> toJson() => {
+    "_id": id,
+    "userId": userId,
     "name": name,
-    "value": value,
+    "city": city,
+    "state": state,
+    "zip": zip,
+    "phoneNumber": phoneNumber,
+    "email": email,
+    "other": other,
+    "__v": v,
+    "humanClient": humanClient,
   };
 }
