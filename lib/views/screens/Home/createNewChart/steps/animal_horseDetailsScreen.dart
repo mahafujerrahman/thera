@@ -57,14 +57,12 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
               SizedBox(height: 20.h),
               Text('Select animal', style: AppStyles.fontSize16(fontWeight: FontWeight.w700)),
               SizedBox(height: 8.h),
-
-              // Grid View for Animals (2 items per row)
-            Container(
+              Container(
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,  // 2 items per row
+                  crossAxisCount: 2,
                   crossAxisSpacing: 2.w,
                   mainAxisSpacing: 2.h,
                   childAspectRatio: 3,
@@ -113,9 +111,6 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
                 },
               ),
             ),
-
-
-
               SizedBox(height: 12.h),
               Row(
                 children: [
@@ -124,10 +119,12 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
                     child: CustomTextField(controller: _addAnimalController),
                   ),
                   SizedBox(width: 10.w),
-                  SizedBox(
-                    height: 60.h,
-                    width: 80.w,
-                    child: CustomButton(onTap: _addAnimal, text: 'Add'),
+                  Expanded(
+                    child: SizedBox(
+                      height: 60.h,
+                      width: 80.w,
+                      child: CustomButton(onTap: _addAnimal, text: 'Add'),
+                    ),
                   ),
                 ],
               ),
