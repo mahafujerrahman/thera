@@ -8,18 +8,18 @@ import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 
-class CreateNewChartStepFiveScreen extends StatefulWidget {
+class  AnimalStepFiveScreen extends StatefulWidget {
   @override
-  _CreateNewChartStepFiveScreenState createState() => _CreateNewChartStepFiveScreenState();
+  _AnimalStepFiveScreenState createState() => _AnimalStepFiveScreenState();
 }
 
-class _CreateNewChartStepFiveScreenState
-    extends State<CreateNewChartStepFiveScreen> {
+class _AnimalStepFiveScreenState
+    extends State< AnimalStepFiveScreen> {
   final ProfileController profileController = Get.put(ProfileController());
   final ServiceController serviceController = Get.put(ServiceController());
 
-  var selectedTreatments = <bool>[].obs; // Track selected checkboxes
-  var isLoading = true.obs; // Loading indicator
+  var selectedTreatments = <bool>[].obs;
+  var isLoading = true.obs;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _CreateNewChartStepFiveScreenState
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: Text(
-          'Step 5',
+          'Step5 -Animal',
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

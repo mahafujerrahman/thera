@@ -18,23 +18,27 @@ import 'package:thera_track_app/views/base/custom_text_field.dart';
 import 'package:thera_track_app/views/base/dotted_border_container.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/innerWidget/addpoint_textBox.dart';
 
-class CreateNewChartStepFourScreen extends StatefulWidget {
+class  AnimalStepFourScreen extends StatefulWidget {
   @override
-  _CreateNewChartStepFourScreenState createState() => _CreateNewChartStepFourScreenState();
+  _AnimalStepFourScreenState createState() => _AnimalStepFourScreenState();
 }
 
-class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScreen> {
+class _AnimalStepFourScreenState extends State< AnimalStepFourScreen> {
+
   final ServiceController serviceController = Get.put(ServiceController());
 
   Uint8List? _image;
 
 
-
   void _addAreaOfConcern() {
-    if (serviceController.addController.text.isNotEmpty) {
-      serviceController.areaOfConcernList.add(serviceController.addController.text);
-      serviceController.addController.clear();
+    if (serviceController.addAreaOfConcern.text.isNotEmpty) {
+      serviceController.areaOfConcernList.add(serviceController.addAreaOfConcern.text);
+      serviceController.addAreaOfConcern.clear();
     }
+  }
+  @override
+  void initState()  {
+    super.initState();
   }
 
   @override
@@ -42,7 +46,8 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
-        title: Text('Animal - Step 4' ,
+        title: Text(
+            'Step 4 : Animal ',
             style: AppStyles.fontSize16()
         ),
         centerTitle: true,
@@ -159,7 +164,7 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
               padding: EdgeInsets.symmetric(vertical: 4.h),
               child: Row(
                 children: [
-                  Expanded(flex: 2, child: CustomTextField(controller: serviceController.addController)),
+                  Expanded(flex: 2, child: CustomTextField(controller: serviceController.addAreaOfConcern)),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: SizedBox(
@@ -224,7 +229,7 @@ class _CreateNewChartStepFourScreenState extends State<CreateNewChartStepFourScr
             SizedBox(height: 10.h),
 
             // Next Button
-            CustomButton(onTap: () => Get.toNamed(AppRoutes.createNewChartStepFiveScreen), text: 'Next'),
+            CustomButton(onTap: () => Get.toNamed(AppRoutes.animalStepFiveScreen), text: 'Next'),
 
             SizedBox(height: 10.h),
           ],

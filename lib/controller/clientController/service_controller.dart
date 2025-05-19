@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/models/clients/GetAllInventoryProduct.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_constants.dart';
@@ -16,22 +17,52 @@ class ServiceController extends GetxController {
   ///Service Given Api
   ///================================ >> Add Animal To The Service << ================================
 
-  TextEditingController addAnimal = TextEditingController();
+
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
   TextEditingController breed = TextEditingController();
   TextEditingController gender = TextEditingController();
   TextEditingController height = TextEditingController();
   TextEditingController color = TextEditingController();
-  TextEditingController addController = TextEditingController();
+  TextEditingController addAnimal = TextEditingController();
+
+
 
   List<String> animals = ['Horse', 'Dog'];
 
   RxString selectedAnimal = ''.obs;
 
-  var areaOfConcernList =
-      ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
+  var areaOfConcernList = ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
+ //==================================>>> Inventory
+  RxInt getQuantity = 0.obs;
+  void incrementItemQuantity() {
+    getQuantity.value++;
+  }
 
+  void decrementItemQuantity() {
+    if (getQuantity.value > 0) {
+      getQuantity.value--;
+    }
+  }
+
+  var inventoryList = <GetAllInventoryModel>[].obs;
+
+
+
+
+  //========================= Treatment
+  var selectedList = <GetAllTreatMentModel>[].obs;
+
+  var fullCost = 0.0.obs;
+  var discount = 0.0.obs;
+  var finalCost = 0.0.obs;
+
+
+
+
+
+
+  TextEditingController addAreaOfConcern = TextEditingController();
   //for Human Section
   DateTime? selectedAppointmentDay;
   RxBool isReminderAllDay = false.obs;
@@ -47,16 +78,11 @@ class ServiceController extends GetxController {
   RxString apEndTime = ''.obs;
 
   var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController =
-      TextEditingController();
+  final TextEditingController descriptionTextController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
-  var selectedList = <GetAllTreatMentModel>[].obs;
 
-  var fullCost = 0.0.obs;
-  var discount = 0.0.obs;
-  var finalCost = 0.0.obs;
 
   void calculateFinalCost() {
     finalCost.value = fullCost.value - discount.value;
@@ -73,8 +99,7 @@ class ServiceController extends GetxController {
 
   createServiceClient() async {
     createServiceLoading(true);
-    var clientId =
-        await PrefsHelper.getString(AppConstants.createdServiceClientId);
+    var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
     var files = <MultipartBody2>[
       MultipartBody2('Concern_images', selectedImage!)
@@ -109,6 +134,16 @@ class ServiceController extends GetxController {
       "reOneDayBefore": reOneDayBefore.value.toString(),
       "reTwoDayBefore": reTwoDayBefore.value.toString(),
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
+
+      //animal
+      "name" : name.value,
+      "age" : age.value,
+      "breed" : breed.value,
+      "gender" : gender.value,
+      "height" : height.value,
+      "color" : color.value,
+      "selectedAnimal" : selectedAnimal.value.toString(),
+
     };
 
     var response = await ApiServiceClient().postData(
@@ -136,7 +171,7 @@ class ServiceController extends GetxController {
     gender.clear();
     height.clear();
     color.clear();
-    addController.clear();
+    addAreaOfConcern.clear();
     descriptionTextController.clear();
     discountController.clear();
     pointController.clear();

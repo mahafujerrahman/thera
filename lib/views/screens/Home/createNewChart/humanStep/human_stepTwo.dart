@@ -31,9 +31,9 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
 
 
   void _addAreaOfConcern() {
-    if (serviceController.addController.text.isNotEmpty) {
-      serviceController.areaOfConcernList.add(serviceController.addController.text);
-      serviceController.addController.clear();
+    if (serviceController.addAreaOfConcern.text.isNotEmpty) {
+      serviceController.areaOfConcernList.add(serviceController.addAreaOfConcern.text);
+      serviceController.addAreaOfConcern.clear();
     }
   }
   @override
@@ -164,7 +164,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
               padding: EdgeInsets.symmetric(vertical: 4.h),
               child: Row(
                 children: [
-                  Expanded(flex: 2, child: CustomTextField(controller: serviceController.addController)),
+                  Expanded(flex: 2, child: CustomTextField(controller: serviceController.addAreaOfConcern)),
                   SizedBox(width: 10.w),
                   Expanded(
                     child: SizedBox(

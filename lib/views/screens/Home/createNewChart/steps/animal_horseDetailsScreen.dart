@@ -47,6 +47,7 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Horse Details
+              AnimalAddDetailsRow(titelText: 'Name', controller: serviceController.name),
               AnimalAddDetailsRow(titelText: 'Age', controller: serviceController.age),
               AnimalAddDetailsRow(titelText: 'Breed', controller: serviceController.breed),
               AnimalAddDetailsRow(titelText: 'Gender', controller: serviceController.gender),
@@ -133,7 +134,7 @@ class _HorseDetailsScreenState extends State<HorseDetailsScreen> {
               // Done Button
               CustomButton(
                 onTap: () {
-                  Get.toNamed(AppRoutes.createNewChartStepFourScreen);
+                  Get.toNamed(AppRoutes.animalStepFourScreen);
                 },
                 text: 'Done',
               ),

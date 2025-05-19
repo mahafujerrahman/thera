@@ -44,13 +44,6 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: SvgPicture.asset(AppIcons.accountSetUp,color: Colors.white),
-              title: Text('Account Setup',style: TextStyle(color: AppColors.whiteColor),),
-              onTap: () {
-                Get.toNamed(AppRoutes.accountSetUpScreen);
-              },
-            ),
-            ListTile(
               leading: SvgPicture.asset(AppIcons.personIcon,color: Colors.white),
               title: Text('Your Details',style: TextStyle(color: AppColors.whiteColor),),
               onTap: () {
@@ -96,7 +89,7 @@ class AppDrawer extends StatelessWidget {
               leading: SvgPicture.asset(AppIcons.settingIcon),
               title: Text('Advance Setting',style: TextStyle(color: AppColors.whiteColor),),
               onTap: () {
-                  Get.toNamed(AppRoutes.advanceSettingsScreen);
+                  Get.toNamed(AppRoutes.advanceSettingScreen);
               },
             ),
             // ================================== >>>>

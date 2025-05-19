@@ -7,12 +7,12 @@ import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/style.dart';
 
-class AdvanceSettingsScreen extends StatefulWidget {
+class AdvanceSettingScreen extends StatefulWidget {
   @override
-  _AdvanceSettingsScreenState createState() => _AdvanceSettingsScreenState();
+  _AdvanceSettingScreenState createState() => _AdvanceSettingScreenState();
 }
 
-class _AdvanceSettingsScreenState extends State<AdvanceSettingsScreen> {
+class _AdvanceSettingScreenState extends State<AdvanceSettingScreen> {
   List<String> options = ['Animal', 'Human'];
   String? selectedOption;
   ProfileController _profileController=Get.put(ProfileController());

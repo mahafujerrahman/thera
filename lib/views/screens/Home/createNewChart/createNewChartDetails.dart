@@ -331,7 +331,7 @@ class _CreateNewChartDetailsScreenState
                       SizedBox(height: 10.h),
                       CustomButton(
                           onTap: () {
-                            Get.toNamed(AppRoutes.createNewChartStepFiveScreen);
+                            Get.toNamed(AppRoutes.animalStepFiveScreen);
                           },
                           text: 'Finished'),
                       SizedBox(height: 10.h),

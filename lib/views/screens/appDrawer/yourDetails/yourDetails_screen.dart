@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/controller/profileController.dart';
+import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -52,7 +53,34 @@ class _YourDetailsScreenState extends State<YourDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16.h),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.editYourDetailsScreen);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.primaryColor, width: 2.w),
+                            borderRadius: BorderRadius.circular(8.r),
+                            color: AppColors.primaryColor
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 2.h),
+                          child: Center(child: Row(
+                            children: [
+                              Icon(Icons.edit,color: AppColors.whiteColor),
+                              SizedBox(width: 8.w),
+                              Text('Edit',style: AppStyles.fontSize16(color: AppColors.whiteColor)),
+                            ],
+                          )),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
                 //Full Name
                 Text(AppStrings.nameText,style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
                 SizedBox(height: 8.h),

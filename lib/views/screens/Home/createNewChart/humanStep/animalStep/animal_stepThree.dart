@@ -89,7 +89,7 @@ class _AnimalStepThreeScreenState extends State<AnimalStepThreeScreen> {
                           trailing: SvgPicture.asset(AppIcons.rightArrow),
                           onTap: () {
                             // Get.toNamed(AppRoutes.horseDetailsScreen);
-                             Get.toNamed(AppRoutes.createNewChartStepFourScreen);
+                             Get.toNamed(AppRoutes.animalStepFourScreen);
                           },
                         ),
                         Divider(color: AppColors.secondaryColor),
