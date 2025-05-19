@@ -12,13 +12,14 @@ import 'package:thera_track_app/views/base/price_details_row.dart';
 
 import '../../../../../controller/profileController.dart';
 
-class HumanStepFour extends StatefulWidget {
+class  AnimalStepSixScreen extends StatefulWidget {
   @override
-  _HumanStepFourState createState() => _HumanStepFourState();
+  _AnimalStepSixScreenState createState() => _AnimalStepSixScreenState();
 }
 
-class _HumanStepFourState
-    extends State<HumanStepFour> {
+class _AnimalStepSixScreenState
+    extends State< AnimalStepSixScreen> {
+
 
   final ServiceController serviceController = Get.put(ServiceController());
 
@@ -37,7 +38,7 @@ class _HumanStepFourState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Step 4 -Human',
+          'Step 6 - Animal',
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -55,18 +56,25 @@ class _HumanStepFourState
               ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return PriceDetailWidget(
-                        title: serviceController.selectedList[index].treatmentTitle,
-                        price: serviceController.selectedList[index].price.toString());
+                    return Column(
+                      children: [
+                        PriceDetailWidget(
+                            title: serviceController.selectedList[index].treatmentTitle,
+                            price: serviceController.selectedList[index].price.toString()),
+                        PriceDetailWidget(
+                            title: serviceController.inventoryList[index].productName.toString(),
+                            price: serviceController.inventoryList[index].pricePerOne.toString()),
+                      ],
+                    );
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox();
                   },
                   itemCount: serviceController.selectedList.length),
-        
+
               Divider(color: AppColors.blackColor),
               PriceDetailWidget(title: 'Full Cost', price: '$totalCost'),
-        
+
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(

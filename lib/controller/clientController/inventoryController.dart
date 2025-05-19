@@ -13,6 +13,7 @@ class InventoryController extends GetxController {
   TextEditingController productName = TextEditingController();
   TextEditingController pricePerOne = TextEditingController();
   TextEditingController quantity = TextEditingController();
+
   var addInventoryLoading = false.obs;
 
   Future<void> addInventoryMethod({

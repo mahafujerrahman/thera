@@ -131,7 +131,6 @@ class ProfileController extends GetxController  implements GetxService{
   RxList<GetAllTreatMentModel> getAllTreatMentList = <GetAllTreatMentModel>[].obs;
 
 
-
   getAllTreatment() async {
     isLoading(true);
     var response = await ApiClient.getData(ApiConstants.getAllTreatmentEndPoint);

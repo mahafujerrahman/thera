@@ -15,14 +15,14 @@ import 'package:thera_track_app/views/base/custom_button.dart';
 import 'package:thera_track_app/views/base/custom_text.dart';
 import 'package:thera_track_app/views/base/custom_text_field.dart';
 
-class AccountSetUpScreen extends StatefulWidget {
-  const AccountSetUpScreen({super.key});
+class EditYourDetailsScreen extends StatefulWidget {
+  const EditYourDetailsScreen({super.key});
 
   @override
-  State<AccountSetUpScreen> createState() => _AccountSetUpScreenState();
+  State<EditYourDetailsScreen> createState() => _EditYourDetailsScreenState();
 }
 
-class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
+class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
   final ProfileController profileController = Get.put(ProfileController());
 
   Uint8List? _image;
@@ -61,7 +61,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
-        title: Text('Account Setup', style: AppStyles.fontSize16()),
+        title: Text('Edit Your Details', style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -73,7 +73,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Picture and Name
-                Row(
+              /*  Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -119,7 +119,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                               ),
 
                             ),
-                           /* Positioned(
+                            Positioned(
                               bottom: 0.h,
                               right: 40.w,
                               child: GestureDetector(
@@ -128,7 +128,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                                 },
                                 child: Icon(Icons.add_photo_alternate_rounded,color:AppColors.whiteColor,size: 35)
                               ),
-                            ),*/
+                            ),
                           ],
                         ),
                         Text(
@@ -138,7 +138,7 @@ class _AccountSetUpScreenState extends State<AccountSetUpScreen> {
                       ],
                     ),
                   ],
-                ),
+                ),*/
                 SizedBox(height: 16.h),
                 // Full Name
                 Text(AppStrings.nameText, style: AppStyles.fontSize16(fontWeight: FontWeight.w400, color: AppColors.color424242)),

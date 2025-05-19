@@ -2,47 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/controller/clientController/inventoryController.dart';
-import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/helpers/route.dart';
 
-class EquipmentScreen extends StatefulWidget {
-  @override
-  _EquipmentScreenState createState() => _EquipmentScreenState();
-}
-
-class _EquipmentScreenState extends State<EquipmentScreen> {
+class EquipmentScreen extends StatelessWidget {
   final InventoryController inventoryController = Get.put(InventoryController());
+  final ServiceController serviceController = Get.put(ServiceController());
 
-  // Store quantity for each item
-  Map<String, int> equipment = {};
-
-  @override
-  void initState() {
-    super.initState();
-    inventoryController.getAllInventory().then((_) {
-      setState(() {
-        // Initialize equipment quantity with 1 for each product
-        for (var item in inventoryController.getAllInventoryModel) {
-          equipment[item.productName ?? 'N/A'] = 1;
-        }
-      });
-    });
-  }
-
-  void _increment(String item) {
-    setState(() {
-      equipment[item] = (equipment[item] ?? 1) + 1;
-    });
-  }
-
-  void _decrement(String item) {
-    setState(() {
-      if ((equipment[item] ?? 1) > 1) {
-        equipment[item] = (equipment[item] ?? 1) - 1;
-      }
-    });
+  EquipmentScreen({Key? key}) : super(key: key) {
+    inventoryController.getAllInventory();
   }
 
   @override
@@ -70,59 +41,68 @@ class _EquipmentScreenState extends State<EquipmentScreen> {
             ),
             SizedBox(height: 8),
             Expanded(
-              child: ListView.builder(
-                itemCount: inventoryController.getAllInventoryModel.length,
-                itemBuilder: (context, index) {
-                  var displayData = inventoryController.getAllInventoryModel[index];
-                  String itemName = displayData.productName ?? 'N/A';
+              child: Obx(() {
+                if (inventoryController.getAllInventoryModel.isEmpty) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return ListView.builder(
+                  itemCount: inventoryController.getAllInventoryModel.length,
+                  itemBuilder: (context, index) {
+                    var item = inventoryController.getAllInventoryModel[index];
+                    final key = item.id ?? item.productName ?? 'N/A';
 
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            itemName,
-                            style: AppStyles.fontSize16(color: AppColors.colorB1B1B1),
-                            overflow: TextOverflow.ellipsis,
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              item.productName ?? 'N/A',
+                              style: AppStyles.fontSize16(color: AppColors.colorB1B1B1),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove_circle_outline, color: AppColors.colorB1B1B1),
-                              onPressed: () => _decrement(itemName),
-                            ),
-                            Container(
-                              width: 60.w,
-                              height: 40.h,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: AppColors.colorB1B1B1),
-                                borderRadius: BorderRadius.circular(4),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.remove_circle_outline, color: AppColors.colorB1B1B1),
+                                onPressed: () {
+                                  serviceController.decrementItemQuantity();
+                                },
                               ),
-                              child: Text(
-                                "${equipment[itemName] ?? 1}",
-                                style: AppStyles.fontSize16(color: AppColors.color707070),
+                              Container(
+                                width: 60.w,
+                                height: 40.h,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: AppColors.colorB1B1B1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Obx(() => Text(
+                                  "${serviceController.getQuantity}",
+                                  style: AppStyles.fontSize16(color: AppColors.color707070),
+                                )),
                               ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add_circle_outline, color: AppColors.colorB1B1B1),
-                              onPressed: () => _increment(itemName),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                              IconButton(
+                                icon: Icon(Icons.add_circle_outline, color: AppColors.colorB1B1B1),
+                                onPressed: () {
+                                  serviceController.incrementItemQuantity();
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
             SizedBox(height: 16),
             CustomButton(
               onTap: () {
-                Get.toNamed(AppRoutes.createNewChartStepSixScreen);
+                Get.toNamed(AppRoutes.animalStepSixScreen);
               },
               text: 'Next',
             ),
