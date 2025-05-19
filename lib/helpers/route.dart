@@ -17,7 +17,7 @@ import 'package:thera_track_app/views/screens/Home/contacts/contact_search_scree
 import 'package:thera_track_app/views/screens/Home/contacts/human/edit_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/human_client_contact_screen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/appoinmentCalenderScreen.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/createNewChartDetails.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animal_details_Step.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_details_stepFive.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepTwo.dart';
