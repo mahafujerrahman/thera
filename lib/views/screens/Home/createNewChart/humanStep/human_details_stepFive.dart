@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
 import 'package:thera_track_app/controller/clientController/service_controller.dart';
-import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -31,11 +30,6 @@ class _HumanStepFiveState extends State<HumanStepFive> {
 
   final ClientController clientController = Get.put(ClientController());
   final ServiceController serviceController = Get.put(ServiceController());
-
-  final ProfileController _profileController = Get.find();
-
-
-
 
 
   @override

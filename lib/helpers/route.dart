@@ -28,7 +28,7 @@ import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNe
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/animal_stepSix.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/animalStep/animal_stepThree.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepTwo.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/equipmentScreen.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/steps/equipment_screen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/animal_horseDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/Home/home_screen.dart';
 import 'package:thera_track_app/views/screens/Home/inventory/inventory_screen.dart';

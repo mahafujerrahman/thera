@@ -39,7 +39,7 @@ class _ChartArchiveDetailsScreenState extends State<ChartArchiveDetailsScreen> {
     final serviceId = Get.parameters['serviceID'] ?? '';
     final appointmentID = Get.parameters['appointmentID'] ?? '';
     chartArchiveController.getServiceDetailsByIdDetails(serviceId);
-    appointmentController.getOneAppointmentByIdDetails(appointmentID);
+   // appointmentController.getOneAppointmentByIdDetails(appointmentID);
   }
 
   bool isPaid = false;

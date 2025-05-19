@@ -60,14 +60,13 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   onTap: () {
                     Get.toNamed(AppRoutes.appointmentDetailsScreen,
                         parameters: {
-                      "screenType": "appointmentScreen",
                       "appointmentID" : displayData.id!
                     });
 
                   },
                   child: ChartCard(
                     id: shortId,
-                    date: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),
+                    date: TimeFormatHelper.formatDate(DateTime.parse(displayData.apDate.toString())),
                     name: displayData.clientId!.name!,
                   ),
                 );

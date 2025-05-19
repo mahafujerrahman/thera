@@ -12,7 +12,7 @@ class EquipmentScreen extends StatelessWidget {
   final InventoryController inventoryController = Get.put(InventoryController());
   final ServiceController serviceController = Get.put(ServiceController());
 
-  EquipmentScreen({Key? key}) : super(key: key) {
+  EquipmentScreen({super.key}) {
     inventoryController.getAllInventory();
   }
 
@@ -49,7 +49,6 @@ class EquipmentScreen extends StatelessWidget {
                   itemCount: inventoryController.getAllInventoryModel.length,
                   itemBuilder: (context, index) {
                     var item = inventoryController.getAllInventoryModel[index];
-                    final key = item.id ?? item.productName ?? 'N/A';
 
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -68,7 +67,7 @@ class EquipmentScreen extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.remove_circle_outline, color: AppColors.colorB1B1B1),
                                 onPressed: () {
-                                  serviceController.decrementItemQuantity();
+                                 serviceController.decrementItemQuantity();
                                 },
                               ),
                               Container(

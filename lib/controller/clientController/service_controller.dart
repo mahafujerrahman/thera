@@ -136,13 +136,7 @@ class ServiceController extends GetxController {
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
 
       //animal
-      "name" : name.value,
-      "age" : age.value,
-      "breed" : breed.value,
-      "gender" : gender.value,
-      "height" : height.value,
-      "color" : color.value,
-      "selectedAnimal" : selectedAnimal.value.toString(),
+
 
     };
 

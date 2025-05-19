@@ -46,12 +46,12 @@ class ApiConstants {
 
 //============================>> Chart Archive  <<=================================
   static const String getAllServiceEndPoint = "/patient/get-all-service";
-  static const String getAllAppointmentEndPoint = "/make-appointment/get-all-appointment";
+  static const String getAllAppointmentEndPoint = "/patient/get-all-appointment";
 
   static const String getAllPaidTreatmentEndPoint = "/patient/paid-treatment-service";
   static const String getAllUnPaidTreatmentEndPoint = "/patient/unpaid-treatment-service";
   static const String getOneServiceDetailsByIDEndPoint = "/patient/get-one-service";
-  static const String getOneAppointmentDetailsByIDEndPoint = "/make-appointment/get-one-appointment";
+  static const String getOneAppointmentDetailsByIDEndPoint = "/patient/get-one-service";
 
 
 }

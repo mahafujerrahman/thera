@@ -7,15 +7,13 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:thera_track_app/controller/clientController/appointmentController.dart';
-import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_images.dart';
-import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/views/base/custom_row.dart';
 
-import '../../../base/custom_list_tile.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
   @override
@@ -31,7 +29,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
   void initState() {
     super.initState();
     final appointmentID = Get.parameters['appointmentID'] ?? '';
-    appointmentController.getOneAppointmentByIdDetails(appointmentID);
+   appointmentController.getOneAppointmentByIdDetails(appointmentID);
   }
 
   bool isPaid = false;
@@ -43,7 +41,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String screenType = parameter['screenType'] ?? '';
     return Scaffold(
         backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
@@ -53,7 +50,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           return appointmentController.isLoading.value
               ? Center(child: CupertinoActivityIndicator(radius: 32.r, color: CupertinoColors.activeBlue))
               : Obx(() {
-            var displayData = appointmentController.getOneAppointmentById.value;
+            var displayData = appointmentController.getOneAppoinmentDetailsModel.value;
 
             return Padding(
               padding: EdgeInsets.all(8),
@@ -69,49 +66,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Name
-                          Text(
-                            AppStrings.nameText,
-                            style: AppStyles.fontSize16(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.color424242),
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomListTile(title: '${displayData.clientId?.name}'),
-                          // Email
-                          Text(
-                            'Email',
-                            style: AppStyles.fontSize16(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.color424242),
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomListTile(title: '${displayData.clientId?.email}'),
-                          // Mobile
-                          Text('Mobile',
-                            style: AppStyles.fontSize16(fontWeight: FontWeight.w400, color: AppColors.color424242),
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomListTile(title: '${displayData.clientId?.phoneNumber}'),
-                          // Address
-                          Text(
-                            'Address',
-                            style: AppStyles.fontSize16(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.color424242),
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomListTile(title: '${displayData.clientId?.address?.city}'),
-                          // Date
-                          Text(
-                            'Date',
-                            style: AppStyles.fontSize16(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.color424242),
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomListTile(title: TimeFormatHelper.formatDate(DateTime.parse(displayData.createdAt.toString())),),
-                        ]),
+                          CustomRow(title: 'Name', displayData: displayData.clientId?.name ?? 'N/A'),
+                          CustomRow(title: 'Email', displayData: displayData.clientId?.email ?? 'N/A'),
+                          CustomRow(title: 'Mobile', displayData: displayData.clientId?.phoneNumber ?? 'N/A'),
+                          CustomRow(title: 'Address', displayData: displayData.clientId?.city ?? 'N/A'),
+
                     // Description Section
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.w),
@@ -130,7 +89,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                 child: Center(
                                   child: CachedNetworkImage(
-                                    imageUrl: "${ApiConstants.imageBaseUrl}${displayData.serviceId!.concernImages![0]}",
+                                    imageUrl:  "${ApiConstants.imageBaseUrl}${displayData.concernImages}",
                                     fit: BoxFit.cover,
                                     errorWidget: (context, url, error) => Center(
                                       child: Icon(
@@ -139,8 +98,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         color: Colors.black,
                                       ),
                                     ),
-                                    placeholder: (context, url) => Center(child:CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor)),
+                                    placeholder: (context, url) => Center(
+                                      child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
+                                    ),
                                   ),
+
                                 ),
                               ),
                             ),
@@ -167,7 +129,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${displayData.serviceId!.description}"),
+                                      child: Text("${displayData?.description}"),
                                     )
                                 ),
                               ],
@@ -177,8 +139,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                         ],
                       ),
                     ),
-                    /* //Add Point Section
-                          TextBoxList(),*/
                     Container(
                       padding: EdgeInsets.all(4),
                       decoration: BoxDecoration(
@@ -203,13 +163,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: displayData.serviceId!.points != null && displayData.serviceId!.points!.isNotEmpty
+                              child: displayData.points != null && displayData.points!.isNotEmpty
                                   ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: List.generate(
-                                  displayData.serviceId!.points![0].split(",").length,
+                                  displayData.points![0].split(",").length,
                                       (index) {
-                                    String point = displayData.serviceId!.points![0]
+                                    String point = displayData.points![0]
                                         .split(",")[index]
                                         .replaceAll(RegExp(r'[\[\]"]'), '');
                                     return Text('${index + 1}. $point');
@@ -238,17 +198,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Next Appointments',
-                                        style: AppStyles.fontSize18(
-                                            color: AppColors.color575757,
-                                            fontWeight: FontWeight.w500)),
+                                        style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
                                     SizedBox(height: 4.h),
                                     Text('24 jan, 2025',
-                                        style: AppStyles.fontSize14(
-                                            color: AppColors.color575757)),
+                                        style: AppStyles.fontSize14(color: AppColors.color575757)),
                                     SizedBox(height: 4.h),
                                     Text('12.00 am',
-                                        style: AppStyles.fontSize14(
-                                            color: AppColors.color575757)),
+                                        style: AppStyles.fontSize14(color: AppColors.color575757)),
                                   ],
                                 ),
                               ),
@@ -264,9 +220,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                       SizedBox(height: 8.h),
 
                   ],
-                ),
-              ),
+                )]
+                )
+              )
             );
+
           });
         }));
   }
