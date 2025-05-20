@@ -17,7 +17,6 @@ class ServiceController extends GetxController {
   ///Service Given Api
   ///================================ >> Add Animal To The Service << ================================
 
-
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
   TextEditingController breed = TextEditingController();
@@ -26,29 +25,43 @@ class ServiceController extends GetxController {
   TextEditingController color = TextEditingController();
   TextEditingController addAnimal = TextEditingController();
 
-
-
   List<String> animals = ['Horse', 'Dog'];
 
   RxString selectedAnimal = ''.obs;
 
-  var areaOfConcernList = ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
- //==================================>>> Inventory
-  RxInt getQuantity = 0.obs;
-  void incrementItemQuantity() {
-    getQuantity.value++;
+  var areaOfConcernList =
+      ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
+
+  //==================================>>> Inventory
+  // Map to store quantity for each inventory item by its ID
+  var itemQuantities = <String, RxInt>{}.obs;
+
+  // Get quantity for a specific item
+  RxInt getItemQuantity(String itemId) {
+    if (!itemQuantities.containsKey(itemId)) {
+      itemQuantities[itemId] = 0.obs;
+    }
+    return itemQuantities[itemId]!;
   }
 
-  void decrementItemQuantity() {
-    if (getQuantity.value > 0) {
-      getQuantity.value--;
+  // Increment quantity for a specific item
+  void incrementItemQuantity(String itemId) {
+    getItemQuantity(itemId).value++;
+  }
+
+  // Decrement quantity for a specific item
+  void decrementItemQuantity(String itemId) {
+    if (getItemQuantity(itemId).value > 0) {
+      getItemQuantity(itemId).value--;
     }
   }
 
-  var inventoryList = <GetAllInventoryModel>[].obs;
+  // Reset quantities (useful when clearing the cart)
+  void resetQuantities() {
+    itemQuantities.clear();
+  }
 
-
-
+  RxInt iceCreamQuantity = 0.obs;
 
   //========================= Treatment
   var selectedList = <GetAllTreatMentModel>[].obs;
@@ -56,11 +69,6 @@ class ServiceController extends GetxController {
   var fullCost = 0.0.obs;
   var discount = 0.0.obs;
   var finalCost = 0.0.obs;
-
-
-
-
-
 
   TextEditingController addAreaOfConcern = TextEditingController();
   //for Human Section
@@ -78,11 +86,11 @@ class ServiceController extends GetxController {
   RxString apEndTime = ''.obs;
 
   var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
-
 
   void calculateFinalCost() {
     finalCost.value = fullCost.value - discount.value;
@@ -99,7 +107,8 @@ class ServiceController extends GetxController {
 
   createServiceClient() async {
     createServiceLoading(true);
-    var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
+    var clientId =
+        await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
     var files = <MultipartBody2>[
       MultipartBody2('Concern_images', selectedImage!)
@@ -136,8 +145,6 @@ class ServiceController extends GetxController {
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
 
       //animal
-
-
     };
 
     var response = await ApiServiceClient().postData(
@@ -156,7 +163,6 @@ class ServiceController extends GetxController {
     }
   }
 
-
   void resetAllFields() {
     addAnimal.clear();
     name.clear();
@@ -174,6 +180,7 @@ class ServiceController extends GetxController {
     selectedAreaOfConcern.clear();
     selectedList.clear();
     pointList.clear();
+    resetQuantities(); // Reset all quantities
 
     fullCost.value = 0.0;
     discount.value = 0.0;
@@ -192,5 +199,4 @@ class ServiceController extends GetxController {
 
     selectedImage = null;
   }
-
 }
