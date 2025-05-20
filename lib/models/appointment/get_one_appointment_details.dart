@@ -1,10 +1,14 @@
+import 'dart:convert';
+
+import '../chartArchive/service_detailsByID_model.dart';
+
 class GetOneAppoinmentDetailsModel {
   final String? id;
   final ClientId? clientId;
   final String? userId;
   final List<String>? areaOfConcern;
   final List<String>? treatments;
-  final List<dynamic>? inventoryAcc;
+  final List<InventoryAcc>? inventoryAcc;
   final String? description;
   final int? fullCost;
   final String? name;
@@ -72,13 +76,36 @@ class GetOneAppoinmentDetailsModel {
   });
 
   factory GetOneAppoinmentDetailsModel.fromJson(Map<String, dynamic> json) {
+    // Helper function to parse JSON string arrays
+    List<String> parseStringArray(dynamic data) {
+      if (data == null) return [];
+      if (data is List) {
+        return data.map((e) => e.toString()).toList();
+      }
+      if (data is String) {
+        try {
+          final parsed = jsonDecode(data) as List;
+          return parsed.map((e) => e.toString()).toList();
+        } catch (e) {
+          return [data];
+        }
+      }
+      return [data.toString()];
+    }
+
     return GetOneAppoinmentDetailsModel(
       id: json['_id'] as String?,
-      clientId: json['clientId'] != null ? ClientId.fromJson(json['clientId']) : null,
+      clientId:
+          json['clientId'] != null ? ClientId.fromJson(json['clientId']) : null,
       userId: json['userId'] as String?,
-      areaOfConcern: (json['areaOfConcern'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
-      treatments: (json['treatments'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
-      inventoryAcc: json['inventoryAcc'] as List<dynamic>?,
+      areaOfConcern: parseStringArray(json['areaOfConcern']),
+      treatments: (json['treatments'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
+      inventoryAcc: json['inventoryAcc'] != null
+          ? List<InventoryAcc>.from(
+              json['inventoryAcc'].map((x) => InventoryAcc.fromJson(x)))
+          : null,
       description: json['description'] as String?,
       fullCost: json['fullCost'] as int?,
       name: json['name'] as String?,
@@ -92,67 +119,25 @@ class GetOneAppoinmentDetailsModel {
       discount: json['discount'] as int?,
       finalCost: json['finalCost'] as int?,
       isPaid: json['isPaid'] as bool?,
-      points: (json['points'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
-      concernImages: (json['concernImages'] as List<dynamic>?)
+      points: parseStringArray(json['points']),
+      concernImages: (json['Concern_images'] as List<dynamic>?)
           ?.map((e) => e.toString())
           .toList(),
-      apDate: json['apDate'] != null ? DateTime.parse(json['apDate']) : null,
-      apStartTime: json['apStartTime'] as String?,
-      apEndTime: json['apEndTime'] as String?,
-      reAllDay: json['reAllDay'] as bool?,
-      reTwelveHourBefore: json['reTwelveHourBefore'] as bool?,
-      reOneDayBefore: json['reOneDayBefore'] as bool?,
-      reTwoDayBefore: json['reTwoDayBefore'] as bool?,
-      reOneWeekBefore: json['reOneWeekBefore'] as bool?,
+      apDate: json['ApDate'] != null ? DateTime.parse(json['ApDate']) : null,
+      apStartTime: json['ApStartTime'] as String?,
+      apEndTime: json['ApEndTime'] as String?,
+      reAllDay: json['ReAllDay'] as bool?,
+      reTwelveHourBefore: json['ReTwelveHourBefore'] as bool?,
+      reOneDayBefore: json['ReOneDayBefore'] as bool?,
+      reTwoDayBefore: json['ReTwoDayBefore'] as bool?,
+      reOneWeekBefore: json['ReOneWeekBefore'] as bool?,
       isAppointment: json['isAppointment'] as bool?,
       selectedAnimal: json['selectedAnimal'] as String?,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
       v: json['__v'] as int?,
-    );
-  }
-}
-
-class ClientId {
-  final String? id;
-  final String? userId;
-  final String? name;
-  final String? city;
-  final String? state;
-  final String? zip;
-  final String? phoneNumber;
-  final String? email;
-  final String? other;
-  final int? v;
-  final bool? humanClient;
-
-  ClientId({
-    this.id,
-    this.userId,
-    this.name,
-    this.city,
-    this.state,
-    this.zip,
-    this.phoneNumber,
-    this.email,
-    this.other,
-    this.v,
-    this.humanClient,
-  });
-
-  factory ClientId.fromJson(Map<String, dynamic> json) {
-    return ClientId(
-      id: json['_id'] as String?,
-      userId: json['userId'] as String?,
-      name: json['name'] as String?,
-      city: json['city'] as String?,
-      state: json['state'] as String?,
-      zip: json['zip'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
-      email: json['email'] as String?,
-      other: json['other'] as String?,
-      v: json['__v'] as int?,
-      humanClient: json['humanClient'] as bool?,
     );
   }
 }

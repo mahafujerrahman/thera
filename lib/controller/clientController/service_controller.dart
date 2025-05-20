@@ -17,7 +17,8 @@ import 'package:thera_track_app/service/api_service_client.dart'
 class ServiceController extends GetxController {
   ///Service Given Api
   ///================================ >> Add Animal To The Service << ================================
-  final InventoryController inventoryController = Get.put(InventoryController());
+  final InventoryController inventoryController =
+      Get.put(InventoryController());
 
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
@@ -31,7 +32,8 @@ class ServiceController extends GetxController {
 
   RxString selectedAnimal = ''.obs;
 
-  var areaOfConcernList = ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
+  var areaOfConcernList =
+      ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
 
   //==================================>>> Inventory
   // Map to store quantity for each inventory item by its ID
@@ -62,7 +64,6 @@ class ServiceController extends GetxController {
     itemQuantities.clear();
   }
 
-
   //========================= Treatment
   var selectedList = <GetAllTreatMentModel>[].obs;
 
@@ -86,7 +87,8 @@ class ServiceController extends GetxController {
   RxString apEndTime = ''.obs;
 
   var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController = TextEditingController();
+  final TextEditingController descriptionTextController =
+      TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
@@ -100,26 +102,19 @@ class ServiceController extends GetxController {
     calculateFinalCost();
   }
 
-/*
-  List<Map<String, dynamic>> inventoryAcc = inventoryController.allInventoryList
-      .where((item) => getItemQuantity(item.id ?? '0').value > 0)
-      .map((item) => {
-    "productName": itemQuantities[itemId] ?? '',
-    "quantity": itemQuantities.toString(),
-  }).toList();*/
-
-
   final TextEditingController pointController = TextEditingController();
 
   File? selectedImage;
 
   createServiceClient() async {
     createServiceLoading(true);
-    var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
+    var clientId =
+        await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
-    var files = <MultipartBody2>[
-      MultipartBody2('Concern_images', selectedImage!)
-    ];
+    var files = <MultipartBody2>[];
+    if (selectedImage != null) {
+      files.add(MultipartBody2('Concern_images', selectedImage!));
+    }
 
     var treat = [];
     for (var x in selectedList) {
@@ -132,6 +127,24 @@ class ServiceController extends GetxController {
       'Authorization': 'Bearer $bearerToken'
     };
 
+    // Prepare inventory items
+    List<Map<String, String>> inventoryItems = [];
+    // itemQuantities.forEach((productId, quantity) {
+    //   if (quantity.value > 0) {
+    //     // Get product name from your inventory controller if needed
+    //     String productName = productId;
+    //
+    //   }
+    // });
+
+    for (var item in inventoryController.allInventoryList) {
+      String itemId = item.id ?? '0';
+      int quantity = getItemQuantity(itemId).value;
+
+      inventoryItems.add(
+          {'productName': item.productName!, 'quantity': quantity.toString()});
+    }
+
     // Convert all values to strings for the multipart request
     var body = {
       "clientId": clientId,
@@ -142,7 +155,7 @@ class ServiceController extends GetxController {
       "description": descriptionTextController.text.trim(),
       "points": jsonEncode(pointList),
       "isPaid": isPaid.value.toString(),
-      "ApDate": selectedAppointmentDay.toString(),
+      "ApDate": selectedAppointmentDay?.toString() ?? '',
       "ApStartTime": apStartTime.value,
       "ApEndTime": apEndTime.value,
       "reAllDay": isReminderAllDay.value.toString(),
@@ -152,7 +165,6 @@ class ServiceController extends GetxController {
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
       "selectedAnimal": selectedAnimal.value.toString(),
 
-
       //============>> Animal
       "name": name.text.trim(),
       "age": age.text.trim(),
@@ -160,7 +172,9 @@ class ServiceController extends GetxController {
       "height": height.text.trim(),
       "gender": gender.text.trim(),
       "color": color.text.trim(),
-     // "inventoryAcc": inventoryAcc,
+
+      // Convert the inventory list to a JSON string
+      "inventoryAcc": jsonEncode(inventoryItems),
     };
 
     var response = await ApiServiceClient().postData(
