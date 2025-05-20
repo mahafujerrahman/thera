@@ -18,13 +18,11 @@ import 'package:thera_track_app/views/base/custom_row.dart';
 
 class AppointmentDetailsScreen extends StatefulWidget {
   @override
-  State<AppointmentDetailsScreen> createState() =>
-      _AppointmentDetailsScreenState();
+  State<AppointmentDetailsScreen> createState() => _AppointmentDetailsScreenState();
 }
 
 class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
-  final AppointmentController appointmentController =
-      Get.put(AppointmentController());
+  final AppointmentController appointmentController = Get.put(AppointmentController());
   var parameter = Get.parameters;
 
   @override
@@ -50,13 +48,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
         ),
         body: Obx(() {
           return appointmentController.isLoading.value
-              ? Center(
-                  child: CupertinoActivityIndicator(
-                      radius: 32.r, color: CupertinoColors.activeBlue))
+              ? Center(child: CupertinoActivityIndicator(radius: 32.r, color: CupertinoColors.activeBlue))
               : Obx(() {
-                  var displayData =
-                      appointmentController.getOneAppoinmentDetailsModel.value;
-
+                  var displayData = appointmentController.getOneAppoinmentDetailsModel.value;
                   return Padding(
                       padding: EdgeInsets.all(8),
                       child: SingleChildScrollView(
@@ -73,67 +67,48 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                               children: [
                                 CustomRow(
                                     title: 'Name',
-                                    displayData:
-                                        displayData.clientId?.name ?? 'N/A'),
+                                    displayData: displayData.clientId?.name ?? 'N/A'),
                                 CustomRow(
                                     title: 'Email',
-                                    displayData:
-                                        displayData.clientId?.email ?? 'N/A'),
+                                    displayData: displayData.clientId?.email ?? 'N/A'),
                                 CustomRow(
                                     title: 'Mobile',
-                                    displayData:
-                                        displayData.clientId?.phoneNumber ??
-                                            'N/A'),
+                                    displayData: displayData.clientId?.phoneNumber ?? 'N/A'),
                                 CustomRow(
                                     title: 'Address',
-                                    displayData:
-                                        displayData.apDate?.toIso8601String() ??
-                                            'N/A'),
+                                    displayData: displayData.clientId?.address?.city ?? 'N/A'),
 
                                 // Description Section
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 4.w),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 8.h),
+                                        padding: EdgeInsets.symmetric(vertical: 8.h),
                                         child: Container(
                                           height: 217.h,
                                           decoration: BoxDecoration(
                                             color: AppColors.whiteColor,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.r)),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                           ),
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4.r)),
+                                            borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                             child: Center(
                                               child: CachedNetworkImage(
-                                                imageUrl: displayData
-                                                            .concernImages !=
-                                                        null
+                                                imageUrl: displayData.concernImages != null
                                                     ? "${ApiConstants.imageBaseUrl}${displayData.concernImages?[0]}"
                                                     : "",
                                                 fit: BoxFit.cover,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Center(
+                                                errorWidget: (context, url, error) => Center(
                                                   child: Icon(
                                                     Icons.error,
                                                     size: 24.r,
                                                     color: Colors.black,
                                                   ),
                                                 ),
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                  child:
-                                                      CupertinoActivityIndicator(
-                                                          radius: 32.r,
-                                                          color: AppColors
-                                                              .primaryColor),
+                                                placeholder: (context, url) => Center(
+                                                  child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
                                                 ),
                                               ),
                                             ),
@@ -144,88 +119,62 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                         padding: EdgeInsets.all(4),
                                         decoration: BoxDecoration(
                                           color: AppColors.secondaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(4.h),
                                         ),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 4.w),
-                                              child: Text('Description',
-                                                  style: AppStyles.fontSize18(
-                                                      color: AppColors
-                                                          .color575757)),
+                                              padding: EdgeInsets.symmetric(vertical: 4.w),
+                                              child: Text('Description', style: AppStyles.fontSize18(color: AppColors.color575757)),
                                             ),
                                             Container(
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
                                                   color: AppColors.whiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
+                                                  borderRadius: BorderRadius.circular(4.r),
                                                 ),
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      "${displayData?.description}"),
+                                                  padding: EdgeInsets.all(8.r),
+                                                  child: Text("${displayData?.description}"),
                                                 )),
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: 16),
+                                      SizedBox(height: 16.h),
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(4),
+                                  padding: EdgeInsets.all(4.r),
                                   decoration: BoxDecoration(
                                     color: AppColors.secondaryColor,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 4.w),
-                                        child: Text(
-                                          'Point',
-                                          style: AppStyles.fontSize18(
-                                              color: AppColors.color575757),
+                                        padding: EdgeInsets.symmetric(vertical: 4.w),
+                                        child: Text('Point', style: AppStyles.fontSize18(color: AppColors.color575757),
                                         ),
                                       ),
                                       Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: AppColors.whiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(4.r),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: displayData.points != null &&
-                                                  displayData.points!.isNotEmpty
+                                          padding: EdgeInsets.all(8.r),
+                                          child: displayData.points != null && displayData.points!.isNotEmpty
                                               ? Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: List.generate(
-                                                    displayData.points![0]
-                                                        .split(",")
-                                                        .length,
+                                                    displayData.points![0].split(",").length,
                                                     (index) {
-                                                      String point = displayData
-                                                          .points![0]
-                                                          .split(",")[index]
-                                                          .replaceAll(
-                                                              RegExp(
-                                                                  r'[\[\]"]'),
-                                                              '');
-                                                      return Text(
-                                                          '${index + 1}. $point');
+                                                      String point = displayData.points![0].split(",")[index].replaceAll(RegExp(r'[\[\]"]'), '');
+                                                      return Text('${index + 1}. $point');
                                                     },
                                                   ),
                                                 )
@@ -239,43 +188,29 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 Column(
                                   children: [
                                     Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 4.w),
+                                      padding: EdgeInsets.symmetric(vertical: 4.w),
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: AppColors.secondaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text('Next Appointments',
-                                                  style: AppStyles.fontSize18(
-                                                      color:
-                                                          AppColors.color575757,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
+                                                  style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
                                               SizedBox(height: 4.h),
                                               Text(
                                                 displayData.apDate != null
-                                                    ? TimeFormatHelper
-                                                        .formatDate(
-                                                            displayData.apDate!)
+                                                    ? TimeFormatHelper.formatDate(displayData.apDate!)
                                                     : 'No Date',
-                                                style: AppStyles.fontSize14(
-                                                    color:
-                                                        AppColors.color575757),
+                                                style: AppStyles.fontSize14(color: AppColors.color575757),
                                               ),
                                               SizedBox(height: 4.h),
-                                              Text('12.00 am',
-                                                  style: AppStyles.fontSize14(
-                                                      color: AppColors
-                                                          .color575757)),
+                                              Text(displayData.apStartTime.toString(), style: AppStyles.fontSize14(color: AppColors.color575757)),
                                             ],
                                           ),
                                         ),
@@ -286,8 +221,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 SizedBox(height: 8.h),
                                 CustomButton(
                                     onTap: () {
-                                      Get.toNamed(
-                                          AppRoutes.appoinmentCalenderScreen);
+                                      Get.toNamed(AppRoutes.appoinmentCalenderScreen);
                                     },
                                     prefixIcon: Icon(Icons.calendar_month),
                                     text: 'Reschedule'),
