@@ -53,9 +53,7 @@ class _AnimalStepSixScreenState extends State<AnimalStepSixScreen> {
                   children: [
                     Text(
                       "Treatments",
-                      style: AppStyles.fontSize16(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.primaryColor),
+                      style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),
                     ),
                     SizedBox(height: 8.h),
                     ListView.builder(
@@ -63,29 +61,20 @@ class _AnimalStepSixScreenState extends State<AnimalStepSixScreen> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return PriceDetailWidget(
-                          title: serviceController
-                                  .selectedList[index].treatmentTitle ??
-                              'Unknown Treatment',
-                          price: serviceController.selectedList[index].price
-                                  ?.toString() ??
-                              '0',
+                          title: serviceController.selectedList[index].treatmentTitle ?? 'Unknown Treatment',
+                          price: serviceController.selectedList[index].price?.toString() ?? '0',
                         );
                       },
                       itemCount: serviceController.selectedList.length,
                     ),
                     Divider(color: AppColors.blackColor.withOpacity(0.3)),
-                    PriceDetailWidget(
-                        title: 'Treatments Subtotal', price: '$treatmentsCost'),
+                    PriceDetailWidget(title: 'Treatments Subtotal', price: '$treatmentsCost'),
                     SizedBox(height: 16.h),
                   ],
                 ),
 
               // Equipment Section
-              Text(
-                "Equipment",
-                style: AppStyles.fontSize16(
-                    fontWeight: FontWeight.w600, color: AppColors.primaryColor),
-              ),
+              Text("Equipment", style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),),
               SizedBox(height: 8.h),
               Obx(() {
                 double equipmentTotal = 0;
@@ -109,16 +98,12 @@ class _AnimalStepSixScreenState extends State<AnimalStepSixScreen> {
                           Expanded(
                             flex: 3,
                             child: Text(
-                              "${item.productName ?? 'Unknown'} (${quantity}x \$${price.toStringAsFixed(2)})",
-                              style: AppStyles.fontSize16(
-                                  color: AppColors.color424242),
-                              overflow: TextOverflow.ellipsis,
+                              "${item.productName ?? 'Unknown'} (${quantity}x ${price}\$)",
+                              style: AppStyles.fontSize16(color: AppColors.color424242), overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Text(
-                            "\$${itemTotal.toStringAsFixed(2)}",
-                            style: AppStyles.fontSize16(
-                                color: AppColors.color424242),
+                          Text("${itemTotal.toStringAsFixed(2)} \$",
+                            style: AppStyles.fontSize16(color: AppColors.color424242),
                           ),
                         ],
                       ),
@@ -150,13 +135,10 @@ class _AnimalStepSixScreenState extends State<AnimalStepSixScreen> {
                   children: [
                     ...equipmentWidgets,
                     Divider(color: AppColors.blackColor.withOpacity(0.3)),
-                    PriceDetailWidget(
-                        title: 'Equipment Subtotal',
-                        price: equipmentTotal.toStringAsFixed(2)),
+                    PriceDetailWidget(title: 'Equipment Subtotal', price: equipmentTotal.toStringAsFixed(2)),
                     SizedBox(height: 16.h),
                     Divider(color: AppColors.blackColor),
-                    PriceDetailWidget(
-                        title: 'Full Cost', price: fullCost.toStringAsFixed(2)),
+                    PriceDetailWidget(title: 'Full Cost', price: fullCost.toStringAsFixed(2)),
                   ],
                 );
               }),
@@ -196,7 +178,7 @@ class _AnimalStepSixScreenState extends State<AnimalStepSixScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            suffixText: "\$",
+                            prefixText: "\$",
                           ),
                           textAlign: TextAlign.center,
                           textAlignVertical: TextAlignVertical.center,

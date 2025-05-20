@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
+import 'package:thera_track_app/controller/clientController/inventoryController.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/models/clients/GetAllInventoryProduct.dart';
@@ -16,6 +17,7 @@ import 'package:thera_track_app/service/api_service_client.dart'
 class ServiceController extends GetxController {
   ///Service Given Api
   ///================================ >> Add Animal To The Service << ================================
+  final InventoryController inventoryController = Get.put(InventoryController());
 
   TextEditingController name = TextEditingController();
   TextEditingController age = TextEditingController();
@@ -29,8 +31,7 @@ class ServiceController extends GetxController {
 
   RxString selectedAnimal = ''.obs;
 
-  var areaOfConcernList =
-      ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
+  var areaOfConcernList = ['Joints', 'Spine/Back', 'Paws', 'Muscles', 'Neck', 'Ears'].obs;
 
   //==================================>>> Inventory
   // Map to store quantity for each inventory item by its ID
@@ -61,7 +62,6 @@ class ServiceController extends GetxController {
     itemQuantities.clear();
   }
 
-  RxInt iceCreamQuantity = 0.obs;
 
   //========================= Treatment
   var selectedList = <GetAllTreatMentModel>[].obs;
@@ -86,8 +86,7 @@ class ServiceController extends GetxController {
   RxString apEndTime = ''.obs;
 
   var selectedAreaOfConcern = <String>[].obs;
-  final TextEditingController descriptionTextController =
-      TextEditingController();
+  final TextEditingController descriptionTextController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
 
   List<String> pointList = [];
@@ -101,14 +100,22 @@ class ServiceController extends GetxController {
     calculateFinalCost();
   }
 
+/*
+  List<Map<String, dynamic>> inventoryAcc = inventoryController.allInventoryList
+      .where((item) => getItemQuantity(item.id ?? '0').value > 0)
+      .map((item) => {
+    "productName": itemQuantities[itemId] ?? '',
+    "quantity": itemQuantities.toString(),
+  }).toList();*/
+
+
   final TextEditingController pointController = TextEditingController();
 
   File? selectedImage;
 
   createServiceClient() async {
     createServiceLoading(true);
-    var clientId =
-        await PrefsHelper.getString(AppConstants.createdServiceClientId);
+    var clientId = await PrefsHelper.getString(AppConstants.createdServiceClientId);
 
     var files = <MultipartBody2>[
       MultipartBody2('Concern_images', selectedImage!)
@@ -143,8 +150,17 @@ class ServiceController extends GetxController {
       "reOneDayBefore": reOneDayBefore.value.toString(),
       "reTwoDayBefore": reTwoDayBefore.value.toString(),
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
+      "selectedAnimal": selectedAnimal.value.toString(),
 
-      //animal
+
+      //============>> Animal
+      "name": name.text.trim(),
+      "age": age.text.trim(),
+      "breed": breed.text.trim(),
+      "height": height.text.trim(),
+      "gender": gender.text.trim(),
+      "color": color.text.trim(),
+     // "inventoryAcc": inventoryAcc,
     };
 
     var response = await ApiServiceClient().postData(
@@ -180,7 +196,7 @@ class ServiceController extends GetxController {
     selectedAreaOfConcern.clear();
     selectedList.clear();
     pointList.clear();
-    resetQuantities(); // Reset all quantities
+    resetQuantities();
 
     fullCost.value = 0.0;
     discount.value = 0.0;

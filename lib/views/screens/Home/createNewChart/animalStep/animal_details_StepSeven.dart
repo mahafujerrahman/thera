@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/controller/clientController/inventoryController.dart';
 import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
@@ -35,6 +36,7 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
 
   final ClientController clientController = Get.put(ClientController());
   final ServiceController serviceController = Get.put(ServiceController());
+  final InventoryController inventoryController = Get.find();
 
   @override
   void initState() {
@@ -47,6 +49,9 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
+    double treatmentsCost = serviceController.selectedList.fold(0, (sum, item) {
+      return sum + (item.price ?? 0);
+    });
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       //=============================> AppBar Section <=======================
@@ -174,6 +179,10 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                 ),
 
                 SizedBox(height: 10.h),
+                Text(
+                  "Treatments",
+                  style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),
+                ),
                 ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -187,8 +196,77 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                   },
                   itemCount: serviceController.selectedList.length,
                 ),
-                Divider(color: AppColors.blackColor),
-                PriceDetailWidget(title: 'Full Cost', price: serviceController.fullCost.value.toString()),
+                Divider(color: AppColors.blackColor.withOpacity(0.3)),
+               // PriceDetailWidget(title: 'Treatments Subtotal', price: '$treatmentsCost'),
+
+                // Equipment Section
+                Text("Equipment", style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),),
+                SizedBox(height: 8.h),
+                Obx(() {
+                  double equipmentTotal = 0;
+                  List<Widget> equipmentWidgets = [];
+
+                  // Loop through all inventory items to find ones with quantity > 0
+                  for (var item in inventoryController.allInventoryList) {
+                    String itemId = item.id ?? '0';
+                    int quantity = serviceController.getItemQuantity(itemId).value;
+                    num price = item.pricePerOne ?? 0;
+
+                    if (quantity > 0) {
+                      num itemTotal = quantity * price;
+                      equipmentTotal += itemTotal;
+
+                      equipmentWidgets.add(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Text(
+                                "${item.productName ?? 'Unknown'} (${quantity}x ${price}\$)",
+                                style: AppStyles.fontSize16(color: AppColors.color424242), overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text("${itemTotal.toStringAsFixed(2)} \$",
+                              style: AppStyles.fontSize16(color: AppColors.color424242),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      equipmentWidgets.add(SizedBox(height: 8.h));
+                    }
+                  }
+
+                  if (equipmentWidgets.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: Text(
+                        "No equipment selected",
+                        style: AppStyles.fontSize16(color: AppColors.colorB1B1B1),
+                      ),
+                    );
+                  }
+
+                  // Calculate the full cost (treatments + equipment)
+               /*   double fullCost = treatmentsCost + equipmentTotal;
+
+                  // Set full cost in controller
+                  serviceController.fullCost.value = fullCost;
+                  serviceController.calculateFinalCost();*/
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...equipmentWidgets,
+                      Divider(color: AppColors.blackColor.withOpacity(0.3)),
+                     // PriceDetailWidget(title: 'Equipment Subtotal', price: equipmentTotal.toStringAsFixed(2)),
+                      SizedBox(height: 16.h),
+                      PriceDetailWidget(title: 'Full Cost', price: serviceController.fullCost.toStringAsFixed(2)),
+                    ],
+                  );
+                }),
+
                 PriceDetailWidget(title: 'Discount ', price: serviceController.discount.value.toString()),
                 Divider(),
                 PriceDetailWidget(title: 'Final Cost',  price: serviceController.finalCost.value.toString()),

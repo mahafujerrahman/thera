@@ -37,7 +37,7 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
         centerTitle: true,
       ),
       body: Obx(() {
-        if (_clientController.getAnimalUnderOneClientModel.isEmpty) {
+        if (_clientController.getOneClientAnimalList.isEmpty) {
           return Center(child:Text('No Data found!'));
         }
 
@@ -47,13 +47,13 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _clientController.getAnimalUnderOneClientModel.length,
+              itemCount: _clientController.getOneClientAnimalList.length,
               itemBuilder: (context, index) {
-                var displayData = _clientController.getAnimalUnderOneClientModel[index];
+                var displayData = _clientController.getOneClientAnimalList[index];
                 return Column(
                   children: [
                     ListTile(
-                      title: Text(displayData.name),
+                      title: Text(displayData.name ?? 'N/A'),
                       trailing: SvgPicture.asset(AppIcons.rightArrow),
                       onTap: () {
                         Get.toNamed(AppRoutes.animalContactDetailsScreen);

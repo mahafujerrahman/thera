@@ -214,7 +214,9 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                       ),
                       SizedBox(height: 8.h),
                       CustomButton(
-                          onTap: () {},
+                          onTap: () {
+
+                          },
                           prefixIcon: Icon(Icons.calendar_month),
                           text: 'Reschedule'),
                       SizedBox(height: 8.h),

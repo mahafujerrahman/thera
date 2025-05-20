@@ -67,7 +67,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   child: ChartCard(
                     id: shortId,
                     date: TimeFormatHelper.formatDate(DateTime.parse(displayData.apDate.toString())),
-                    name: displayData.clientId!.name! ?? 'N/A',
+                    name: displayData.clientId?.name ?? 'N/A',
                   ),
                 );
               },
