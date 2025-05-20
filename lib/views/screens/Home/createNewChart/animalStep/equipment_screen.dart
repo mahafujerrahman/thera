@@ -12,7 +12,7 @@ class EquipmentScreen extends StatelessWidget {
   final InventoryController inventoryController = Get.put(InventoryController());
   final ServiceController serviceController = Get.put(ServiceController());
 
-  EquipmentScreen({Key? key}) : super(key: key) {
+  EquipmentScreen({super.key}) {
     inventoryController.getAllInventory();
   }
 
@@ -42,14 +42,14 @@ class EquipmentScreen extends StatelessWidget {
             SizedBox(height: 8),
             Expanded(
               child: Obx(() {
-                if (inventoryController.getAllInventoryModel.isEmpty) {
-                  return Center(child: CircularProgressIndicator());
+                if (inventoryController.allInventoryList.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
                 }
                 return ListView.builder(
-                  itemCount: inventoryController.getAllInventoryModel.length,
+                  itemCount: inventoryController.allInventoryList.length,
                   itemBuilder: (context, index) {
-                    var item = inventoryController.getAllInventoryModel[index];
-                    final key = item.id ?? item.productName ?? 'N/A';
+                    var item = inventoryController.allInventoryList[index];
+                    String itemId = item.id ?? index.toString();
 
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -68,7 +68,7 @@ class EquipmentScreen extends StatelessWidget {
                               IconButton(
                                 icon: Icon(Icons.remove_circle_outline, color: AppColors.colorB1B1B1),
                                 onPressed: () {
-                                  serviceController.decrementItemQuantity();
+                                  serviceController.decrementItemQuantity(itemId);
                                 },
                               ),
                               Container(
@@ -80,14 +80,14 @@ class EquipmentScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Obx(() => Text(
-                                  "${serviceController.getQuantity}",
+                                  "${serviceController.getItemQuantity(itemId).value}",
                                   style: AppStyles.fontSize16(color: AppColors.color707070),
                                 )),
                               ),
                               IconButton(
                                 icon: Icon(Icons.add_circle_outline, color: AppColors.colorB1B1B1),
                                 onPressed: () {
-                                  serviceController.incrementItemQuantity();
+                                  serviceController.incrementItemQuantity(itemId);
                                 },
                               ),
                             ],
@@ -99,10 +99,12 @@ class EquipmentScreen extends StatelessWidget {
                 );
               }),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             CustomButton(
               onTap: () {
-                Get.toNamed(AppRoutes.animalStepSixScreen);
+                Get.toNamed(
+                  AppRoutes.animalStepSixScreen,
+                );
               },
               text: 'Next',
             ),

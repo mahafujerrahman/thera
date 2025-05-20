@@ -37,7 +37,7 @@ class ApiConstants {
   static const String createTreatmentEndPoint = "/treatment/create-treatment";
   static const String getAllTreatmentEndPoint = "/treatment/get-all-treatment";
   static const String deleteSingelTreatmentEndPoint = "/treatment/delete-treatment";
-  static const String getAllAnimalUnderOneClientTreatmentEndPoint = "/client/all-animal-under-one-client";
+  static const String getAllAnimalUnderOneClientEndPoint = "/patient/get-one-client-animal";
   static const String getAllWalletEndPoint = "/travel/get-all-travel-expenses";
   static const String addTravelCostEndPoint = "/travel/create-travel-expenses";
   static const String getOneTravelExpensesEndPoint = "/travel/get-one-travel-expenses";
@@ -46,12 +46,12 @@ class ApiConstants {
 
 //============================>> Chart Archive  <<=================================
   static const String getAllServiceEndPoint = "/patient/get-all-service";
-  static const String getAllAppointmentEndPoint = "/make-appointment/get-all-appointment";
+  static const String getAllAppointmentEndPoint = "/patient/get-all-appointment";
 
   static const String getAllPaidTreatmentEndPoint = "/patient/paid-treatment-service";
   static const String getAllUnPaidTreatmentEndPoint = "/patient/unpaid-treatment-service";
   static const String getOneServiceDetailsByIDEndPoint = "/patient/get-one-service";
-  static const String getOneAppointmentDetailsByIDEndPoint = "/make-appointment/get-one-appointment";
+  static const String getOneAppointmentDetailsByIDEndPoint = "/patient/get-one-service";
 
 
 }

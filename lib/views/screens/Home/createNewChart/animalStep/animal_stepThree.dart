@@ -65,32 +65,28 @@ class _AnimalStepThreeScreenState extends State<AnimalStepThreeScreen> {
                return ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: clientController.getAnimalUnderOneClientModel.length,
+                  itemCount: clientController.getOneClientAnimalList.length,
                   itemBuilder: (context, index) {
-                    var displayData =  clientController.getAnimalUnderOneClientModel[index];
+                    var displayData =  clientController.getOneClientAnimalList[index];
                     return Column(
                       children: [
                         ListTile(
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(displayData.name),
+                              Text(displayData?.name ?? 'N/A'),
                               SizedBox(width: 8.w),
 
-                              Row(
+                           /*   Row(
                                 children: [
                                   Text('Previous Chart :',style: AppStyles.fontSize12()),
                                   Text('15 Jan,2025',style: AppStyles.fontSize12(color: AppColors.redColor)),
                                 ],
-                              ),
+                              ),*/
 
                             ],
                           ),
                           trailing: SvgPicture.asset(AppIcons.rightArrow),
-                          onTap: () {
-                            // Get.toNamed(AppRoutes.horseDetailsScreen);
-                             Get.toNamed(AppRoutes.animalStepFourScreen);
-                          },
                         ),
                         Divider(color: AppColors.secondaryColor),
                       ],

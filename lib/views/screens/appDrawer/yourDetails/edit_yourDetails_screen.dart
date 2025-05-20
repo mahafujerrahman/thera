@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thera_track_app/controller/profileController.dart';
-import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -45,15 +43,7 @@ class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
     phoneNumberCTRl.text = profileData.phoneNumber ?? '';
     emailCTRl.text = profileData.email ?? '';
   }
-  String extractCountryCode(String phoneNumber) {
-    if (phoneNumber.isNotEmpty) {
-      final match = RegExp(r'^\+(\d+)').firstMatch(phoneNumber);
-      if (match != null) {
-        return match.group(1) ?? 'US'; // Extract country code or default to 'US'
-      }
-    }
-    return 'US';
-  }
+
 
   @override
   Widget build(BuildContext context) {

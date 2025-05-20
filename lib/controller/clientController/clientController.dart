@@ -10,6 +10,7 @@ import 'package:thera_track_app/models/clients/all_clients_model.dart';
 import 'package:thera_track_app/models/clients/client_with_animal_model.dart';
 import 'package:thera_track_app/models/clients/getAllAnimalUnderClientModel.dart';
 import 'package:thera_track_app/models/clients/getClient_details_byID_model.dart';
+import 'package:thera_track_app/models/clients/getOneClientAnimalModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
@@ -142,13 +143,13 @@ class ClientController extends GetxController {
   }
   //=========================>> Get Client with Animal <<============================
 
-  RxList<GetAnimalUnderOneClientModel> getAnimalUnderOneClientModel = <GetAnimalUnderOneClientModel>[].obs;
+  RxList<GetOneClientAnimalModel> getOneClientAnimalList = <GetOneClientAnimalModel>[].obs;
 
   getAnimalUnderOneClient(String clientID) async {
     showLoading(true);
-    var response = await ApiClient.getData("${ApiConstants.getAllAnimalUnderOneClientTreatmentEndPoint}/$clientID");
+    var response = await ApiClient.getData("${ApiConstants.getAllAnimalUnderOneClientEndPoint}/$clientID");
     if (response.statusCode == 200) {
-      getAnimalUnderOneClientModel.value = List.from(response.body['data']['attributes'].map((x) => GetAnimalUnderOneClientModel.fromJson(x)));
+      getOneClientAnimalList.value = List.from(response.body['data']['attributes'].map((x) => GetOneClientAnimalModel.fromJson(x)));
       showLoading(false);
       update();
     }

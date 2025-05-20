@@ -109,7 +109,12 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
                               if (clientData.humanClient == true) {
                                 Get.toNamed(AppRoutes.humanStepTwo);
                               } else {
-                                Get.toNamed(AppRoutes.animalStepThreeScreen);
+                                Get.toNamed(AppRoutes.animalStepThreeScreen,
+                                    parameters: {
+                                      "clientID": "${clientData.id}",
+                                    }
+
+                                );
                               }
                             },
                           ),
@@ -165,7 +170,11 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
                               if (clientData.humanClient == true) {
                                 Get.toNamed(AppRoutes.humanStepTwo);
                               } else {
-                                Get.toNamed(AppRoutes.animalStepThreeScreen);
+                                Get.toNamed(AppRoutes.animalStepThreeScreen,
+                                    parameters: {
+                                      "clientID": "${clientData.id}",
+                                    }
+                                );
                               }
                             },
                           ),

@@ -391,7 +391,7 @@ class _AppoinmentCalenderScreenState extends State<AppoinmentCalenderScreen> {
               SizedBox(height: 16.h),
               // Done Button
               CustomButton(onTap: () {
-                Get.toNamed(AppRoutes.humanStepFive);
+                Get.back();
               }, text: 'Done'),
             ],
           ),

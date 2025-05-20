@@ -42,21 +42,20 @@ class InventoryController extends GetxController {
       'Authorization': 'Bearer $bearerToken'
     };
 
+    var response = await ApiClient.postData(
+      ApiConstants.addInventoryEndPoint,
+      jsonEncode(body),
+      headers: headers,
+    );
 
-      var response = await ApiClient.postData(
-        ApiConstants.addInventoryEndPoint,
-        jsonEncode(body),
-        headers: headers,
-      );
-
-      if (response.statusCode == 200) {
-        var newProduct = GetAllInventoryModel.fromJson(response.body['data']);
-        getAllInventoryModel.add(newProduct);
-        getAllInventoryModel.refresh();
-        Get.snackbar('Success', 'Inventory added successfully.');
-        clearFields();
-      } else {
-        ApiChecker.checkApi(response);
+    if (response.statusCode == 200) {
+      var newProduct = GetAllInventoryModel.fromJson(response.body['data']);
+      allInventoryList.add(newProduct);
+      allInventoryList.refresh();
+      Get.snackbar('Success', 'Inventory added successfully.');
+      clearFields();
+    } else {
+      ApiChecker.checkApi(response);
     }
   }
 
@@ -68,16 +67,19 @@ class InventoryController extends GetxController {
   }
 
   //============== All Inventory
-  RxList<GetAllInventoryModel> getAllInventoryModel = <GetAllInventoryModel>[].obs;
+  RxList<GetAllInventoryModel> allInventoryList = <GetAllInventoryModel>[].obs;
 
   getAllInventory() async {
-    var response = await ApiClient.getData(ApiConstants.getAllInventoryEndPoint);
-    print("===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
+    var response =
+        await ApiClient.getData(ApiConstants.getAllInventoryEndPoint);
+    print(
+        "===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      getAllInventoryModel.value = List.from(response.body['data'].map((x) => GetAllInventoryModel.fromJson(x)));
+      allInventoryList.value = List.from(
+          response.body['data'].map((x) => GetAllInventoryModel.fromJson(x)));
 
-      getAllInventoryModel.refresh();
+      allInventoryList.refresh();
     } else {
       ApiChecker.checkApi(response);
     }
@@ -85,13 +87,13 @@ class InventoryController extends GetxController {
 
 //=================================================>>>>>> Delete Single Product <<<<<<=========================================================
   deleteSingelProduct({required String productID}) async {
-    var response = await ApiClient.deleteData('${ApiConstants.deleteSingelProductEndPoint}/${productID}');
+    var response = await ApiClient.deleteData(
+        '${ApiConstants.deleteSingelProductEndPoint}/${productID}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       Get.snackbar('Successfully', 'Deleted Product');
-      getAllInventoryModel.refresh();
+      allInventoryList.refresh();
     } else {
       ApiChecker.checkApi(response);
     }
   }
-
 }
