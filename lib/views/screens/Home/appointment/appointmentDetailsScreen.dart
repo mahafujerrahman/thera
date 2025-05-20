@@ -7,6 +7,8 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:thera_track_app/controller/clientController/appointmentController.dart';
+import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_images.dart';
@@ -85,11 +87,13 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 color: AppColors.whiteColor,
                                 borderRadius: BorderRadius.all(Radius.circular(4.r)),
                               ),
-                              child: ClipRRect(
+                              child:ClipRRect(
                                 borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                 child: Center(
                                   child: CachedNetworkImage(
-                                    imageUrl:  "${ApiConstants.imageBaseUrl}${displayData.concernImages}",
+                                    imageUrl: displayData.concernImages != null
+                                        ? "${ApiConstants.imageBaseUrl}${displayData.concernImages?.first}"
+                                        : "",
                                     fit: BoxFit.cover,
                                     errorWidget: (context, url, error) => Center(
                                       child: Icon(
@@ -102,7 +106,6 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                       child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
                                     ),
                                   ),
-
                                 ),
                               ),
                             ),
@@ -197,14 +200,18 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Next Appointments',
-                                        style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
+                                    Text('Next Appointments', style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
                                     SizedBox(height: 4.h),
-                                    Text('24 jan, 2025',
-                                        style: AppStyles.fontSize14(color: AppColors.color575757)),
+                                    Text(
+                                      displayData.apDate != null
+                                          ? TimeFormatHelper.formatDate(displayData.apDate!)
+                                          : 'No Date',
+                                      style: AppStyles.fontSize14(color: AppColors.color575757),
+                                    ),
+
+
                                     SizedBox(height: 4.h),
-                                    Text('12.00 am',
-                                        style: AppStyles.fontSize14(color: AppColors.color575757)),
+                                    Text('12.00 am', style: AppStyles.fontSize14(color: AppColors.color575757)),
                                   ],
                                 ),
                               ),
@@ -215,7 +222,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                       SizedBox(height: 8.h),
                       CustomButton(
                           onTap: () {
-
+                            Get.toNamed(AppRoutes.appoinmentCalenderScreen);
                           },
                           prefixIcon: Icon(Icons.calendar_month),
                           text: 'Reschedule'),
