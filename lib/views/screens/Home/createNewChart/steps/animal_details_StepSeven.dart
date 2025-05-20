@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
 import 'package:thera_track_app/controller/clientController/service_controller.dart';
@@ -9,28 +10,31 @@ import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_images.dart';
+import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/views/base/custom_list_tile.dart';
 import 'package:thera_track_app/views/base/custom_row.dart';
 import 'package:thera_track_app/views/base/dotted_border_container.dart';
 import 'package:thera_track_app/views/base/price_details_row.dart';
+import 'package:thera_track_app/views/screens/Home/chartArchive/innerWidget/addpoint_textBox.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/innerWidget/detailsRow_widget.dart';
 
-
-class HumanStepFive extends StatefulWidget {
-  const HumanStepFive({super.key});
+class AnimalServiceDetailsScreen extends StatefulWidget {
+  const AnimalServiceDetailsScreen({super.key});
 
   @override
-  State<HumanStepFive> createState() => _HumanStepFiveState();
+  State<AnimalServiceDetailsScreen> createState() =>
+      _AnimalServiceDetailsScreenState();
 }
 
-class _HumanStepFiveState extends State<HumanStepFive> {
+class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen> {
   final TextEditingController fullNameCTRl = TextEditingController();
   final TextEditingController emailCTRl = TextEditingController();
   final TextEditingController addressCTRl = TextEditingController();
 
   final ClientController clientController = Get.put(ClientController());
   final ServiceController serviceController = Get.put(ServiceController());
-
 
   @override
   void initState() {
@@ -48,7 +52,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
       //=============================> AppBar Section <=======================
       appBar: AppBar(
         title: Text(
-          'Human - New Create Details',
+          'Animal - New Create Details',
           style: AppStyles.fontSize16(fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
@@ -80,6 +84,16 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                 CustomRow(title: 'Mobile', displayData: clientInfo.phoneNumber ?? 'N/A'),
                 CustomRow(title: 'Address', displayData: clientInfo.city ?? 'N/A'),
                 SizedBox(height: 10.h),
+                Padding(
+                  padding:  EdgeInsets.symmetric(vertical: 8.h),
+                  child: Text('Animal Details :',style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
+                ),
+                CustomRow(title: 'Animal Name', displayData:serviceController.name.text.trim()),
+                CustomRow(title: 'Age', displayData: serviceController.age.text.trim()),
+                CustomRow(title: 'Breed', displayData: serviceController.breed.text.trim()),
+                CustomRow(title: 'Gender', displayData: serviceController.gender.text.trim()),
+                CustomRow(title: 'Height', displayData: serviceController.height.text.trim()),
+                CustomRow(title: 'Color', displayData: serviceController.color.text.trim()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 12.w),
                   child: DottedBorderContainer(
@@ -196,7 +210,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                           ),
                         ),
                         SizedBox(width: 10.w),
-                       /* Expanded(
+                      /*  Expanded(
                           child: CustomButton(
                             onTap: () {},
                             prefixIcon: Icon(Icons.send),
@@ -207,7 +221,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                       ],
                     ),
                     SizedBox(height: 12.h),
-                    /*Row(
+                 /*   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -319,7 +333,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                   ],
                 ),
                 SizedBox(height: 10.h),
-           /*     Obx((){
+                /*     Obx((){
                   return CustomButton(
                     //  loading: serviceController.createServiceLoading.value,
                       onTap: () {
@@ -328,10 +342,10 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                       text: 'Finished');
                 }*/
                 CustomButton(
-                onTap: () {
-                  serviceController.createServiceClient();
-                  },
-                text: 'Finished'),
+                    onTap: () {
+                      serviceController.createServiceClient();
+                    },
+                    text: 'Finished'),
                 SizedBox(height: 10.h),
               ],
             );

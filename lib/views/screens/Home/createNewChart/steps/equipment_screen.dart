@@ -98,7 +98,7 @@ class EquipmentScreen extends StatelessWidget {
                 );
               }),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 16.h),
             CustomButton(
               onTap: () {
                 Get.toNamed(AppRoutes.animalStepSixScreen);

@@ -17,7 +17,7 @@ import 'package:thera_track_app/views/screens/Home/contacts/contact_search_scree
 import 'package:thera_track_app/views/screens/Home/contacts/human/edit_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/human_client_contact_screen.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/appoinmentCalenderScreen.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/animal_details_Step.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/steps/animal_details_StepSeven.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_details_stepFive.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepTwo.dart';
@@ -87,8 +87,9 @@ class AppRoutes{
   static String animalStepFourScreen = "/animalStepFourScreen";
   static String animalStepFiveScreen = "/animalStepFiveScreen";
   static String animalStepSixScreen = "/animalStepSixScreen";
+  static String animalServiceDetailsScreen = "/animalServiceDetailsScreen";
 
-  static String createNewChartDetailsScreen = "/createNewChartDetailsScreen";
+
   static String appoinmentCalenderScreen = "/appoinmentCalenderScreen";
   static String notificationScreen = "/notificationScreen";
   static String resetPassword = "/resetPassword";
@@ -141,7 +142,6 @@ class AppRoutes{
    GetPage(name:createNewChartStepOneScreen, page: ()=> CreateNewChartStepOneScreen(),transition: Transition.noTransition),
    GetPage(name:createNewChartStepTwoScreen, page: ()=> CreateNewChartStepTwoScreen(),transition: Transition.noTransition),
 
-   GetPage(name:createNewChartDetailsScreen, page: ()=> CreateNewChartDetailsScreen(),transition: Transition.noTransition),
 
    GetPage(name:horseDetailsScreen, page: ()=> HorseDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:appoinmentCalenderScreen, page: ()=> AppoinmentCalenderScreen(),transition: Transition.noTransition),
@@ -196,6 +196,7 @@ class AppRoutes{
    GetPage(name:animalStepFourScreen, page: ()=> AnimalStepFourScreen(),transition: Transition.noTransition),
    GetPage(name:animalStepFiveScreen, page: ()=> AnimalStepFiveScreen(),transition: Transition.noTransition),
    GetPage(name:animalStepSixScreen, page: ()=> AnimalStepSixScreen(),transition: Transition.noTransition),
+   GetPage(name:animalServiceDetailsScreen, page: ()=> AnimalServiceDetailsScreen(),transition: Transition.noTransition),
 
  ];
 }

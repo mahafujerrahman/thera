@@ -61,9 +61,9 @@ class _AnimalStepSixScreenState
                         PriceDetailWidget(
                             title: serviceController.selectedList[index].treatmentTitle,
                             price: serviceController.selectedList[index].price.toString()),
-                        PriceDetailWidget(
+                      /*  PriceDetailWidget(
                             title: serviceController.inventoryList[index].productName.toString(),
-                            price: serviceController.inventoryList[index].pricePerOne.toString()),
+                            price: serviceController.inventoryList[index].pricePerOne.toString()),*/
                       ],
                     );
                   },
@@ -130,7 +130,7 @@ class _AnimalStepSixScreenState
               // Next Button
               CustomButton(
                 onTap: () {
-                  Get.toNamed(AppRoutes.humanStepFive);
+                  Get.toNamed(AppRoutes.animalServiceDetailsScreen);
                 },
                 text: 'Next',
               ),
