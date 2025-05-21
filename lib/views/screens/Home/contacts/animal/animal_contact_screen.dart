@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -31,7 +33,7 @@ WidgetsBinding.instance.addPostFrameCallback((_){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animal Contacts',style: AppStyles.fontSize16()),
+        title: Text('Animal Contacts2',style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
       body:Obx(() {
@@ -51,7 +53,8 @@ WidgetsBinding.instance.addPostFrameCallback((_){
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () {
+                    onTap: () async  {
+                    await PrefsHelper.setString(AppConstants.uniqueAnimal, animalName);
                       Get.toNamed(AppRoutes.contactSearchScreen,
                         parameters: {
                           "animalName": "$animalName",

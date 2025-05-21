@@ -7,7 +7,7 @@ import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/inventoryController.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
-import 'package:thera_track_app/models/clients/GetAllInventoryProduct.dart';
+import 'package:thera_track_app/models/clients/get_all_inventory_product.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_constants.dart';

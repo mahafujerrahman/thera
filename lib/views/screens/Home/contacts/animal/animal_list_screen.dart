@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_icons.dart';
@@ -23,9 +25,12 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _clientController.getAnimalUnderOneClient("${parameter['clientId']}");
-       _clientController.getClientWithAnimal("${parameter['animalName']}");
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var animalName = await PrefsHelper.getString(AppConstants.uniqueAnimal);
+      _clientController.animalNameUnderClient(
+        animalName: animalName,
+          clientID: "${parameter['clientId']}"
+      );
     });
   }
 
@@ -33,11 +38,11 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animal List', style: AppStyles.fontSize16()),
+        title: Text('Animal Name List', style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
       body: Obx(() {
-        if (_clientController.getOneClientAnimalList.isEmpty) {
+        if (_clientController.getAnimalNameList.isEmpty) {
           return Center(child:Text('No Data found!'));
         }
 
@@ -47,16 +52,20 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _clientController.getOneClientAnimalList.length,
+              itemCount: _clientController.getAnimalNameList.length,
               itemBuilder: (context, index) {
-                var displayData = _clientController.getOneClientAnimalList[index];
+                var displayData = _clientController.getAnimalNameList[index];
                 return Column(
                   children: [
                     ListTile(
                       title: Text(displayData.name ?? 'N/A'),
                       trailing: SvgPicture.asset(AppIcons.rightArrow),
                       onTap: () {
-                        Get.toNamed(AppRoutes.animalContactDetailsScreen);
+                        Get.toNamed(AppRoutes.animalContactDetailsScreen,
+                            parameters: {
+                              "id": displayData.id,
+                            }
+                        );
                       },
                     ),
                     Divider(color: AppColors.secondaryColor),

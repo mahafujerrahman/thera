@@ -15,6 +15,7 @@ import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
+import 'package:thera_track_app/models/clients/animal/animalNameModel.dart';
 
 class ClientController extends GetxController {
 
@@ -160,7 +161,7 @@ class ClientController extends GetxController {
     }
   }
   // ======================= Client Details by ID ==========================
-  
+
   Rx<GetClientInfoByIdModel> getClientInfoByIdModel = GetClientInfoByIdModel().obs;
   var clientInfoLoading = false.obs;
   
@@ -239,6 +240,25 @@ class ClientController extends GetxController {
     }
 
     }
+
+    //==================== animalNameUnderClient
+  RxList<GetAnimalNameModel> getAnimalNameList = <GetAnimalNameModel>[].obs;
+
+  animalNameUnderClient({String? animalName, String? clientID}) async {
+    showLoading(true);
+    var response = await ApiClient.getData("${ApiConstants.getAnimalNameEndPoint}/$animalName/$clientID");
+    if (response.statusCode == 200) {
+      getAnimalNameList.value = List.from(response.body['data']['attributes'].map((x) => GetAnimalNameModel.fromJson(x)));
+      showLoading(false);
+      update();
+    }
+    else {
+      ApiChecker.checkApi(response);
+      showLoading(false);
+      update();
+    }
+  }
+
 
   }
 

@@ -8,7 +8,7 @@ import 'package:thera_track_app/views/screens/Home/appointment/appointmentDetail
 import 'package:thera_track_app/views/screens/Home/appointment/appointment_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/chartArchive_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/detailsChartArchive_screen.dart';
-import 'package:thera_track_app/views/screens/Home/contacts/animal/animalList_screen.dart';
+import 'package:thera_track_app/views/screens/Home/contacts/animal/animal_list_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/animal/animal_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/animal/edit_animal_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/clients_contact_details_screen.dart';

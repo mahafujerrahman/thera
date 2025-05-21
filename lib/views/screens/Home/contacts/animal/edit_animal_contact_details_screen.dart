@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:get/get.dart';
+import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -16,33 +17,58 @@ class EditAnimalContactDetailsScreen extends StatefulWidget {
 }
 
 class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetailsScreen> {
+  final ProfileController profileController = Get.find<ProfileController>();
+  late final String animalId;
 
-  final TextEditingController fullNameCTRl = TextEditingController();
-  final TextEditingController townCTRl = TextEditingController();
-  final TextEditingController postCodeCTRl = TextEditingController();
-  final TextEditingController countryCTRl = TextEditingController();
-  final TextEditingController emailCTRl = TextEditingController();
+  final TextEditingController nameCTRl = TextEditingController();
+  final TextEditingController ageCTRl = TextEditingController();
+  final TextEditingController breedCTRl = TextEditingController();
+  final TextEditingController genderCTRl = TextEditingController();
+  final TextEditingController heightCTRl = TextEditingController();
+  final TextEditingController colorCTRl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    animalId = Get.parameters['id'] ?? '';
+    final profileData = profileController.getAnimalData.value;
+    nameCTRl.text = profileData.name ?? '';
+    ageCTRl.text = profileData.age?.toString() ?? '';
+    breedCTRl.text = profileData.breed ?? '';
+    genderCTRl.text = profileData.gender ?? '';
+    heightCTRl.text = profileData.height?.toString() ?? '';
+    colorCTRl.text = profileData.color ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
-        title: Text('Edit Client Information',style:AppStyles.fontSize16()),
+        title: Text(
+          'Edit ${nameCTRl.text} Information',
+          style: AppStyles.fontSize16(),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 12.h,vertical: 12.w),
+          padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.nameText,style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
+              // Name Field
+              Text(
+                AppStrings.nameText,
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
+              ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: fullNameCTRl,
+                controller: nameCTRl,
                 hintText: AppStrings.fullName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -51,114 +77,153 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
                   return null;
                 },
               ),
-              //Age'
+
+              // Age Field
               SizedBox(height: 8.h),
-              Text('Age',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
+              Text(
+                'Age',
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
+              ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: townCTRl,
+                controller: ageCTRl,
                 hintText: 'Enter age',
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter age";
                   }
-                  return null;
-                },
-              ),
-              SizedBox(height: 8.h),
-              ///====================>>> Foaling Year
-              Text('Foaling Year',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: postCodeCTRl,
-                hintText: 'Enter your Foaling Year',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter Foaling Year";
+                  if (int.tryParse(value) == null) {
+                    return "Please enter valid number";
                   }
                   return null;
                 },
               ),
 
+              // Breed Field
               SizedBox(height: 8.h),
-
-              //====================>>> Breed
-              Text('Breed',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller: countryCTRl,
-                hintText: 'Enter your Breed',
-
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter Breed";
-                  }
-                  return null;
-                },
+              Text(
+                'Breed',
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
               ),
               SizedBox(height: 8.h),
-              //====================>>> Gender
-              Text('Gender',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
-              SizedBox(height: 8.h),
               CustomTextField(
-                controller: countryCTRl,
-                hintText: 'Enter your Gender',
-
+                controller: breedCTRl,
+                hintText: 'Enter breed',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter Gender";
+                    return "Please enter breed";
                   }
                   return null;
                 },
               ),
 
-              // Height
+              // Gender Field
               SizedBox(height: 8.h),
-              Text('Height',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
+              Text(
+                'Gender',
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
+              ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller:emailCTRl,
-                hintText: 'Enter Height',
+                controller: genderCTRl,
+                hintText: 'Enter gender',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter gender";
+                  }
+                  return null;
+                },
+              ),
+
+              // Height Field
+              SizedBox(height: 8.h),
+              Text(
+                'Height',
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              CustomTextField(
+                controller: heightCTRl,
+                hintText: 'Enter height',
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter height";
                   }
-                  return null;
-                },
-              ),
-              // Color
-              SizedBox(height: 8.h),
-              Text('Color',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller:emailCTRl,
-                hintText: 'Enter Color',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter Color          ";
-                  }
-                  return null;
-                },
-              ),
-              // Other
-              SizedBox(height: 8.h),
-              Text('Other',style: AppStyles.fontSize16(fontWeight:FontWeight.w400,color: AppColors.color424242),),
-              SizedBox(height: 8.h),
-              CustomTextField(
-                controller:emailCTRl,
-                hintText: 'Enter Your Other',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please enter your Other";
+                  if (int.tryParse(value) == null) {
+                    return "Please enter valid number";
                   }
                   return null;
                 },
               ),
 
+              // Color Field
+              SizedBox(height: 8.h),
+              Text(
+                'Color',
+                style: AppStyles.fontSize16(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.color424242,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              CustomTextField(
+                controller: colorCTRl,
+                hintText: 'Enter color',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter color";
+                  }
+                  return null;
+                },
+              ),
+
+              // Update Button
               SizedBox(height: 12.h),
-              CustomButton(
-                  onTap: (){},
-                  text: 'Update'),
+              // In your onTap handler for the Update button:
+              Obx(() {
+                return CustomButton(
+                  loading: profileController.loading.value,
+                  onTap: () {
+                    final age = int.tryParse(ageCTRl.text);
+                    final height = int.tryParse(heightCTRl.text);
+
+                    if (age == null) {
+                      Get.snackbar('Error', 'Please enter a valid age number');
+                      return;
+                    }
+
+                    if (height == null) {
+                      Get.snackbar('Error', 'Please enter a valid height number');
+                      return;
+                    }
+
+                    profileController.editClientAnimal(
+                      animalId: animalId,
+                      name: nameCTRl.text.trim(),
+                      age: age,
+                      breed: breedCTRl.text.trim(),
+                      gender: genderCTRl.text.trim(),
+                      height: height,
+                      color: colorCTRl.text.trim(),
+                    );
+                  },
+                  text: 'Update',
+                );
+              }),
               SizedBox(height: 50.h),
             ],
           ),
@@ -166,5 +231,4 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
       ),
     );
   }
-
 }

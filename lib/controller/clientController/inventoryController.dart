@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
-import 'package:thera_track_app/models/clients/GetAllInventoryProduct.dart';
+import 'package:thera_track_app/models/clients/get_all_inventory_product.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';

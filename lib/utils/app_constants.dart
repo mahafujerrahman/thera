@@ -8,6 +8,7 @@ class AppConstants{
   static String isLogged = "IsLogged";
 
 
+
   static String userId="userId";
   // share preference Key
   static String THEME ="theme";
@@ -31,6 +32,7 @@ class AppConstants{
   static String role = "Role";
   static String selectedOption = "selectedOption";
   static String fcmToken = "fcmToken";
+  static String uniqueAnimal = "uniqueAnimal";
 
 
   static String createdServiceClientId="createdServiceClientId";

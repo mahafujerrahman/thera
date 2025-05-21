@@ -17,7 +17,7 @@ class ContactSearchScreen extends StatefulWidget {
 
 class _ContactSearchScreenState extends State<ContactSearchScreen> {
   TextEditingController searchController = TextEditingController();
-  ClientController _clientController=Get.put(ClientController());
+  ClientController _clientController = Get.put(ClientController());
 
   var parameter = Get.parameters;
 
