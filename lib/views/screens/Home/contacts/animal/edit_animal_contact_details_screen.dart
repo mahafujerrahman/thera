@@ -20,24 +20,19 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
   final ProfileController profileController = Get.find<ProfileController>();
   late final String animalId;
 
-  final TextEditingController nameCTRl = TextEditingController();
-  final TextEditingController ageCTRl = TextEditingController();
-  final TextEditingController breedCTRl = TextEditingController();
-  final TextEditingController genderCTRl = TextEditingController();
-  final TextEditingController heightCTRl = TextEditingController();
-  final TextEditingController colorCTRl = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
     animalId = Get.parameters['id'] ?? '';
     final profileData = profileController.getAnimalData.value;
-    nameCTRl.text = profileData.name ?? '';
-    ageCTRl.text = profileData.age?.toString() ?? '';
-    breedCTRl.text = profileData.breed ?? '';
-    genderCTRl.text = profileData.gender ?? '';
-    heightCTRl.text = profileData.height?.toString() ?? '';
-    colorCTRl.text = profileData.color ?? '';
+    profileController.nameCTRl.text = profileData.name ?? '';
+    profileController.ageCTRl.text = profileData.age?.toString() ?? '';
+    profileController.breedCTRl.text = profileData.breed ?? '';
+    profileController.genderCTRl.text = profileData.gender ?? '';
+    profileController.heightCTRl.text = profileData.height?.toString() ?? '';
+    profileController.colorCTRl.text = profileData.color ?? '';
   }
 
   @override
@@ -47,7 +42,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
       appBar: AppBar(
         backgroundColor: AppColors.whiteColor,
         title: Text(
-          'Edit ${nameCTRl.text} Information',
+          'Edit ${profileController.nameCTRl.text} Information',
           style: AppStyles.fontSize16(),
         ),
         centerTitle: true,
@@ -68,7 +63,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: nameCTRl,
+                controller: profileController.nameCTRl,
                 hintText: AppStrings.fullName,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -89,7 +84,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: ageCTRl,
+                controller: profileController.ageCTRl,
                 hintText: 'Enter age',
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -114,7 +109,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: breedCTRl,
+                controller: profileController.breedCTRl,
                 hintText: 'Enter breed',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -135,7 +130,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: genderCTRl,
+                controller: profileController.genderCTRl,
                 hintText: 'Enter gender',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -156,7 +151,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: heightCTRl,
+                controller: profileController.heightCTRl,
                 hintText: 'Enter height',
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -181,7 +176,7 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
               ),
               SizedBox(height: 8.h),
               CustomTextField(
-                controller: colorCTRl,
+                controller: profileController.colorCTRl,
                 hintText: 'Enter color',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -198,8 +193,8 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
                 return CustomButton(
                   loading: profileController.loading.value,
                   onTap: () {
-                    final age = int.tryParse(ageCTRl.text);
-                    final height = int.tryParse(heightCTRl.text);
+                    final age = int.tryParse(profileController.ageCTRl.text);
+                    final height = int.tryParse(profileController.heightCTRl.text);
 
                     if (age == null) {
                       Get.snackbar('Error', 'Please enter a valid age number');
@@ -213,14 +208,15 @@ class _EditAnimalContactDetailsScreenState extends State<EditAnimalContactDetail
 
                     profileController.editClientAnimal(
                       animalId: animalId,
-                      name: nameCTRl.text.trim(),
+                      name: profileController.nameCTRl.text.trim(),
                       age: age,
-                      breed: breedCTRl.text.trim(),
-                      gender: genderCTRl.text.trim(),
+                      breed: profileController.breedCTRl.text.trim(),
+                      gender: profileController.genderCTRl.text.trim(),
                       height: height,
-                      color: colorCTRl.text.trim(),
+                      color: profileController.colorCTRl.text.trim(),
                     );
                   },
+
 
 
                   text: 'Update',

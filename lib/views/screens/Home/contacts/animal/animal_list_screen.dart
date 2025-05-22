@@ -19,7 +19,7 @@ class AnimalListScreen extends StatefulWidget {
 class _AnimalListScreenState extends State<AnimalListScreen> {
   TextEditingController searchController = TextEditingController();
 
-  ClientController _clientController = Get.put(ClientController());
+  final ClientController _clientController = Get.put(ClientController());
   var parameter = Get.parameters;
 
   @override
@@ -42,6 +42,9 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
         centerTitle: true,
       ),
       body: Obx(() {
+        if (_clientController.showLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
         if (_clientController.getAnimalNameList.isEmpty) {
           return Center(child:Text('No Data found!'));
         }
@@ -58,7 +61,7 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      title: Text(displayData.name ?? 'N/A'),
+                      title: Text(displayData.name),
                       trailing: SvgPicture.asset(AppIcons.rightArrow),
                       onTap: () {
                         Get.toNamed(AppRoutes.animalContactDetailsScreen,

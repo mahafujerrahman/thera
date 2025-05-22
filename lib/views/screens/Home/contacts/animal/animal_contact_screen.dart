@@ -33,7 +33,7 @@ WidgetsBinding.instance.addPostFrameCallback((_){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Animal Contacts2',style: AppStyles.fontSize16()),
+        title: Text('Animal Contacts',style: AppStyles.fontSize16()),
         centerTitle: true,
       ),
       body:Obx(() {
@@ -60,7 +60,7 @@ WidgetsBinding.instance.addPostFrameCallback((_){
                           "animalName": "$animalName",
                         }
                       );
-                    //  _clientController.getClientWithAnimal('$animalName');
+                    //_clientController.getClientWithAnimal('$animalName');
                     },
                     leading: Icon(Icons.account_circle_outlined),
                     title: Text(animalName,style: AppStyles.fontSize16()),

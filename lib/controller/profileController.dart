@@ -305,7 +305,12 @@ class ProfileController extends GetxController  implements GetxService {
   }
 
   //================= Animal edit
-
+  final TextEditingController nameCTRl = TextEditingController();
+  final TextEditingController ageCTRl = TextEditingController();
+  final TextEditingController breedCTRl = TextEditingController();
+  final TextEditingController genderCTRl = TextEditingController();
+  final TextEditingController heightCTRl = TextEditingController();
+  final TextEditingController colorCTRl = TextEditingController();
 
 
   Future<void> editClientAnimal({
@@ -323,6 +328,7 @@ class ProfileController extends GetxController  implements GetxService {
       final bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
       final headers = {
         'Authorization': 'Bearer $bearerToken',
+        'Content-Type': 'application/json',
       };
 
       final body = {
