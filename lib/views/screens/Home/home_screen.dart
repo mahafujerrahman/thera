@@ -48,8 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Row(
             children: [
               Obx(() {
-                var profileData = _profileController.profileInformationModel
-                    .value;
+                var profileData = _profileController.profileInformationModel.value;
                 return Container(
                   height: 60.h,
                   width: 60.w,

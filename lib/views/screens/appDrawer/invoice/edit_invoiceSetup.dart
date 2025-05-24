@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:thera_track_app/controller/clientController/invoice_controller.dart';
 import 'package:thera_track_app/controller/profileController.dart';
+import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -23,7 +25,8 @@ class EditInvoiceSetupScreen extends StatefulWidget {
 
 class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
 
-  final ProfileController _profileController = Get.put(ProfileController());
+  final InvoiceController invoiceController = Get.put(InvoiceController());
+
   TextEditingController institutionCTRl = TextEditingController();
   TextEditingController streetCTRl = TextEditingController();
   TextEditingController cityCTRl = TextEditingController();
@@ -33,6 +36,7 @@ class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
   TextEditingController emailCTRl = TextEditingController();
   TextEditingController websiteCTRl = TextEditingController();
 
+  String? invoiceID = '';
 
   Uint8List? _image;
   File? selectedImage;
@@ -41,7 +45,16 @@ class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-
+      final invoiceData = invoiceController.invoiceInformationData.value;
+      institutionCTRl.text = invoiceData.institutionName ?? '';
+      streetCTRl.text = invoiceData.street ?? '';
+      cityCTRl.text = invoiceData.city ?? '';
+      townCTRl.text = invoiceData.town ?? '';
+      zipcodeCTRl.text = invoiceData.zipCode ?? '';
+      phoneCTRl.text = invoiceData.phone ?? '';
+      emailCTRl.text = invoiceData.emailAddress ?? '';
+      websiteCTRl.text = invoiceData.website ?? '';
+      invoiceID = Get.parameters['invoiceID'] ?? '';
     });
   }
 
@@ -59,8 +72,8 @@ class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
         ),
         backgroundColor: AppColors.whiteColor,
         body: Obx((){
-
-          if (_profileController.isLoading.value) {
+          var invoiceData = invoiceController.invoiceInformationData.value;
+          if (invoiceController.isLoading.value) {
             return Center(child: CupertinoActivityIndicator(radius: 32.r, color:AppColors.primaryColor));
           }
           return
@@ -70,41 +83,54 @@ class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
                       children: [
-                        Container(
-                          height: 104.h,
-                          width: 104.w,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.primaryColor, width: 2),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          clipBehavior: Clip.hardEdge,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: _image != null
-                                ? Image.memory(
-                              _image!,
-                              fit: BoxFit.cover,
-                            )
-                                : CachedNetworkImage(
-                              imageUrl: "https://your-image-url-or-placeholder.png",
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Center(
-                                child: CupertinoActivityIndicator(
-                                  radius: 12.r,
-                                  color: AppColors.primaryColor,
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children:  [
+                            _image != null
+                                ? InkWell(
+                              onTap: (){
+                                showImagePickerOption(context);
+                              },
+                              child: Container(
+                                height: 120.h,
+                                width: 120.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  border: Border.all(color: AppColors.primaryColor),
+                                  color: Colors.red,
+                                  shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                    image: MemoryImage(_image!),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                              errorWidget: (context, url, error) => Image.asset(
-                                "assets/images/image_placeHolder.png",
-                                fit: BoxFit.cover,
+                            )
+                                : InkWell(
+                              onTap: (){
+                                showImagePickerOption(context);
+                              },
+                              child: Container(
+                                height: 120.h,
+                                width: 120.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  border: Border.all(color: AppColors.primaryColor),
+                                  shape: BoxShape.rectangle,
+                                  image: DecorationImage(
+                                    image: invoiceData.invoiceImage != null && invoiceData!.invoiceImage!.isNotEmpty
+                                        ? CachedNetworkImageProvider("${ApiConstants.imageBaseUrl}${invoiceData.invoiceImage}")
+                                        : AssetImage("assets/images/image_placeHolder.png") as ImageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
+
                             ),
-                          ),
-                        )
+                          ],
+                        ),
 
                       ],
                     ),
@@ -249,7 +275,20 @@ class _EditInvoiceSetupScreenState extends State<EditInvoiceSetupScreen> {
                       },
                     ),
                     SizedBox(height: 30.h),
-                    CustomButton(onTap: (){}, text: 'Update')
+                    CustomButton(onTap: (){
+                      invoiceController.editInvoice(
+                          invoiceID: invoiceID,
+                          image: selectedImage,
+                          instituteName: institutionCTRl.text,
+                          street: streetCTRl.text,
+                          city: cityCTRl.text,
+                          town: townCTRl.text,
+                          zipCode: zipcodeCTRl.text,
+                          phone: phoneCTRl.text,
+                          emailAddress: emailCTRl.text,
+                          website: websiteCTRl.text
+                      );
+                    }, text: 'Update')
                   ],
                 ),
               ),

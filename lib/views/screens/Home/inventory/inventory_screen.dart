@@ -67,8 +67,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       () => ListView.builder(
                         itemCount: inventoryController.allInventoryList.length,
                         itemBuilder: (context, index) {
-                          var displayData =
-                              inventoryController.allInventoryList[index];
+                          var displayData = inventoryController.allInventoryList[index];
                           return Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8.w, vertical: 4.h),

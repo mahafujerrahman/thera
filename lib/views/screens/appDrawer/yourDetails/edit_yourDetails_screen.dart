@@ -199,35 +199,6 @@ class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
                 ),
                 SizedBox(height: 10.h),
 
-               /* IntlPhoneField(
-                  decoration: InputDecoration(
-                    hintText: AppStrings.enterPhoneNumber,
-                    hintStyle: TextStyle(color: Colors.grey),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                      borderSide: BorderSide(color: AppColors.primaryColor),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                      borderSide: BorderSide(color: AppColors.primaryColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                      borderSide: BorderSide(color: AppColors.primaryColor, width: 1.w),
-                    ),
-                  ),
-                  showCountryFlag: true,
-                  initialCountryCode: 'US',
-                  initialValue: phoneNumberCTRl.text,
-                  flagsButtonMargin: EdgeInsets.only(left: 10.w),
-                  disableLengthCheck: true,
-                  dropdownIconPosition: IconPosition.trailing,
-                  onChanged: (phone) {
-                    phoneNumberCTRl.text = phone.completeNumber;
-                    print("Phone===============> ${phone.completeNumber}");
-                  },
-                ),*/
                 // Main Email Address
                 SizedBox(height: 8.h),
                 Text('Main Email Address', style: AppStyles.fontSize16(fontWeight: FontWeight.w400, color: AppColors.color424242)),

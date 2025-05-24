@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +8,9 @@ import 'package:thera_track_app/utils/style.dart';
 class SubscriptionCard extends StatelessWidget {
   final String planName;
   final double price;
-  final String feature;
+  final String feature1;
+  final String feature2;
+  final String feature3;
   final String billingCycle;
   final bool isCurrentPlan;
 
@@ -17,7 +18,9 @@ class SubscriptionCard extends StatelessWidget {
     Key? key,
     required this.planName,
     required this.price,
-    required this.feature,
+    required this.feature1,
+    required this.feature2,
+    required this.feature3,
     required this.billingCycle,
     this.isCurrentPlan = false,
   }) : super(key: key);
@@ -86,9 +89,26 @@ class SubscriptionCard extends StatelessWidget {
             children: [
               Icon(Icons.done, color: AppColors.primaryColor),
               SizedBox(width: 8.w),
-              Text('$feature', style: AppStyles.fontSize16(color: Colors.blue)),
+              Text('$feature1', style: AppStyles.fontSize16(color: Colors.blue)),
             ],
           ),
+          Row(
+            children: [
+              Icon(Icons.done, color: AppColors.primaryColor),
+              SizedBox(width: 8.w),
+              Text('$feature2', style: AppStyles.fontSize16(color: Colors.blue)),
+            ],
+          ),
+          Row(
+            children: [
+              Icon(Icons.done, color: AppColors.primaryColor),
+              SizedBox(width: 8.w),
+              Text('$feature3', style: AppStyles.fontSize16(color: Colors.blue)),
+            ],
+          ),
+
+
+
 
           // Price Section
           Row(

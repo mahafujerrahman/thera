@@ -17,9 +17,7 @@ class ProfileController extends GetxController  implements GetxService {
 
 //============================> Get Profile Data <=============================
 
-  Rx<
-      ProfileInformationModel> profileInformationModel = ProfileInformationModel()
-      .obs;
+  Rx<ProfileInformationModel> profileInformationModel = ProfileInformationModel().obs;
   var isLoading = false.obs;
 
   getProfileData() async {

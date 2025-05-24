@@ -56,5 +56,10 @@ class ApiConstants {
   static const String getOneAppointmentDetailsByIDEndPoint = "/patient/get-one-service";
   static const String sendFeedBackEndPoint = "/send/feedback";
 
+  static const String createInvoiceEndPoint = "/invoice/create-invoice";
+  static const String getAllSubscriptionPlanEndPoint = "/subscription/read";
+  static const String getInvoiceDataEndPoint = "/invoice/read-invoice";
+  static const String updateInvoiceDataEndPoint = "/invoice/update-invoice";
+
 
 }
