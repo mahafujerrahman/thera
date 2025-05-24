@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/clientController/subscription_controller.dart';
 import 'package:thera_track_app/controller/payment/payment_controller.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -60,10 +61,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: (){
+                      var logger = Logger();
+                      logger.i('======>>Package ID${displayData.id}');
                       paymentController.paymentSheetInitialization(
                           displayData.price.toString(),
                           "USD",
-                          context
+                          context,
+
                       );
                     },
                     child: SubscriptionCard(

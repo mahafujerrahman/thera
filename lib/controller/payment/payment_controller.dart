@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/payment/keys.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -16,6 +17,12 @@ class PaymentController extends GetxController {
     try {
       await Stripe.instance.presentPaymentSheet().then((val) {
         internetPaymentData = null;
+
+        // Log the successful payment response
+        var logger = Logger();
+        logger.w('======>> Payment Successful Response: ${internetPaymentData.toString()}');
+
+
 
         // Show success message in AlertDialog instead of SnackBar
         showAlertDialog(context, amount);
