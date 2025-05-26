@@ -78,6 +78,7 @@ class _TravelDetailsScreenState extends State<TravelDetailsScreen> {
                     ),
                   ),
 
+
                 Expanded(
                   child: travelController.getAllTravelModel.isEmpty
                       ? Center(

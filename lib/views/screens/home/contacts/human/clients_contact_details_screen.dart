@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -33,12 +30,9 @@ class _ClientsContactDetailsScreenState extends State<ClientsContactDetailsScree
 
   @override
   void initState() {
-
     WidgetsBinding.instance.addPostFrameCallback((_){
       _clientController.clientDetailsByID("${parameter['clientId']}");
     });
-
-    // TODO: implement initState
     super.initState();
   }
   @override
@@ -59,7 +53,7 @@ class _ClientsContactDetailsScreenState extends State<ClientsContactDetailsScree
         centerTitle: true,
         actions: [
           Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.h),
             child: InkWell(
                 onTap: (){
                   Get.toNamed(AppRoutes.editContactDetailsScreen);

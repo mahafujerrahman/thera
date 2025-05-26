@@ -45,6 +45,7 @@ import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/unpaid/undPaidDetails_screen.dart';
+import 'package:thera_track_app/views/screens/home/appointment/reschedule_calender.dart';
 import 'package:thera_track_app/views/screens/home/travel/addCostScreen.dart';
 import 'package:thera_track_app/views/screens/home/travel/costDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/home/travel/travel_screen.dart';
@@ -109,6 +110,7 @@ class AppRoutes{
   static String invoiceSetupScreen = "/invoice_setupScreen";
   static String editInvoiceSetupScreen = "/edit_InvoiceSetupScreen";
   static String advanceSettingScreen = "/advanceSettingScreen";
+  static String appoinmentRescheduleCalenderScreen = "/appoinmentRescheduleCalenderScreen";
 
 
 
@@ -145,6 +147,7 @@ class AppRoutes{
 
    GetPage(name:horseDetailsScreen, page: ()=> HorseDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:appoinmentCalenderScreen, page: ()=> AppoinmentCalenderScreen(),transition: Transition.noTransition),
+   GetPage(name:appoinmentRescheduleCalenderScreen, page: ()=> AppoinmentRescheduleCalenderScreen(),transition: Transition.noTransition),
 
 
    //ChartArchiveScreen

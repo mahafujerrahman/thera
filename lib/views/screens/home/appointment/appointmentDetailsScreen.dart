@@ -221,7 +221,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                                 SizedBox(height: 8.h),
                                 CustomButton(
                                     onTap: () {
-                                      Get.toNamed(AppRoutes.appoinmentCalenderScreen);
+                                      Get.toNamed(AppRoutes.appoinmentRescheduleCalenderScreen,
+                                      parameters: {
+                                        'serviceID' : displayData.id!
+                                      }
+                                      );
                                     },
                                     prefixIcon: Icon(Icons.calendar_month),
                                     text: 'Reschedule'),
