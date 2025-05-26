@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/clientController.dart';
@@ -8,6 +9,7 @@ import 'package:thera_track_app/controller/clientController/service_controller.d
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:thera_track_app/utils/app_icons.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -48,7 +50,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
       //=============================> AppBar Section <=======================
       appBar: AppBar(
         title: Text(
-          'Human - New Create Details',
+          'New Create Details',
           style: AppStyles.fontSize16(fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
@@ -118,7 +120,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Text(serviceController.descriptionTextController.text.trim()),
                       ),
@@ -131,7 +133,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(4.r),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +147,7 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                         padding: EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                         child:  Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,30 +182,71 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                 PriceDetailWidget(title: 'Final Cost',  price: serviceController.finalCost.value.toString()),
                 SizedBox(height: 20.h),
                 Column(
+                  mainAxisAlignment:  MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: CustomButton(
-                            onTap: () {
+                          child: ElevatedButton(
+                            onPressed: () {
                               Get.toNamed(AppRoutes.appoinmentCalenderScreen);
                             },
-                            prefixIcon: Icon(Icons.calendar_month),
-                            text: 'Make Appointment',
-                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              minimumSize: Size(double.infinity, 50.h),
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(AppIcons.calenderIcon),
+                                SizedBox(width: 8.w),
+                                Flexible(
+                                  child: Text(
+                                    'Make Appointment',
+                                    style: AppStyles.fontSize14(color: AppColors.whiteColor),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 10.w),
-                       /* Expanded(
-                          child: CustomButton(
-                            onTap: () {},
-                            prefixIcon: Icon(Icons.send),
-                            text: 'Sent',
-                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              minimumSize: Size(double.infinity, 50.h),
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(AppIcons.save),
+                                SizedBox(width: 8.w),
+                                Flexible(
+                                  child: Text(
+                                    'Save',
+                                    style: AppStyles.fontSize14(color: AppColors.whiteColor),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),*/
+                        ),
                       ],
                     ),
                     SizedBox(height: 12.h),
@@ -213,8 +256,8 @@ class _HumanStepFiveState extends State<HumanStepFive> {
                         Expanded(
                           child: CustomButton(
                             onTap: () {},
-                            prefixIcon: Icon(Icons.save),
-                            text: 'Save',
+                            prefixIcon: Icon(Icons.send),
+                            text: 'Sent',
                             textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
                           ),
                         ),

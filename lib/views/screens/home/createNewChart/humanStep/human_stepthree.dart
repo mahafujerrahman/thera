@@ -6,6 +6,7 @@ import 'package:thera_track_app/controller/clientController/service_controller.d
 import 'package:thera_track_app/controller/profileController.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 
 class HumanStepThree extends StatefulWidget {
@@ -36,8 +37,8 @@ class _HumanStepThreeState
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: Text(
-          'Step 3 -Human',
-          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            'Step 3',
+            style: AppStyles.fontSize16()
         ),
         centerTitle: true,
         leading: IconButton(

@@ -34,5 +34,7 @@ class AppIcons{
   static String subscriptionIcon ="$baseUrl/subscriptionIcon.svg";
   static String bottomArrow ="$baseUrl/bottomArrow.svg";
   static String travel ="$baseUrl/travel.svg";
+  static String save ="$baseUrl/save.svg";
+  static String calenderIcon ="$baseUrl/calenderIcon.svg";
 
 }

@@ -33,9 +33,9 @@ class _TreatmentScreenState extends State<TreatmentScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Treatment", style: AppStyles.fontSize14()),
+        title: Text("Treatment", style: AppStyles.fontSize16()),
         backgroundColor: AppColors.whiteColor,
-        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
       ),
       body: Obx(()=>  Padding(
           padding: EdgeInsets.all(16.r),

@@ -37,7 +37,7 @@ class _HumanStepFourState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Step 4 -Human',
+          'Step 4',
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

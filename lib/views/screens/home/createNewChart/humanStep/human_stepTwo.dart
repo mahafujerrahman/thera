@@ -47,7 +47,7 @@ class _HumanStepTwoState extends State<HumanStepTwo> {
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: Text(
-           'Step 2 : Human ',
+           'Step 2 ',
             style: AppStyles.fontSize16()
         ),
         centerTitle: true,

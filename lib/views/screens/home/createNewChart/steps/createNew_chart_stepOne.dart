@@ -39,7 +39,7 @@ class _CreateNewChartStepOneScreenState extends State<CreateNewChartStepOneScree
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Step 1 -main', style: AppStyles.fontSize16()),
+        title: Text('Step 1', style: AppStyles.fontSize16()),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black, size: 20.w),
