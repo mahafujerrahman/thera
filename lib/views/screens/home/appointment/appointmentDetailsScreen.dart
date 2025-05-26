@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -11,6 +12,7 @@ import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:thera_track_app/utils/app_icons.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -221,18 +223,40 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> wit
                                 ],
                               ),
                               SizedBox(height: 8.h),
-                              CustomButton(
-                                  onTap: () {
-                                    Get.toNamed(AppRoutes.appoinmentRescheduleCalenderScreen,
-                                        parameters: {
-                                          'serviceID' : displayData.id!
-                                        }
-                                    )?.then((_) {
-                                      _loadAppointment();
-                                    });
-                                  },
-                                  prefixIcon: Icon(Icons.calendar_month),
-                                  text: 'Reschedule'),
+                              ElevatedButton(
+                                onPressed: ()  {
+                                  Get.toNamed(AppRoutes.appoinmentRescheduleCalenderScreen,
+                                      parameters: {
+                                        'serviceID' : displayData.id!
+                                      }
+                                  )?.then((_) {
+                                    _loadAppointment();
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                  minimumSize: Size(double.infinity, 50.h),
+                                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset(AppIcons.calenderIcon),
+                                    SizedBox(width: 8.w),
+                                    Flexible(
+                                      child: Text(
+                                        'Reschedule',
+                                        style: AppStyles.fontSize16(color: AppColors.whiteColor),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               SizedBox(height: 8.h),
                             ],
                           )
