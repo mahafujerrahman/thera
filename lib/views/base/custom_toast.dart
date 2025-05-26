@@ -12,7 +12,7 @@ class AppCustomToast {
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         textColor: Colors.white,
-        backgroundColor: AppColors.primaryColor
+        backgroundColor: AppColors.blackColor
     );
   }
   // Method to show a toast message

@@ -51,14 +51,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: SvgPicture.asset(AppIcons.backButton),
-          padding: EdgeInsets.all(8.0),
-          iconSize: 18.sp,
-        ),
+
       ),
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(

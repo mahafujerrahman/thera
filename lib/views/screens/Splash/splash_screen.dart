@@ -10,6 +10,7 @@ import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/views/base/custom_toast.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -81,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ///======================no internet=========================>
       else {
        // Get.snack bar('Network Error!', 'Please connect your internet.');
-       // AppCustomToast.showCustomToast('Please connect your internet.');
+        AppCustomToast.showCustomToast('Please connect your internet.');
         print("----------------------No internet");
       }
     });

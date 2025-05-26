@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:thera_track_app/controller/clientController/appointmentController.dart';
 import 'package:thera_track_app/controller/clientController/service_controller.dart';
 import 'package:thera_track_app/helpers/time_formate.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -18,7 +19,7 @@ class AppoinmentRescheduleCalenderScreen extends StatefulWidget {
   _AppoinmentRescheduleCalenderScreenState createState() => _AppoinmentRescheduleCalenderScreenState();
 }
 class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentRescheduleCalenderScreen> {
-  ServiceController serviceController =Get.put(ServiceController());
+  AppointmentController appointmentController =Get.put(AppointmentController());
   String? serviceID ='';
   var parameter = Get.parameters;
 
@@ -89,11 +90,11 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                   focusedDay: _focusedDay,
                   calendarFormat: _calendarFormat,
                   selectedDayPredicate: (day) {
-                    return isSameDay(serviceController.selectedAppointmentDay, day);
+                    return isSameDay(appointmentController.selectedAppointmentDay, day);
                   },
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
-                      serviceController.selectedAppointmentDay = selectedDay;
+                      appointmentController.selectedAppointmentDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
                   },
@@ -208,7 +209,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text(TimeFormatHelper.formatDate(serviceController.selectedAppointmentDay ?? DateTime.now()),
+                                          child: Text(TimeFormatHelper.formatDate(appointmentController.selectedAppointmentDay ?? DateTime.now()),
                                           ),
                                         ))
                                 ),
@@ -223,7 +224,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                   if (pickedTime != null && pickedTime != selectedStartTime) {
                                     setState(() {
                                       selectedStartTime = pickedTime;
-                                      serviceController.apStartTime.value = pickedTime.format(context);
+                                      appointmentController.apStartTime.value = pickedTime.format(context);
                                     });
                                   }
                                 },
@@ -235,8 +236,8 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                   child: Padding(
                                     padding: EdgeInsets.all(8.r),
                                     child: Obx(() {
-                                      return Text(serviceController.apStartTime.value.isNotEmpty
-                                          ? serviceController.apStartTime.value
+                                      return Text(appointmentController.apStartTime.value.isNotEmpty
+                                          ? appointmentController.apStartTime.value
                                           : selectedStartTime.format(context));
                                     }),
                                   ),
@@ -273,7 +274,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                         ),
                                         child: Padding(
                                             padding: EdgeInsets.all(8.r),
-                                            child: Text(TimeFormatHelper.formatDate(serviceController.selectedAppointmentDay ?? DateTime.now()))
+                                            child: Text(TimeFormatHelper.formatDate(appointmentController.selectedAppointmentDay ?? DateTime.now()))
                                         )
                                     )
                                 ),
@@ -287,7 +288,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                     if (pickedTime != null && pickedTime != selectedEndTime) {
                                       setState(() {
                                         selectedEndTime = pickedTime;
-                                        serviceController.apEndTime.value = pickedTime.format(context);
+                                        appointmentController.apEndTime.value = pickedTime.format(context);
                                       });
                                     }
                                   },
@@ -299,8 +300,8 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                                       child: Padding(
                                         padding: EdgeInsets.all(8.r),
                                         child: Obx(() {
-                                          return Text(serviceController.apEndTime.value.isNotEmpty
-                                              ? serviceController.apEndTime.value
+                                          return Text(appointmentController.apEndTime.value.isNotEmpty
+                                              ? appointmentController.apEndTime.value
                                               : selectedStartTime.format(context));
                                         }),
                                       )),
@@ -319,7 +320,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                 onTap: () {
                   setState(() {
                     // Toggle the visibility of reminder options
-                    serviceController.isReminderAllDay.value = !serviceController.isReminderAllDay.value;
+                    appointmentController.isReminderAllDay.value = !appointmentController.isReminderAllDay.value;
                   });
                 },
                 child: CustomListTile(
@@ -330,7 +331,7 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
               ),
 
 
-              if (serviceController.isReminderAllDay.value)
+              if (appointmentController.isReminderAllDay.value)
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   decoration: BoxDecoration(
@@ -342,10 +343,10 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                       Obx(() {
                         return CheckboxListTile(
                           title: Text("12 hour before"),
-                          value: serviceController.reTwelveHourBefore.value,
+                          value: appointmentController.reTwelveHourBefore.value,
                           onChanged: (bool? value) {
-                            serviceController.reTwelveHourBefore.value = value!;
-                            print('12 hour before is ${serviceController.reTwelveHourBefore.value}');
+                            appointmentController.reTwelveHourBefore.value = value!;
+                            print('12 hour before is ${appointmentController.reTwelveHourBefore.value}');
                           },
                         );
                       }),
@@ -353,10 +354,10 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                       Obx(() {
                         return CheckboxListTile(
                           title: Text("1 Day before"),
-                          value: serviceController.reOneDayBefore.value,
+                          value: appointmentController.reOneDayBefore.value,
                           onChanged: (bool? value) {
-                            serviceController.reOneDayBefore.value = value!;
-                            print('1 Day before is ${serviceController.reOneDayBefore.value}');
+                            appointmentController.reOneDayBefore.value = value!;
+                            print('1 Day before is ${appointmentController.reOneDayBefore.value}');
                           },
                         );
                       }),
@@ -365,10 +366,10 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                       Obx(() {
                         return CheckboxListTile(
                           title: Text("2 Day before"),
-                          value: serviceController.reTwoDayBefore.value,
+                          value: appointmentController.reTwoDayBefore.value,
                           onChanged: (bool? value) {
-                            serviceController.reTwoDayBefore.value = value!;
-                            print('2 Day before is ${serviceController.reTwoDayBefore.value}');
+                            appointmentController.reTwoDayBefore.value = value!;
+                            print('2 Day before is ${appointmentController.reTwoDayBefore.value}');
                           },
                         );
                       }),
@@ -377,11 +378,11 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
                       Obx(() {
                         return CheckboxListTile(
                           title: Text("1 week before"),
-                          value: serviceController.reOneWeekBefore.value,
+                          value: appointmentController.reOneWeekBefore.value,
                           onChanged: (bool? value) {
-                            serviceController.reOneWeekBefore.value = value!;
+                            appointmentController.reOneWeekBefore.value = value!;
                             // Print the value when changed
-                            print('1 week before is ${serviceController.reOneWeekBefore.value}');
+                            print('1 week before is ${appointmentController.reOneWeekBefore.value}');
                           },
                         );
                       }),
@@ -391,8 +392,10 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
               SizedBox(height: 16.h),
               // Done Button
               CustomButton(onTap: () {
-                Get.back();
-              }, text: 'Done'),
+                appointmentController.appointmentReschedule(
+                    serviceID: serviceID!
+                );
+              }, text: 'Save'),
             ],
           ),
         ),

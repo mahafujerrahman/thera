@@ -60,6 +60,7 @@ class ApiConstants {
   static const String getAllSubscriptionPlanEndPoint = "/subscription/read";
   static const String getInvoiceDataEndPoint = "/invoice/read-invoice";
   static const String updateInvoiceDataEndPoint = "/invoice/update-invoice";
+  static const String appointmentResechduleEndPoint = "/patient/update-appointment";
 
 
 }

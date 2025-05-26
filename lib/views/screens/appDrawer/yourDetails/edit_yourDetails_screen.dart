@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thera_track_app/controller/profileController.dart';
+import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -63,7 +65,7 @@ class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Picture and Name
-              /*  Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -98,7 +100,8 @@ class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
                                 height: 120.h,
                                 width: 120.w,
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  shape: BoxShape.rectangle,
                                   image: DecorationImage(
                                     image: profileData.profileImage != null && profileData.profileImage!.isNotEmpty
                                         ? CachedNetworkImageProvider("${ApiConstants.imageBaseUrl}${profileData.profileImage}")
@@ -121,14 +124,10 @@ class _EditYourDetailsScreenState extends State<EditYourDetailsScreen> {
                             ),
                           ],
                         ),
-                        Text(
-                          "${profileData.firstName}",
-                          style: AppStyles.fontSize16(fontWeight: FontWeight.w400),
-                        ),
                       ],
                     ),
                   ],
-                ),*/
+                ),
                 SizedBox(height: 16.h),
                 // Full Name
                 Text(AppStrings.nameText, style: AppStyles.fontSize16(fontWeight: FontWeight.w400, color: AppColors.color424242)),

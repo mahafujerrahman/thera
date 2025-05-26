@@ -75,16 +75,17 @@ class ServiceController extends GetxController {
   //for Human Section
   DateTime? selectedAppointmentDay;
   RxBool isReminderAllDay = false.obs;
-
   RxBool reTwelveHourBefore = false.obs;
   RxBool reOneDayBefore = false.obs;
   RxBool reTwoDayBefore = false.obs;
   RxBool reOneWeekBefore = false.obs;
+  RxString apStartTime = ''.obs;
+  RxString apEndTime = ''.obs;
+
   RxBool isPaid = false.obs;
   RxBool createServiceLoading = false.obs;
 
-  RxString apStartTime = ''.obs;
-  RxString apEndTime = ''.obs;
+
 
   var selectedAreaOfConcern = <String>[].obs;
   final TextEditingController descriptionTextController =

@@ -15,21 +15,36 @@ import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
 import 'package:thera_track_app/views/base/custom_row.dart';
+import 'package:flutter/widgets.dart'; // For RouteAware
 
 class AppointmentDetailsScreen extends StatefulWidget {
   @override
   State<AppointmentDetailsScreen> createState() => _AppointmentDetailsScreenState();
 }
 
-class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
+class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> with RouteAware {
   final AppointmentController appointmentController = Get.put(AppointmentController());
   var parameter = Get.parameters;
 
   @override
   void initState() {
     super.initState();
+    _loadAppointment();
+  }
+
+  void _loadAppointment() {
     final appointmentID = Get.parameters['appointmentID'] ?? '';
     appointmentController.getOneAppointmentByIdDetails(appointmentID);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _loadAppointment();
   }
 
   bool isPaid = false;
@@ -50,190 +65,179 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
           return appointmentController.isLoading.value
               ? Center(child: CupertinoActivityIndicator(radius: 32.r, color: CupertinoColors.activeBlue))
               : Obx(() {
-                  var displayData = appointmentController.getOneAppoinmentDetailsModel.value;
-                  return Padding(
-                      padding: EdgeInsets.all(8),
-                      child: SingleChildScrollView(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                            Container(
-                                height: 100.h,
-                                width: double.infinity,
-                                child: Image.asset(AppImages.appLogo)),
-                            // Client Info Section
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomRow(
-                                    title: 'Name',
-                                    displayData: displayData.clientId?.name ?? 'N/A'),
-                                CustomRow(
-                                    title: 'Email',
-                                    displayData: displayData.clientId?.email ?? 'N/A'),
-                                CustomRow(
-                                    title: 'Mobile',
-                                    displayData: displayData.clientId?.phoneNumber ?? 'N/A'),
-                                CustomRow(
-                                    title: 'Address',
-                                    displayData: displayData.clientId?.address?.city ?? 'N/A'),
+            var displayData = appointmentController.getOneAppoinmentDetailsModel.value;
+            return Padding(
+                padding: EdgeInsets.all(8),
+                child: SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: 100.h,
+                              width: double.infinity,
+                              child: Image.asset(AppImages.appLogo)),
+                          // Client Info Section
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomRow(title: 'Name', displayData: displayData.clientId?.name ?? 'N/A'),
+                              CustomRow(title: 'Email', displayData: displayData.clientId?.email ?? 'N/A'),
+                              CustomRow(title: 'Mobile', displayData: displayData.clientId?.phoneNumber ?? 'N/A'),
+                              CustomRow(title: 'Address', displayData: displayData.clientId?.address?.city ?? 'N/A'),
 
-                                // Description Section
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 4.w),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 8.h),
-                                        child: Container(
-                                          height: 217.h,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.whiteColor,
-                                            borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                                            child: Center(
-                                              child: CachedNetworkImage(
-                                                imageUrl: displayData.concernImages != null
-                                                    ? "${ApiConstants.imageBaseUrl}${displayData.concernImages?[0]}"
-                                                    : "",
-                                                fit: BoxFit.cover,
-                                                errorWidget: (context, url, error) => Center(
-                                                  child: Icon(
-                                                    Icons.error,
-                                                    size: 24.r,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                placeholder: (context, url) => Center(
-                                                  child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.secondaryColor,
-                                          borderRadius: BorderRadius.circular(4.h),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(vertical: 4.w),
-                                              child: Text('Description', style: AppStyles.fontSize18(color: AppColors.color575757)),
-                                            ),
-                                            Container(
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.whiteColor,
-                                                  borderRadius: BorderRadius.circular(4.r),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(8.r),
-                                                  child: Text("${displayData?.description}"),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(4.r),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.secondaryColor,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 4.w),
-                                        child: Text('Point', style: AppStyles.fontSize18(color: AppColors.color575757),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.whiteColor,
-                                          borderRadius: BorderRadius.circular(4.r),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(8.r),
-                                          child: displayData.points != null && displayData.points!.isNotEmpty
-                                              ? Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: List.generate(
-                                                    displayData.points![0].split(",").length,
-                                                    (index) {
-                                                      String point = displayData.points![0].split(",")[index].replaceAll(RegExp(r'[\[\]"]'), '');
-                                                      return Text('${index + 1}. $point');
-                                                    },
-                                                  ),
-                                                )
-                                              : Text('No points available'),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                Column(
+                              // Description Section
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 4.w),
+                                      padding: EdgeInsets.symmetric(vertical: 8.h),
                                       child: Container(
-                                        width: double.infinity,
+                                        height: 217.h,
                                         decoration: BoxDecoration(
-                                          color: AppColors.secondaryColor,
-                                          borderRadius: BorderRadius.circular(4),
+                                          color: AppColors.whiteColor,
+                                          borderRadius: BorderRadius.all(Radius.circular(4.r)),
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('Next Appointments',
-                                                  style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
-                                              SizedBox(height: 4.h),
-                                              Text(
-                                                displayData.apDate != null
-                                                    ? TimeFormatHelper.formatDate(displayData.apDate!)
-                                                    : 'No Date',
-                                                style: AppStyles.fontSize14(color: AppColors.color575757),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.all(Radius.circular(4.r)),
+                                          child: Center(
+                                            child: CachedNetworkImage(
+                                              imageUrl: displayData.concernImages != null && displayData.concernImages!.isNotEmpty
+                                                  ? "${ApiConstants.imageBaseUrl}${displayData.concernImages?[0]}"
+                                                  : "",
+                                              fit: BoxFit.cover,
+                                              errorWidget: (context, url, error) => Center(
+                                                child: Icon(Icons.error, size: 24.r, color: Colors.black),
                                               ),
-                                              SizedBox(height: 4.h),
-                                              Text(displayData.apStartTime.toString(), style: AppStyles.fontSize14(color: AppColors.color575757)),
-                                            ],
+                                              placeholder: (context, url) => Center(
+                                                child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
+                                    Container(
+                                      padding: EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.secondaryColor,
+                                        borderRadius: BorderRadius.circular(4.h),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 4.w),
+                                            child: Text('Description', style: AppStyles.fontSize18(color: AppColors.color575757)),
+                                          ),
+                                          Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.whiteColor,
+                                                borderRadius: BorderRadius.circular(4.r),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.r),
+                                                child: Text("${displayData?.description ?? ''}"),
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 16.h),
                                   ],
                                 ),
-                                SizedBox(height: 8.h),
-                                CustomButton(
-                                    onTap: () {
-                                      Get.toNamed(AppRoutes.appoinmentRescheduleCalenderScreen,
-                                      parameters: {
-                                        'serviceID' : displayData.id!
-                                      }
-                                      );
-                                    },
-                                    prefixIcon: Icon(Icons.calendar_month),
-                                    text: 'Reschedule'),
-                                SizedBox(height: 8.h),
-                              ],
-                            )
-                          ])));
-                });
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(4.r),
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondaryColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 4.w),
+                                      child: Text('Point', style: AppStyles.fontSize18(color: AppColors.color575757),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.whiteColor,
+                                        borderRadius: BorderRadius.circular(4.r),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.r),
+                                        child: displayData.points != null && displayData.points!.isNotEmpty
+                                            ? Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: List.generate(
+                                            displayData.points![0].split(",").length, (index) {
+                                              String point = displayData.points![0].split(",")[index].replaceAll(RegExp(r'[\[\]"]'), '');
+                                              return Text('${index + 1}. $point');
+                                            },
+                                          ),
+                                        )
+                                            : Text('No points available'),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 4.w),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.secondaryColor,
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Next Appointments',
+                                                style: AppStyles.fontSize18(color: AppColors.color575757, fontWeight: FontWeight.w500)),
+                                            SizedBox(height: 4.h),
+                                            Text(
+                                              displayData.apDate != null
+                                                  ? TimeFormatHelper.formatDate(displayData.apDate!)
+                                                  : 'No Date',
+                                              style: AppStyles.fontSize14(color: AppColors.color575757),
+                                            ),
+                                            SizedBox(height: 4.h),
+                                            Text(displayData.apStartTime.toString(), style: AppStyles.fontSize14(color: AppColors.color575757)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8.h),
+                              CustomButton(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.appoinmentRescheduleCalenderScreen,
+                                        parameters: {
+                                          'serviceID' : displayData.id!
+                                        }
+                                    )?.then((_) {
+                                      _loadAppointment();
+                                    });
+                                  },
+                                  prefixIcon: Icon(Icons.calendar_month),
+                                  text: 'Reschedule'),
+                              SizedBox(height: 8.h),
+                            ],
+                          )
+                        ])));
+          });
         }));
   }
 }

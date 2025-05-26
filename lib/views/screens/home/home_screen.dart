@@ -5,9 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:thera_track_app/controller/profileController.dart';
-import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
@@ -45,47 +43,54 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(80.h),
         child: AppBar(
           automaticallyImplyLeading: false,
-          title: Row(
-            children: [
-              Obx(() {
-                var profileData = _profileController.profileInformationModel.value;
-                return Container(
+          title: Obx(() {
+            final profileData = _profileController.profileInformationModel.value;
+            final profileImageUrl = profileData.profileImage != null && profileData.profileImage!.isNotEmpty
+                ? "${ApiConstants.imageBaseUrl}${profileData.profileImage}"
+                : null;
+
+            return Row(
+              children: [
+                Container(
                   height: 60.h,
                   width: 60.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   clipBehavior: Clip.hardEdge,
-                  child: CachedNetworkImage(
-                    imageUrl: "${ApiConstants.imageBaseUrl}${profileData.profileImage}",
+                  child: profileImageUrl != null
+                      ? CachedNetworkImage(
+                    imageUrl: profileImageUrl,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(child: CupertinoActivityIndicator(radius: 16.r, color: AppColors.primaryColor,),
-                        ),
+                    placeholder: (context, url) => Center(
+                      child: CupertinoActivityIndicator(radius: 16.r, color: AppColors.primaryColor),
+                    ),
                     errorWidget: (context, url, error) => Image.asset(
                       "assets/images/image_placeHolder.png",
                       fit: BoxFit.cover,
                     ),
+                  )
+                      : Image.asset(
+                    "assets/images/image_placeHolder.png",
+                    fit: BoxFit.cover,
                   ),
-                );
-              }
-              ),
-              SizedBox(width: 10.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hello, Good Evening',
-                    style: AppStyles.fontSize14(color: AppColors.whiteColor),
-                  ),
-                  Text(
-                    'Setup Your Account',
-                    style: AppStyles.fontSize16(color: AppColors.whiteColor,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                SizedBox(width: 10.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Hello, Good Evening',
+                      style: AppStyles.fontSize14(color: AppColors.whiteColor),
+                    ),
+                    Text(profileData.firstName ?? '', style: AppStyles.fontSize16(color: AppColors.whiteColor, fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }),
           backgroundColor: Colors.blue,
           actions: [
             IconButton(
@@ -97,15 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.w),
         child: GridView.count(
           crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 10.w,
+          mainAxisSpacing: 10.h,
           children: [
             GridViewTile(
+              key: const ValueKey('createNewChart'),
               child: SvgPicture.asset(AppIcons.newChart),
               label: 'Create New Chart',
               onTap: () {
@@ -113,6 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             GridViewTile(
+              label: 'Notification',
+              onTap: () {
+                Get.toNamed(AppRoutes.notificationScreen);
+              },
               child: Container(
                 height: 40.h,
                 width: 40.w,
@@ -124,10 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text('01', style: TextStyle(fontSize: 18.sp)),
                 ),
               ),
-              label: 'Notification',
-              onTap: () {
-                Get.toNamed(AppRoutes.notificationScreen);
-              },
             ),
             GridViewTile(
               child: SvgPicture.asset(AppIcons.chartArchive),
@@ -157,13 +163,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 Get.toNamed(AppRoutes.appointmentScreen);
               },
             ),
-          /*  GridViewTile(
+            // Uncomment if needed in future:
+            /*
+            GridViewTile(
+              key: const ValueKey('offlineFiles'),
               child: SvgPicture.asset(AppIcons.offlineIcon),
               label: 'Offline Files',
               onTap: () {
                 Get.toNamed(AppRoutes.offLineFileScreen);
               },
-            ),*/
+            ),
+            */
             GridViewTile(
               child: SvgPicture.asset(AppIcons.inventoryIcon),
               label: 'Inventory',

@@ -7,7 +7,7 @@ class AppIcons{
   static String eyeOffIcon = "$baseUrl/eye-off.svg";
   static String errorImage = "$baseUrl/errorImage.svg";
   static String editIcon= "$baseUrl/edit.svg";
-  static String backButton = "$baseUrl/backArrow.svg";
+
 
 // Sign in Screen
   static String emailIcon ="$baseUrl/email.svg";
