@@ -28,9 +28,6 @@ class _AppoinmentRescheduleCalenderScreenState extends State<AppoinmentReschedul
 
   DateTime _focusedDay = DateTime.now();
 
-
-
-
   // List of reminders
   List<String> reminderOptions = [
     "12 hour before",
