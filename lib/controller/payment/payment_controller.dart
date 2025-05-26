@@ -122,12 +122,12 @@ class PaymentController extends GetxController {
       builder: (c) => AlertDialog(
         backgroundColor: AppColors.whiteColor,
         title: Text("Congratulation.", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
-        content: Text("Return to the Home page \nto explore More Event. \n\nPayment Successful!", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
+        content: Text("Return to the home page \nto explore More Event. \n\nPayment Successful!", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
 
         actions: [
           CustomButton(onTap: (){
             Get.toNamed(AppRoutes.homeScreen);
-          }, text: 'Back to Home')
+          }, text: 'Back to home')
         ],
       ),
     );

@@ -155,6 +155,7 @@ class ServiceController extends GetxController {
       "description": descriptionTextController.text.trim(),
       "points": jsonEncode(pointList),
       "isPaid": isPaid.value.toString(),
+
       "ApDate": selectedAppointmentDay?.toString() ?? '',
       "ApStartTime": apStartTime.value,
       "ApEndTime": apEndTime.value,
@@ -163,6 +164,7 @@ class ServiceController extends GetxController {
       "reOneDayBefore": reOneDayBefore.value.toString(),
       "reTwoDayBefore": reTwoDayBefore.value.toString(),
       "reOneWeekBefore": reOneWeekBefore.value.toString(),
+
       "selectedAnimal": selectedAnimal.value.toString(),
 
       //============>> Animal

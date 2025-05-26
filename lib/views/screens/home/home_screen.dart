@@ -157,13 +157,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Get.toNamed(AppRoutes.appointmentScreen);
               },
             ),
-            GridViewTile(
+          /*  GridViewTile(
               child: SvgPicture.asset(AppIcons.offlineIcon),
               label: 'Offline Files',
               onTap: () {
                 Get.toNamed(AppRoutes.offLineFileScreen);
               },
-            ),
+            ),*/
             GridViewTile(
               child: SvgPicture.asset(AppIcons.inventoryIcon),
               label: 'Inventory',
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SvgPicture.asset(AppIcons.travel),
               label: 'Travel',
               onTap: () {
-                Get.toNamed(AppRoutes.walletDetailsScreen);
+                Get.toNamed(AppRoutes.travelDetailsScreen);
               },
             ),
           ],

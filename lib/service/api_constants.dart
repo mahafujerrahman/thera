@@ -8,7 +8,7 @@ class ApiConstants {
   static String googleBaseUrl="https://maps.googleapis.com/maps/api/place/autocomplete/json";
   static String googleApiKey="AIzaSyAszXC1be8aJ37eHuNcBm_-O1clWkPUwV4";
 
-  //============================>> User Auth <<=================================
+  //============================>> User auth <<=================================
   static const String signUpEndPoint = "/auth/register";
   static const String signInEndPoint = "/auth/login";
   static const String otpVerifyEndPoint = "/auth/verify-email";
@@ -39,7 +39,7 @@ class ApiConstants {
   static const String getAllTreatmentEndPoint = "/treatment/get-all-treatment";
   static const String deleteSingelTreatmentEndPoint = "/treatment/delete-treatment";
   static const String getAllAnimalUnderOneClientEndPoint = "/patient/get-one-client-animal";
-  static const String getAllWalletEndPoint = "/travel/get-all-travel-expenses";
+  static const String getAllTravelEndPoint = "/travel/get-all-travel-expenses";
   static const String addTravelCostEndPoint = "/travel/create-travel-expenses";
   static const String getOneTravelExpensesEndPoint = "/travel/get-one-travel-expenses";
   static const String createServiceEndPoint = "/patient/create-service";

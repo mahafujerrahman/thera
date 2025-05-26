@@ -39,7 +39,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       body: Obx(() {
       if (subscriptionController.isLoading.value) {
         return Center(
-            child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor));
+            child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor)
+        );
       }
         if (subscriptionController.subscriptionPlanList.isEmpty) {
           return Center(

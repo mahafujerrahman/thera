@@ -1,7 +1,7 @@
 import '../models/language_model.dart';
 
 class AppConstants{
-  static String APP_NAME = "Home Health";
+  static String APP_NAME = "home Health";
   static const String bearerToken = "BearerToken";
 
   static const String phoneNumber = "PhoneNumber";

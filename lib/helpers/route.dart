@@ -34,9 +34,6 @@ import 'package:thera_track_app/views/screens/Home/home_screen.dart';
 import 'package:thera_track_app/views/screens/Home/inventory/inventory_screen.dart';
 import 'package:thera_track_app/views/screens/Home/notification/notificationScreen.dart';
 import 'package:thera_track_app/views/screens/Home/offline_file/offline_file_screen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/costDetailsScreen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/addCostScreen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/wallet_screen.dart';
 import 'package:thera_track_app/views/screens/Splash/onboarding_screen.dart';
 import 'package:thera_track_app/views/screens/Splash/splash_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/advanceSetting/advance_setting_screen.dart';
@@ -48,6 +45,9 @@ import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/unpaid/undPaidDetails_screen.dart';
+import 'package:thera_track_app/views/screens/home/travel/addCostScreen.dart';
+import 'package:thera_track_app/views/screens/home/travel/costDetailsScreen.dart';
+import 'package:thera_track_app/views/screens/home/travel/travel_screen.dart';
 import '../views/screens/appDrawer/yourDetails/yourDetails_screen.dart';
 
 class AppRoutes{
@@ -94,7 +94,7 @@ class AppRoutes{
   static String notificationScreen = "/notificationScreen";
   static String resetPassword = "/resetPassword";
   static String inventoryScreen = "/inventoryScreen";
-  static String walletDetailsScreen = "/walletDetailsScreen";
+  static String travelDetailsScreen = "/travelDetailsScreen";
   static String costAddScreen = "/costAddScreen";
   static String costDetailsScreen = "/costDetailsScreen";
   static String equipmentScreen = "/equipmentScreen";
@@ -170,7 +170,7 @@ class AppRoutes{
    //Inventory Screen
    GetPage(name:inventoryScreen, page: ()=> InventoryScreen(),transition: Transition.noTransition),
    // Wallet Details Screen
-   GetPage(name:walletDetailsScreen, page: ()=> WalletDetailsScreen(),transition: Transition.noTransition),
+   GetPage(name:travelDetailsScreen, page: ()=> TravelDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:costAddScreen, page: ()=> CostAddScreen(),transition: Transition.noTransition),
    GetPage(name:costDetailsScreen, page: ()=> CostDetailsScreen(),transition: Transition.noTransition),
 
