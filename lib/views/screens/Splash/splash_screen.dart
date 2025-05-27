@@ -68,7 +68,6 @@ class _SplashScreenState extends State<SplashScreen> {
           bool? isLogged = await PrefsHelper.getBool(AppConstants.isLogged);
           String token = await PrefsHelper.getString(AppConstants.bearerToken);
           var role = await PrefsHelper.getString(AppConstants.role);
-
           ///========================check islogged in, token, and role then decide where will be navigate====================>
 
           if (isLogged != null && isLogged) {
