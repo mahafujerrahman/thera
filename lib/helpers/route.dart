@@ -37,6 +37,7 @@ import 'package:thera_track_app/views/screens/Home/offline_file/offline_file_scr
 import 'package:thera_track_app/views/screens/Splash/onboarding_screen.dart';
 import 'package:thera_track_app/views/screens/Splash/splash_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/advanceSetting/advance_setting_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/subscription/payment_succesful_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_now_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/yourDetails/edit_yourDetails_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/feedback/feedback_screen.dart';
@@ -113,6 +114,7 @@ class AppRoutes{
   static String editInvoiceSetupScreen = "/edit_InvoiceSetupScreen";
   static String advanceSettingScreen = "/advanceSettingScreen";
   static String appoinmentRescheduleCalenderScreen = "/appoinmentRescheduleCalenderScreen";
+  static String paymentSuccessfulScreen = "/paymentSuccessfulScreen";
 
 
 
@@ -190,6 +192,7 @@ class AppRoutes{
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
    GetPage(name:subscriptionNowScreen, page: ()=> SubscriptionNowScreen(),transition: Transition.noTransition),
+   GetPage(name:paymentSuccessfulScreen, page: ()=> PaymentSuccessfulScreen(),transition: Transition.noTransition),
 
    //human Step
    GetPage(name:humanStepTwo, page: ()=> HumanStepTwo(),transition: Transition.noTransition),

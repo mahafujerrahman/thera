@@ -36,5 +36,6 @@ class AppIcons{
   static String travel ="$baseUrl/travel.svg";
   static String save ="$baseUrl/save.svg";
   static String calenderIcon ="$baseUrl/calenderIcon.svg";
+  static String successfulIcon ="$baseUrl/successfulIcon.svg";
 
 }

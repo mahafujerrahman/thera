@@ -1,31 +1,40 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/payment/keys.dart';
 import 'package:thera_track_app/helpers/route.dart';
-import 'package:thera_track_app/utils/app_colors.dart';
-import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/service/api_checker.dart';
+import 'package:thera_track_app/service/api_client.dart';
+import 'package:thera_track_app/service/api_constants.dart';
 
 class PaymentController extends GetxController {
   Map<String, dynamic>? internetPaymentData;
+  String? currentSubscriptionId;
 
-  // Show Payment Sheet
+  var loading = false.obs;
+
+  // Show Payment Sheet and handle success/failure
   Future<void> showPaymentSheet(BuildContext context, String amount) async {
     try {
-      await Stripe.instance.presentPaymentSheet().then((val) {
-        internetPaymentData = null;
-
-        // Log the successful payment response
+      await Stripe.instance.presentPaymentSheet().then((val) async {
         var logger = Logger();
-        logger.w('======>> Payment Successful Response: ${internetPaymentData.toString()}');
 
+        logger.i('======>> Payment Successful Response: ${internetPaymentData.toString()}');
 
+        final paymentIntentId = internetPaymentData?['id'] ?? '';
 
-        // Show success message in AlertDialog instead of SnackBar
-        showAlertDialog(context, amount);
+        if (currentSubscriptionId != null && paymentIntentId.isNotEmpty) {
+          logger.w("joy bangla");
+
+          return;
+          // Call backend API to confirm payment success
+          await subcriptionPaymentSuccess(currentSubscriptionId!, paymentIntentId, 'USD');
+        } else {
+          logger.w('subscriptionId or paymentIntentId is missing');
+        }
       }).onError((error, stackTrace) {
         print(error);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -45,13 +54,11 @@ class PaymentController extends GetxController {
     }
   }
 
-  // Make Internet Payment Request
-  Future<Map<String, dynamic>?> makeInternetForPayment(
-      String amountToBeCharge, String currency) async {
+  // Create Payment Intent on Stripe server
+  Future<Map<String, dynamic>?> makeInternetForPayment(String amountToBeCharge, String currency) async {
     double amount = double.parse(amountToBeCharge);
     try {
       Map<String, dynamic> paymentInfo = {
-        //'amount': (int.parse(amountToBeCharge) * 100).toString(),
         'amount': (amount * 100).toInt().toString(),
         'currency': currency,
         'payment_method_types[]': 'card',
@@ -67,22 +74,23 @@ class PaymentController extends GetxController {
       );
 
       print('Response from Stripe: ${responseFromStripe.body}');
-      return jsonDecode(responseFromStripe.body);
+      final jsonResponse = jsonDecode(responseFromStripe.body);
+      internetPaymentData = jsonResponse;
+      return jsonResponse;
     } catch (error) {
       print("Error: $error");
       return null;
     }
   }
 
-  // Initialize Payment Sheet
+  // Initialize Payment Sheet and show it
   Future<void> paymentSheetInitialization(
-      String amountToBeCharge, String currency, BuildContext context) async {
+      String amountToBeCharge, String currency, BuildContext context, String subscriptionId) async {
     try {
-      internetPaymentData =
-      await makeInternetForPayment(amountToBeCharge, currency);
+      currentSubscriptionId = subscriptionId;
+      internetPaymentData = await makeInternetForPayment(amountToBeCharge, currency);
 
       if (internetPaymentData != null) {
-        // Initialize payment sheet with the correct client_secret
         await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             allowsDelayedPaymentMethods: true,
@@ -115,21 +123,31 @@ class PaymentController extends GetxController {
     }
   }
 
-  //================== Show AlertDialog
-  showAlertDialog(BuildContext context, String amount) {
-    return showDialog(
-      context: context,
-      builder: (c) => AlertDialog(
-        backgroundColor: AppColors.whiteColor,
-        title: Text("Congratulation.", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
-        content: Text("Return to the home page \nto explore More Event. \n\nPayment Successful!", style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryColor)),
+  // Call backend API to confirm payment success
+  Future<void> subcriptionPaymentSuccess(String subscriptionId, String stripePaymentId, String currency) async {
+    loading(true);
+    try {
+      var body = {
+        "subscriptionId": subscriptionId,
+        "stripPaymentId": stripePaymentId,
+        "currency": currency
+      };
+      var headers = {'Content-Type': 'application/json'};
+      var response = await ApiClient.postData(ApiConstants.createPaymentEndPoint,
+          jsonEncode(body), headers: headers);
 
-        actions: [
-          CustomButton(onTap: (){
-            Get.toNamed(AppRoutes.homeScreen);
-          }, text: 'Back to home')
-        ],
-      ),
-    );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.toNamed(AppRoutes.paymentSuccessfulScreen);
+        print('Payment success confirmed on backend');
+        Get.snackbar('Success', response.body['message']);
+      } else {
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      print("Error calling payment success API: $e");
+      Get.snackbar('Error', 'Failed to confirm payment success');
+    } finally {
+      loading(false);
+    }
   }
 }

@@ -63,14 +63,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: (){
-                      var logger = Logger();
-                      logger.i('======>>Package ID${displayData.id}');
-                      paymentController.paymentSheetInitialization(
-                          displayData.price.toString(),
-                          "USD",
-                          context,
 
-                      );
                     },
                     child: GestureDetector(
                       onTap: (){

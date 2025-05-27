@@ -58,6 +58,7 @@ class ApiConstants {
 
   static const String createInvoiceEndPoint = "/invoice/create-invoice";
   static const String getSubscriptionPlanEndPoint = "/subscription/read";
+  static const String createPaymentEndPoint = "/payment/create-payment";
 
   static const String getInvoiceDataEndPoint = "/invoice/read-invoice";
   static const String updateInvoiceDataEndPoint = "/invoice/update-invoice";
