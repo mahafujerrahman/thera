@@ -5,7 +5,7 @@ class SubscriptionPlanModel {
   final String advantage2;
   final String advantage3;
   final double price;
-  final int v;
+  final bool currentPlan;
 
   SubscriptionPlanModel({
     required this.id,
@@ -14,7 +14,7 @@ class SubscriptionPlanModel {
     required this.advantage2,
     required this.advantage3,
     required this.price,
-    required this.v,
+    required this.currentPlan,
   });
 
   factory SubscriptionPlanModel.fromJson(Map<String, dynamic> json) {
@@ -25,7 +25,7 @@ class SubscriptionPlanModel {
       advantage2: json['advantage2'],
       advantage3: json['advantage3'],
       price: (json['price'] as num).toDouble(),
-      v: json['__v'],
+      currentPlan: json['currentPlan'],
     );
   }
 
@@ -37,7 +37,7 @@ class SubscriptionPlanModel {
       'advantage2': advantage2,
       'advantage3': advantage3,
       'price': price,
-      '__v': v,
+      'currentPlan': currentPlan,
     };
   }
 }

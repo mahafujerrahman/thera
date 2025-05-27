@@ -38,7 +38,7 @@ class _UnPaidDetailsScreenState extends State<UnPaidDetailsScreen> {
                 child: Column(
                   children: [
                     profileController.getAllUnPaidTreatmentModels.isEmpty
-                        ? Center(child: Text('No unPaid treatments added yet.', style: TextStyle(color: Colors.black),),)
+                        ? Center(child: Text('No unpaid treatments added yet.', style: TextStyle(color: Colors.black),),)
                         : Column(
                       children: [
                         ListView.builder(

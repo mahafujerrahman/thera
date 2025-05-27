@@ -5,9 +5,10 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/clientController/subscription_controller.dart';
 import 'package:thera_track_app/controller/payment/payment_controller.dart';
+import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
-import 'package:thera_track_app/views/screens/appDrawer/subscription/subscriptionCard.dart';
+import 'package:thera_track_app/views/screens/appDrawer/subscription/innerWidget/subscriptionCard.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -71,14 +72,23 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
                       );
                     },
-                    child: SubscriptionCard(
-                      planName: displayData.duration,
-                      price: displayData.price,
-                      feature1:displayData.advantage1,
-                      feature2:displayData.advantage2,
-                      feature3:displayData.advantage3,
-                      billingCycle: 'Monthly',
-                      isCurrentPlan: false,
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.subscriptionNowScreen,
+                          parameters: {
+                          'subscriptionId':displayData.id,
+                          }
+                        );
+                      },
+                      child: SubscriptionCard(
+                        planName: displayData.duration,
+                        price: displayData.price,
+                        feature1:displayData.advantage1,
+                        feature2:displayData.advantage2,
+                        feature3:displayData.advantage3,
+                        billingCycle: 'Monthly',
+                        isCurrentPlan: displayData.currentPlan,
+                      ),
                     ),
                   ),
                 ),
