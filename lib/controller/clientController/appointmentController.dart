@@ -99,7 +99,6 @@ class AppointmentController extends GetxController {
         body: jsonEncode(body),
         headers: headers,
       );
-
       debugPrint("Response body: ${response.body} \nStatus code: ${response.statusCode}");
       debugPrint("Full response: ${response.body}");
 
