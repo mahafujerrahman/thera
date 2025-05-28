@@ -8,25 +8,25 @@
 		},
 		"paths" : 
 		{
-			"cmake" : "C:/Users/bdCalling/AppData/Local/Android/Sdk/cmake/3.22.1/bin/cmake.exe",
-			"cpack" : "C:/Users/bdCalling/AppData/Local/Android/Sdk/cmake/3.22.1/bin/cpack.exe",
-			"ctest" : "C:/Users/bdCalling/AppData/Local/Android/Sdk/cmake/3.22.1/bin/ctest.exe",
-			"root" : "C:/Users/bdCalling/AppData/Local/Android/Sdk/cmake/3.22.1/share/cmake-3.22"
+			"cmake" : "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/bin/cmake",
+			"cpack" : "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/bin/cpack",
+			"ctest" : "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/bin/ctest",
+			"root" : "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/share/cmake-3.22"
 		},
 		"version" : 
 		{
-			"isDirty" : true,
+			"isDirty" : false,
 			"major" : 3,
 			"minor" : 22,
 			"patch" : 1,
-			"string" : "3.22.1-g37088a8-dirty",
+			"string" : "3.22.1-g37088a8",
 			"suffix" : "g37088a8"
 		}
 	},
 	"objects" : 
 	[
 		{
-			"jsonFile" : "codemodel-v2-9c7b23c7336acd1b4b82.json",
+			"jsonFile" : "codemodel-v2-805009263eeb59c184a9.json",
 			"kind" : "codemodel",
 			"version" : 
 			{
@@ -35,7 +35,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cache-v2-2eae7bfe72617722733e.json",
+			"jsonFile" : "cache-v2-483d236d7fd0acb24586.json",
 			"kind" : "cache",
 			"version" : 
 			{
@@ -44,7 +44,7 @@
 			}
 		},
 		{
-			"jsonFile" : "cmakeFiles-v1-e568ce551aaf95a669bd.json",
+			"jsonFile" : "cmakeFiles-v1-e44c2348f2d09237a0b7.json",
 			"kind" : "cmakeFiles",
 			"version" : 
 			{
@@ -59,7 +59,7 @@
 		{
 			"cache-v2" : 
 			{
-				"jsonFile" : "cache-v2-2eae7bfe72617722733e.json",
+				"jsonFile" : "cache-v2-483d236d7fd0acb24586.json",
 				"kind" : "cache",
 				"version" : 
 				{
@@ -69,7 +69,7 @@
 			},
 			"cmakeFiles-v1" : 
 			{
-				"jsonFile" : "cmakeFiles-v1-e568ce551aaf95a669bd.json",
+				"jsonFile" : "cmakeFiles-v1-e44c2348f2d09237a0b7.json",
 				"kind" : "cmakeFiles",
 				"version" : 
 				{
@@ -79,7 +79,7 @@
 			},
 			"codemodel-v2" : 
 			{
-				"jsonFile" : "codemodel-v2-9c7b23c7336acd1b4b82.json",
+				"jsonFile" : "codemodel-v2-805009263eeb59c184a9.json",
 				"kind" : "codemodel",
 				"version" : 
 				{

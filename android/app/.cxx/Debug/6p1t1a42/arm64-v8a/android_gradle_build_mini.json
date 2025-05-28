@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/shuvosta/Documents/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/shuvosta/Desktop/Thera-Track-App/android/app/.cxx/Debug/6p1t1a42/arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/shuvosta/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/shuvosta/Desktop/Thera-Track-App/android/app/.cxx/Debug/6p1t1a42/arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

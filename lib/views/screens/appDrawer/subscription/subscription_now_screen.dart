@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/clientController/subscription_controller.dart';
 import 'package:thera_track_app/controller/payment/payment_controller.dart';
-import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
 import 'package:thera_track_app/utils/style.dart';
 import 'package:thera_track_app/views/base/custom_button.dart';
@@ -78,7 +77,6 @@ class _SubscriptionNowScreenState extends State<SubscriptionNowScreen> {
       }),
       bottomNavigationBar: Obx(() {
         final displayData = subscriptionController.getOneSubscriptionList.value;
-
         if (subscriptionController.showLoading.value ||
             displayData.id == null) {
           return const SizedBox.shrink();
