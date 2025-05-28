@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data'; // Add this explicit import for Uint8List
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
 import 'package:thera_track_app/controller/clientController/inventoryController.dart';
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
-import 'package:thera_track_app/models/clients/get_all_inventory_product.dart';
 import 'package:thera_track_app/models/clients/treatMentModel.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_constants.dart';
@@ -208,59 +206,69 @@ class ServiceController extends GetxController {
       inventoryItems.add(
           {'productName': item.productName!, 'quantity': quantity.toString()});
     }
-    var body = {
-      "clientId": clientId,
-      "areaOfConcern": jsonEncode(selectedAreaOfConcern),
-      "treatments": jsonEncode(treat),
-      "finalCost": finalCost.value.toString(),
-      "discount": discount.value.toString(),
-      "description": descriptionTextController.text.trim(),
-      "points": jsonEncode(pointList),
-      "isPaid": isPaid.value.toString(),
 
-      "ApDate": selectedAppointmentDay?.toString() ?? '',
-      "ApStartTime": apStartTime.value,
-      "ApEndTime": apEndTime.value,
-      "reAllDay": isReminderAllDay.value.toString(),
-      "reTwelveHourBefore": reTwelveHourBefore.value.toString(),
-      "reOneDayBefore": reOneDayBefore.value.toString(),
-      "reTwoDayBefore": reTwoDayBefore.value.toString(),
-      "reOneWeekBefore": reOneWeekBefore.value.toString(),
-
-      "selectedAnimal": selectedAnimal.value.toString(),
-
-      //============>> Animal
-      "name": name.text.trim(),
-      "age": age.text.trim(),
-      "breed": breed.text.trim(),
-      "height": height.text.trim(),
-      "gender": gender.text.trim(),
-      "color": color.text.trim(),
-
-      // Convert the inventory list to a JSON string
-      "inventoryAcc": jsonEncode(inventoryItems),
-    };
     debugPrint("Saving to local image....tut..tut....tut....");
 
+    String? localImagePath;
+
     try {
-      Directory appDocDir = await getApplicationDocumentsDirectory();
-      await appDocDir.create(recursive: true);
-
-      String filePath =
-          '${appDocDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
-
-      File file = File(filePath);
-
-      // Fixed: Properly convert image to bytes
+      // Save image to local storage if exists
       if (selectedImage != null) {
+        Directory appDocDir = await getApplicationDocumentsDirectory();
+        await appDocDir.create(recursive: true);
+
+        String filePath =
+            '${appDocDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+        File file = File(filePath);
         Uint8List imageBytes = await selectedImage!.readAsBytes();
         await file.writeAsBytes(imageBytes);
+
+        localImagePath = filePath;
+        print("Image saved to local path: $localImagePath");
       }
 
-      DatabaseHelper dbHelper = DatabaseHelper(dbName: "localData.db");
+      // Prepare data for database including image path
+      var body = {
+        "clientId": clientId,
+        "areaOfConcern": jsonEncode(selectedAreaOfConcern),
+        "treatments": jsonEncode(treat),
+        "finalCost": finalCost.value.toString(),
+        "discount": discount.value.toString(),
+        "description": descriptionTextController.text.trim(),
+        "points": jsonEncode(pointList),
+        "isPaid": isPaid.value.toString(),
+
+        "ApDate": selectedAppointmentDay?.toString() ?? '',
+        "ApStartTime": apStartTime.value,
+        "ApEndTime": apEndTime.value,
+        "reAllDay": isReminderAllDay.value.toString(),
+        "reTwelveHourBefore": reTwelveHourBefore.value.toString(),
+        "reOneDayBefore": reOneDayBefore.value.toString(),
+        "reTwoDayBefore": reTwoDayBefore.value.toString(),
+        "reOneWeekBefore": reOneWeekBefore.value.toString(),
+
+        "selectedAnimal": selectedAnimal.value.toString(),
+
+        //============>> Animal
+        "name": name.text.trim(),
+        "age": age.text.trim(),
+        "breed": breed.text.trim(),
+        "height": height.text.trim(),
+        "gender": gender.text.trim(),
+        "color": color.text.trim(),
+
+        // Convert the inventory list to a JSON string
+        "inventoryAcc": jsonEncode(inventoryItems),
+
+        // Add local image path to the data
+        "localImagePath": localImagePath ?? '',
+      };
+
+      DatabaseHelper dbHelper = DatabaseHelper(dbName: "munnaBadnam.db");
       await dbHelper.insert('local_data', body);
 
-      print("locally data saved to: $filePath");
+      print("Data saved to local database successfully");
     } catch (e) {
       print("Error saving data: $e");
     }
