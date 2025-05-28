@@ -13,11 +13,11 @@ import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
 import 'package:thera_track_app/utils/app_constants.dart';
 
-class ProfileController extends GetxController  implements GetxService {
-
+class ProfileController extends GetxController implements GetxService {
 //============================> Get Profile Data <=============================
 
-  Rx<ProfileInformationModel> profileInformationModel = ProfileInformationModel().obs;
+  Rx<ProfileInformationModel> profileInformationModel =
+      ProfileInformationModel().obs;
   var isLoading = false.obs;
 
   getProfileData() async {
@@ -31,8 +31,7 @@ class ProfileController extends GetxController  implements GetxService {
           ProfileInformationModel.fromJson(response.body['data']['attributes']);
       isLoading(false);
       update();
-    }
-    else {
+    } else {
       ApiChecker.checkApi(response);
       isLoading(false);
       update();
@@ -49,9 +48,8 @@ class ProfileController extends GetxController  implements GetxService {
     required country,
     required phoneNumber,
   }) async {
-    List<MultipartBody> multipartBody = image == null ? [] : [
-      MultipartBody("profileImage", image)
-    ];
+    List<MultipartBody> multipartBody =
+        image == null ? [] : [MultipartBody("profileImage", image)];
 
     Map<String, String> body = {
       "fullName": fullName,
@@ -67,9 +65,11 @@ class ProfileController extends GetxController  implements GetxService {
       multipartBody: multipartBody,
     );
 
-    print("===========response body : ${response.body} \nand status code : ${response.statusCode}");
+    print(
+        "===========response body : ${response.body} \nand status code : ${response.statusCode}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-      profileInformationModel.value = ProfileInformationModel.fromJson(response.body['data']['attributes']);
+      profileInformationModel.value =
+          ProfileInformationModel.fromJson(response.body['data']['attributes']);
       profileInformationModel.refresh();
       Get.offAllNamed(AppRoutes.homeScreen);
       Get.snackbar('Successfully', 'Profile Updated');
@@ -83,7 +83,8 @@ class ProfileController extends GetxController  implements GetxService {
   TextEditingController treatmentPrice = TextEditingController();
   var addTreatmentLoading = false.obs;
 
-  addTreatmentMethod({required String treatmentTitle, required String price}) async {
+  addTreatmentMethod(
+      {required String treatmentTitle, required String price}) async {
     addTreatmentLoading(true);
     // var fcmToken = await PrefsHelper.getString(AppConstants.fcmToken);
 
@@ -109,11 +110,12 @@ class ProfileController extends GetxController  implements GetxService {
     };
 
     var response = await ApiClient.postData(
-        ApiConstants.createTreatmentEndPoint, jsonEncode(body), headers: headers
-    );
+        ApiConstants.createTreatmentEndPoint, jsonEncode(body),
+        headers: headers);
 
     if (response.statusCode == 200) {
-      var newTreatment = GetAllTreatMentModel.fromJson(response.body['data']['attributes']);
+      var newTreatment =
+          GetAllTreatMentModel.fromJson(response.body['data']['attributes']);
       getAllTreatMentList.add(newTreatment);
       getAllTreatMentList.refresh();
 
@@ -123,8 +125,7 @@ class ProfileController extends GetxController  implements GetxService {
 
       addTreatmentLoading(false);
       update();
-    }
-    else {
+    } else {
       ApiChecker.checkApi(response);
       addTreatmentLoading(false);
       update();
@@ -132,16 +133,19 @@ class ProfileController extends GetxController  implements GetxService {
   }
 
 //============== All treatment
-  RxList<GetAllTreatMentModel> getAllTreatMentList = <GetAllTreatMentModel>[].obs;
-
+  RxList<GetAllTreatMentModel> getAllTreatMentList =
+      <GetAllTreatMentModel>[].obs;
 
   getAllTreatment() async {
     isLoading(true);
-    var response = await ApiClient.getData(ApiConstants.getAllTreatmentEndPoint);
-    print("===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
+    var response =
+        await ApiClient.getData(ApiConstants.getAllTreatmentEndPoint);
+    print(
+        "===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      getAllTreatMentList.value = List.from(response.body['data']['attributes'].map((x) => GetAllTreatMentModel.fromJson(x)));
+      getAllTreatMentList.value = List.from(response.body['data']['attributes']
+          .map((x) => GetAllTreatMentModel.fromJson(x)));
       getAllTreatMentList.refresh();
       isLoading(false);
     } else {
@@ -150,10 +154,10 @@ class ProfileController extends GetxController  implements GetxService {
     }
   }
 
-
 //=================================================>>>>>> Delete Singel Treatment <<<<<<=========================================================
   deleteSingelTreatment({required String treatmentID}) async {
-    var response = await ApiClient.deleteData('${ApiConstants.deleteSingelTreatmentEndPoint}/${treatmentID}');
+    var response = await ApiClient.deleteData(
+        '${ApiConstants.deleteSingelTreatmentEndPoint}/${treatmentID}');
     if (response.statusCode == 200 || response.statusCode == 201) {
       Get.snackbar('Successfully', 'Deleted Treatment');
       getAllTreatMentList.refresh();
@@ -169,12 +173,24 @@ class ProfileController extends GetxController  implements GetxService {
     Map<String, dynamic> body = {
       "isHumanTrue": isHuman,
     };
-    var response = await ApiClient.patchData(ApiConstants.updateAdvanceSettingEndPoint, body: body);
-    print("===========>> Response body : ${response
-        .body} \nand status code : ${response.statusCode}");
+
+    var bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+
+    var headers = {
+      // 'Content-Type': 'application/json',
+      'Authorization': 'Bearer $bearerToken'
+    };
+
+    var response = await ApiClient.patchData(
+        ApiConstants.updateAdvanceSettingEndPoint,
+        body: body,
+        headers: headers);
+    print(
+        "===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      profileInformationModel.value = ProfileInformationModel.fromJson(response.body['data']['attributes']);
+      profileInformationModel.value =
+          ProfileInformationModel.fromJson(response.body['data']['attributes']);
       profileInformationModel.refresh();
 
       Get.back();
@@ -184,10 +200,10 @@ class ProfileController extends GetxController  implements GetxService {
     }
   }
 
-
   //=========================>> Get All Paid Treatment <<============================
 
-  RxList<GetAllTreatmentModels> getAllPaidTreatmentModels = <GetAllTreatmentModels>[].obs;
+  RxList<GetAllTreatmentModels> getAllPaidTreatmentModels =
+      <GetAllTreatmentModels>[].obs;
 
   Rx<num> paidTotalFinalCost = 0.obs;
   var loading = false.obs;
@@ -195,16 +211,19 @@ class ProfileController extends GetxController  implements GetxService {
   getAllPaidTreatmentDetails() async {
     loading(true);
 
-    var response = await ApiClient.getData("${ApiConstants.getAllPaidTreatmentEndPoint}");
+    var response =
+        await ApiClient.getData(ApiConstants.getAllPaidTreatmentEndPoint);
     if (response.statusCode == 200) {
       paidTotalFinalCost.value =
-      response.body['data']['attributes']['totalFinalCost'];
-      getAllPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(response.body['data']['attributes']['result'].map((x) => GetAllTreatmentModels.fromJson(x)));
+          response.body['data']['attributes']['totalFinalCost'];
+      getAllPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(
+          response.body['data']['attributes']['result']
+              .map((x) => GetAllTreatmentModels.fromJson(x)));
       loading(false);
       update();
-      debugPrint('==============>> Paid Total Final Cost :  ${paidTotalFinalCost.value}');
-    }
-    else {
+      debugPrint(
+          '==============>> Paid Total Final Cost :  ${paidTotalFinalCost.value}');
+    } else {
       ApiChecker.checkApi(response);
       loading(false);
       update();
@@ -213,23 +232,26 @@ class ProfileController extends GetxController  implements GetxService {
 
   //=========================>> Get All unPaid Treatment <<============================
 
-  RxList<GetAllTreatmentModels> getAllUnPaidTreatmentModels = <GetAllTreatmentModels>[].obs;
+  RxList<GetAllTreatmentModels> getAllUnPaidTreatmentModels =
+      <GetAllTreatmentModels>[].obs;
 
   Rx<num> unpaidTotalFinalCost = 0.obs;
 
   getAllUnPaidTreatmentDetail() async {
     loading(true);
-    var response = await ApiClient.getData("${ApiConstants.getAllUnPaidTreatmentEndPoint}");
+    var response =
+        await ApiClient.getData(ApiConstants.getAllUnPaidTreatmentEndPoint);
     if (response.statusCode == 200) {
       unpaidTotalFinalCost.value =
-      response.body['data']['attributes']['totalFinalCost'];
-
-      getAllUnPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(response.body['data']['attributes']['result'].map((x) => GetAllTreatmentModels.fromJson(x)));
+          response.body['data']['attributes']['totalFinalCost'];
+      getAllUnPaidTreatmentModels.value = List<GetAllTreatmentModels>.from(
+          response.body['data']['attributes']['result']
+              .map((x) => GetAllTreatmentModels.fromJson(x)));
       loading(false);
       update();
-      debugPrint('==============>> Unpaid Total Final Cost : ${unpaidTotalFinalCost.value}');
-    }
-    else {
+      debugPrint(
+          '==============>> Unpaid Total Final Cost : ${unpaidTotalFinalCost.value}');
+    } else {
       ApiChecker.checkApi(response);
       loading(false);
       update();
@@ -265,16 +287,15 @@ class ProfileController extends GetxController  implements GetxService {
       "message": feedbackController.text.trim()
     };
 
-    var response = await ApiClient.postData(
-        ApiConstants.sendFeedBackEndPoint, body);
+    var response =
+        await ApiClient.postData(ApiConstants.sendFeedBackEndPoint, body);
 
     if (response.statusCode == 200) {
       Get.snackbar('Successfully', response.body['message']);
       loading(false);
       Get.toNamed(AppRoutes.homeScreen);
       clearFeedback();
-    }
-    else {
+    } else {
       ApiChecker.checkApi(response);
       Get.snackbar('Error!', response.body['message']);
       loading(false);
@@ -284,20 +305,22 @@ class ProfileController extends GetxController  implements GetxService {
 
   //==========================>>>> one Animal Details <<<<===========================
 
-
-  RxBool showLoading=false.obs;
+  RxBool showLoading = false.obs;
   Rx<GetAnimalDataModel> getAnimalData = GetAnimalDataModel().obs;
   getAnimalDetails({required String id}) async {
-    showLoading.value=true;
-    var response = await ApiClient.getData("${ApiConstants.getOneAppointmentDetailsByIDEndPoint}/$id");
-    print("===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
+    showLoading.value = true;
+    var response = await ApiClient.getData(
+        "${ApiConstants.getOneAppointmentDetailsByIDEndPoint}/$id");
+    print(
+        "===========>> Response body : ${response.body} \nand status code : ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      getAnimalData.value = GetAnimalDataModel.fromJson(response.body['data']['attributes']);
+      getAnimalData.value =
+          GetAnimalDataModel.fromJson(response.body['data']['attributes']);
       getAnimalData.refresh();
-      showLoading.value=false;
+      showLoading.value = false;
     } else {
-      showLoading.value=false;
+      showLoading.value = false;
       ApiChecker.checkApi(response);
     }
   }
@@ -309,7 +332,6 @@ class ProfileController extends GetxController  implements GetxService {
   final TextEditingController genderCTRl = TextEditingController();
   final TextEditingController heightCTRl = TextEditingController();
   final TextEditingController colorCTRl = TextEditingController();
-
 
   Future<void> editClientAnimal({
     required String animalId,
@@ -344,16 +366,20 @@ class ProfileController extends GetxController  implements GetxService {
         headers: headers,
       );
 
-      debugPrint("Response body: ${response.body} \nStatus code: ${response.statusCode}");
+      debugPrint(
+          "Response body: ${response.body} \nStatus code: ${response.statusCode}");
       debugPrint("Full response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        getAnimalData.value = GetAnimalDataModel.fromJson(response.body['data']['attributes']);
+        getAnimalData.value =
+            GetAnimalDataModel.fromJson(response.body['data']['attributes']);
         getAnimalData.refresh();
         Get.back();
-        Get.snackbar('Success', response.body['message'] ?? 'Animal updated successfully');
+        Get.snackbar('Success',
+            response.body['message'] ?? 'Animal updated successfully');
       } else {
-        Get.snackbar('Error', response.body['message'] ?? 'Failed to update animal');
+        Get.snackbar(
+            'Error', response.body['message'] ?? 'Failed to update animal');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: ${e.toString()}');
@@ -361,5 +387,4 @@ class ProfileController extends GetxController  implements GetxService {
       loading(false);
     }
   }
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:thera_track_app/Utils/app_constants.dart';
@@ -10,6 +11,7 @@ import 'package:thera_track_app/controller/clientController/service_controller.d
 import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:thera_track_app/utils/app_icons.dart';
 import 'package:thera_track_app/utils/app_images.dart';
 import 'package:thera_track_app/utils/app_strings.dart';
 import 'package:thera_track_app/utils/style.dart';
@@ -29,7 +31,8 @@ class AnimalServiceDetailsScreen extends StatefulWidget {
       _AnimalServiceDetailsScreenState();
 }
 
-class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen> {
+class _AnimalServiceDetailsScreenState
+    extends State<AnimalServiceDetailsScreen> {
   final TextEditingController fullNameCTRl = TextEditingController();
   final TextEditingController emailCTRl = TextEditingController();
   final TextEditingController addressCTRl = TextEditingController();
@@ -41,7 +44,8 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var clientID = await PrefsHelper.getString(AppConstants.createdServiceClientId);
+      var clientID =
+          await PrefsHelper.getString(AppConstants.createdServiceClientId);
       clientController.clientDetailsByID(clientID);
     });
     super.initState();
@@ -85,22 +89,40 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                   ),
                 ),
                 CustomRow(title: 'Name', displayData: clientInfo.name ?? 'N/A'),
-                CustomRow(title: 'Email', displayData: clientInfo.email ?? 'N/A'),
-                CustomRow(title: 'Mobile', displayData: clientInfo.phoneNumber ?? 'N/A'),
-                CustomRow(title: 'Address', displayData: clientInfo.city ?? 'N/A'),
+                CustomRow(
+                    title: 'Email', displayData: clientInfo.email ?? 'N/A'),
+                CustomRow(
+                    title: 'Mobile',
+                    displayData: clientInfo.phoneNumber ?? 'N/A'),
+                CustomRow(
+                    title: 'Address', displayData: clientInfo.city ?? 'N/A'),
                 SizedBox(height: 10.h),
                 Padding(
-                  padding:  EdgeInsets.symmetric(vertical: 8.h),
-                  child: Text('Animal Details :',style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
+                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                  child: Text('Animal Details :',
+                      style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
                 ),
-                CustomRow(title: 'Animal Name', displayData:serviceController.name.text.trim()),
-                CustomRow(title: 'Age', displayData: serviceController.age.text.trim()),
-                CustomRow(title: 'Breed', displayData: serviceController.breed.text.trim()),
-                CustomRow(title: 'Gender', displayData: serviceController.gender.text.trim()),
-                CustomRow(title: 'Height', displayData: serviceController.height.text.trim()),
-                CustomRow(title: 'Color', displayData: serviceController.color.text.trim()),
+                CustomRow(
+                    title: 'Animal Name',
+                    displayData: serviceController.name.text.trim()),
+                CustomRow(
+                    title: 'Age',
+                    displayData: serviceController.age.text.trim()),
+                CustomRow(
+                    title: 'Breed',
+                    displayData: serviceController.breed.text.trim()),
+                CustomRow(
+                    title: 'Gender',
+                    displayData: serviceController.gender.text.trim()),
+                CustomRow(
+                    title: 'Height',
+                    displayData: serviceController.height.text.trim()),
+                CustomRow(
+                    title: 'Color',
+                    displayData: serviceController.color.text.trim()),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.h, vertical: 12.w),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.h, vertical: 12.w),
                   child: DottedBorderContainer(
                     child: Container(
                       height: 200.h,
@@ -108,12 +130,13 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                       child: Center(
                         child: serviceController.selectedImage != null
                             ? Image.file(
-                          serviceController.selectedImage!,
-                          height: 200.h,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        )
-                            : Image.asset('assets/images/image_placeHolder.png'),
+                                serviceController.selectedImage!,
+                                height: 200.h,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/image_placeHolder.png'),
                       ),
                     ),
                   ),
@@ -130,7 +153,9 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 4.w),
-                        child: Text('Description', style: AppStyles.fontSize18(color: AppColors.color575757)),
+                        child: Text('Description',
+                            style: AppStyles.fontSize18(
+                                color: AppColors.color575757)),
                       ),
                       Container(
                         width: double.infinity,
@@ -139,7 +164,9 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(serviceController.descriptionTextController.text.trim()),
+                        child: Text(serviceController
+                            .descriptionTextController.text
+                            .trim()),
                       ),
                     ],
                   ),
@@ -157,7 +184,9 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 4.w),
-                        child: Text('Added Point ', style: AppStyles.fontSize18(color: AppColors.color575757)),
+                        child: Text('Added Point ',
+                            style: AppStyles.fontSize18(
+                                color: AppColors.color575757)),
                       ),
                       Container(
                         width: double.infinity,
@@ -166,11 +195,14 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child:  Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            for (int i = 0; i < serviceController.pointList.length; i++)
-                              Text('${i + 1}. ${serviceController.pointList[i]}'),
+                            for (int i = 0;
+                                i < serviceController.pointList.length;
+                                i++)
+                              Text(
+                                  '${i + 1}. ${serviceController.pointList[i]}'),
                           ],
                         ),
                       ),
@@ -181,14 +213,18 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                 SizedBox(height: 10.h),
                 Text(
                   "Treatments",
-                  style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),
+                  style: AppStyles.fontSize16(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryColor),
                 ),
                 ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return PriceDetailWidget(
-                      title: serviceController.selectedList[index].treatmentTitle,
-                      price: serviceController.selectedList[index].price.toString(),
+                      title:
+                          serviceController.selectedList[index].treatmentTitle,
+                      price: serviceController.selectedList[index].price
+                          .toString(),
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -197,10 +233,15 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                   itemCount: serviceController.selectedList.length,
                 ),
                 Divider(color: AppColors.blackColor.withOpacity(0.3)),
-               // PriceDetailWidget(title: 'Treatments Subtotal', price: '$treatmentsCost'),
+                // PriceDetailWidget(title: 'Treatments Subtotal', price: '$treatmentsCost'),
 
                 // Equipment Section
-                Text("Equipment", style: AppStyles.fontSize16(fontWeight: FontWeight.w600, color: AppColors.primaryColor),),
+                Text(
+                  "Equipment",
+                  style: AppStyles.fontSize16(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryColor),
+                ),
                 SizedBox(height: 8.h),
                 Obx(() {
                   double equipmentTotal = 0;
@@ -209,7 +250,8 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                   // Loop through all inventory items to find ones with quantity > 0
                   for (var item in inventoryController.allInventoryList) {
                     String itemId = item.id ?? '0';
-                    int quantity = serviceController.getItemQuantity(itemId).value;
+                    int quantity =
+                        serviceController.getItemQuantity(itemId).value;
                     num price = item.pricePerOne ?? 0;
 
                     if (quantity > 0) {
@@ -224,11 +266,15 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                               flex: 3,
                               child: Text(
                                 "${item.productName ?? 'Unknown'} (${quantity}x ${price}\$)",
-                                style: AppStyles.fontSize16(color: AppColors.color424242), overflow: TextOverflow.ellipsis,
+                                style: AppStyles.fontSize16(
+                                    color: AppColors.color424242),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Text("${itemTotal.toStringAsFixed(2)} \$",
-                              style: AppStyles.fontSize16(color: AppColors.color424242),
+                            Text(
+                              "${itemTotal.toStringAsFixed(2)} \$",
+                              style: AppStyles.fontSize16(
+                                  color: AppColors.color424242),
                             ),
                           ],
                         ),
@@ -243,13 +289,14 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: Text(
                         "No equipment selected",
-                        style: AppStyles.fontSize16(color: AppColors.colorB1B1B1),
+                        style:
+                            AppStyles.fontSize16(color: AppColors.colorB1B1B1),
                       ),
                     );
                   }
 
                   // Calculate the full cost (treatments + equipment)
-               /*   double fullCost = treatmentsCost + equipmentTotal;
+                  /*   double fullCost = treatmentsCost + equipmentTotal;
 
                   // Set full cost in controller
                   serviceController.fullCost.value = fullCost;
@@ -260,16 +307,22 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                     children: [
                       ...equipmentWidgets,
                       Divider(color: AppColors.blackColor.withOpacity(0.3)),
-                     // PriceDetailWidget(title: 'Equipment Subtotal', price: equipmentTotal.toStringAsFixed(2)),
+                      // PriceDetailWidget(title: 'Equipment Subtotal', price: equipmentTotal.toStringAsFixed(2)),
                       SizedBox(height: 16.h),
-                      PriceDetailWidget(title: 'Full Cost', price: serviceController.fullCost.toStringAsFixed(2)),
+                      PriceDetailWidget(
+                          title: 'Full Cost',
+                          price: serviceController.fullCost.toStringAsFixed(2)),
                     ],
                   );
                 }),
 
-                PriceDetailWidget(title: 'Discount ', price: serviceController.discount.value.toString()),
+                PriceDetailWidget(
+                    title: 'Discount ',
+                    price: serviceController.discount.value.toString()),
                 Divider(),
-                PriceDetailWidget(title: 'Final Cost',  price: serviceController.finalCost.value.toString()),
+                PriceDetailWidget(
+                    title: 'Final Cost',
+                    price: serviceController.finalCost.value.toString()),
                 SizedBox(height: 20.h),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,22 +337,46 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                             },
                             prefixIcon: Icon(Icons.calendar_month),
                             text: 'Make Appointment',
-                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                            textStyle: AppStyles.fontSize12(
+                                color: AppColors.whiteColor),
                           ),
                         ),
                         SizedBox(width: 10.w),
-                      /*  Expanded(
-                          child: CustomButton(
-                            onTap: () {},
-                            prefixIcon: Icon(Icons.send),
-                            text: 'Sent',
-                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              serviceController.saveToLocal();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                              minimumSize: Size(double.infinity, 50.h),
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(AppIcons.save),
+                                SizedBox(width: 8.w),
+                                Flexible(
+                                  child: Text(
+                                    'Save',
+                                    style: AppStyles.fontSize14(
+                                        color: AppColors.whiteColor),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),*/
+                        ),
                       ],
                     ),
                     SizedBox(height: 12.h),
-                 /*   Row(
+                    /*   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
@@ -332,7 +409,7 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  serviceController.isPaid.value  = true;
+                                  serviceController.isPaid.value = true;
                                 });
                               },
                               child: Container(
@@ -340,7 +417,8 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(color: AppColors.primaryColor),
+                                  border:
+                                      Border.all(color: AppColors.primaryColor),
                                 ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -351,7 +429,8 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                                         value: serviceController.isPaid.value,
                                         onChanged: (bool? value) {
                                           setState(() {
-                                            serviceController.isPaid.value = value ?? false;
+                                            serviceController.isPaid.value =
+                                                value ?? false;
                                           });
                                         },
                                         activeColor: AppColors.primaryColor,
@@ -359,7 +438,8 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                                     ),
                                     Text(
                                       'Paid',
-                                      style: TextStyle(color: AppColors.primaryColor),
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor),
                                     ),
                                   ],
                                 ),
@@ -388,17 +468,20 @@ class _AnimalServiceDetailsScreenState extends State<AnimalServiceDetailsScreen>
                                     Transform.scale(
                                       scale: 1.2,
                                       child: Checkbox(
-                                          value: !serviceController.isPaid.value,
+                                          value:
+                                              !serviceController.isPaid.value,
                                           onChanged: (bool? value) {
                                             setState(() {
-                                              serviceController.isPaid.value = !(value ?? false);
+                                              serviceController.isPaid.value =
+                                                  !(value ?? false);
                                             });
                                           },
                                           activeColor: AppColors.redColor),
                                     ),
                                     Text(
                                       'Unpaid',
-                                      style: TextStyle(color: AppColors.redColor),
+                                      style:
+                                          TextStyle(color: AppColors.redColor),
                                     ),
                                   ],
                                 ),

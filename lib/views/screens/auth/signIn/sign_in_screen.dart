@@ -43,18 +43,28 @@ class _SignInScreenState extends State<SignInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 150.h),
-                  Text(AppStrings.signInToYourAccount,style: AppStyles.fontSize24(color: AppColors.blackColor),),
+                  Text(
+                    AppStrings.signInToYourAccount,
+                    style: AppStyles.fontSize24(color: AppColors.blackColor),
+                  ),
                   SizedBox(height: 20.h),
-                  Text(AppStrings.welcomeBack,style: AppStyles.fontSize14(fontWeight:FontWeight.w400),),
+                  Text(
+                    AppStrings.welcomeBack,
+                    style: AppStyles.fontSize14(fontWeight: FontWeight.w400),
+                  ),
                   SizedBox(height: 30.h),
                   // Email Text Field
-                  Text(AppStrings.yourEmail,style: AppStyles.fontSize16(fontWeight:FontWeight.w700),),
+                  Text(
+                    AppStrings.yourEmail,
+                    style: AppStyles.fontSize16(fontWeight: FontWeight.w700),
+                  ),
                   SizedBox(height: 8.h),
                   CustomTextField(
                     controller: authController.signInEmailCtrl,
                     hintText: AppStrings.enterEmail,
                     prefixIcon: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 12.h),
                       child: SvgPicture.asset(AppIcons.emailIcon),
                     ),
                     validator: (value) {
@@ -65,7 +75,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
                   SizedBox(height: 8.h),
-                  Text(AppStrings.passwordText,style: AppStyles.fontSize16(fontWeight:FontWeight.w700),),
+                  Text(
+                    AppStrings.passwordText,
+                    style: AppStyles.fontSize16(fontWeight: FontWeight.w700),
+                  ),
                   SizedBox(height: 8.h),
                   // Password Text Field
                   CustomTextField(
@@ -73,7 +86,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     hintText: AppStrings.enterPassword,
                     isPassword: true,
                     prefixIcon: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.w, vertical: 12.h),
                       child: SvgPicture.asset(AppIcons.passwordLockIcon),
                     ),
                     validator: (value) {
@@ -101,28 +115,29 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   // Sign In Button
                   SizedBox(height: 20.h),
-                  Obx(()=>
-                      CustomButton(
-                        loading: authController.signInLoading.value,
-                        onTap: () {
-                          if(_formKey.currentState!.validate()){
-                            authController.signInMethod();
-                          }
-                        },
-                        text: 'Sign In',
-                        textColor: AppColors.whiteColor,
-                      ),
-
+                  Obx(
+                    () => CustomButton(
+                      loading: authController.signInLoading.value,
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          authController.signInMethod();
+                        }
+                      },
+                      text: 'Sign In',
+                      textColor: AppColors.whiteColor,
+                    ),
                   ),
 
                   // Don't Have an Account Section
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(AppStrings.doNotHaveAnAccount.tr,style: AppStyles.fontSize14(color: AppColors.greyColor)),
+                      Text(AppStrings.doNotHaveAnAccount.tr,
+                          style:
+                              AppStyles.fontSize14(color: AppColors.greyColor)),
                       TextButton(
                         onPressed: () {
-                           Get.toNamed(AppRoutes.signUpScreen);
+                          Get.toNamed(AppRoutes.signUpScreen);
                         },
                         child: CustomText(
                           text: AppStrings.signUp,
