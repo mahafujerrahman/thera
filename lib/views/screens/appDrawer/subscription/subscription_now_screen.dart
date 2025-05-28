@@ -19,7 +19,8 @@ class SubscriptionNowScreen extends StatefulWidget {
 }
 
 class _SubscriptionNowScreenState extends State<SubscriptionNowScreen> {
-  final SubscriptionController subscriptionController = Get.put(SubscriptionController());
+  final SubscriptionController subscriptionController =
+      Get.put(SubscriptionController());
   PaymentController paymentController = Get.put(PaymentController());
 
   late final String subscriptionId;
@@ -31,7 +32,8 @@ class _SubscriptionNowScreenState extends State<SubscriptionNowScreen> {
     subscriptionId = Get.parameters['subscriptionId'] ?? '';
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      subscriptionController.getOneSubscriptionDetails(subscriptionID: subscriptionId);
+      subscriptionController.getOneSubscriptionDetails(
+          subscriptionID: subscriptionId);
     });
   }
 
@@ -40,13 +42,15 @@ class _SubscriptionNowScreenState extends State<SubscriptionNowScreen> {
     final displayData = subscriptionController.getOneSubscriptionList.value;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subscription', style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
+        title: Text('Subscription',
+            style: AppStyles.fontSize20(fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: Obx(() {
         if (subscriptionController.showLoading.value) {
           return Center(
-            child: CupertinoActivityIndicator(radius: 32.r, color: AppColors.primaryColor),
+            child: CupertinoActivityIndicator(
+                radius: 32.r, color: AppColors.primaryColor),
           );
         }
 
@@ -72,23 +76,31 @@ class _SubscriptionNowScreenState extends State<SubscriptionNowScreen> {
           ),
         );
       }),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: CustomButton(
-          onTap: () {
-            var logger = Logger();
-            logger.i('======>> Package ID: ${displayData.id}');
-           /* paymentController.paymentSheetInitialization(
-              displayData.price.toString(), // amount
-              "USD",                        // currency
-              context,                      // build context
-              displayData.id ?? '',         // subscriptionId (fallback to empty string)
-            );*/
-          },
-          text: 'Subscribe Now',
-        ),
-      ),
+      bottomNavigationBar: Obx(() {
+        final displayData = subscriptionController.getOneSubscriptionList.value;
+
+        if (subscriptionController.showLoading.value ||
+            displayData.id == null) {
+          return const SizedBox.shrink();
+        }
+
+        return Padding(
+          padding: EdgeInsets.all(16.w),
+          child: CustomButton(
+            onTap: () {
+              var logger = Logger();
+              logger.i('======>> SubscriptionId ID: ${displayData.id}');
+              paymentController.paymentSheetInitialization(
+                displayData.price.toString(), // amount
+                "USD", // currency
+                context, // build context
+                displayData.id ?? '',
+              );
+            },
+            text: 'Subscribe Now',
+          ),
+        );
+      }),
     );
   }
 }
-
