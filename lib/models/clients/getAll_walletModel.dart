@@ -1,5 +1,5 @@
 
-class GetAllWalletModel {
+class GetAllTravelModel {
   final String? id;
   final String? departure;
   final String? destination;
@@ -13,7 +13,7 @@ class GetAllWalletModel {
   final DateTime? updatedAt;
   final int? v;
 
-  GetAllWalletModel({
+  GetAllTravelModel({
     this.id,
     this.departure,
     this.destination,
@@ -28,7 +28,7 @@ class GetAllWalletModel {
     this.v,
   });
 
-  factory GetAllWalletModel.fromJson(Map<String, dynamic> json) => GetAllWalletModel(
+  factory GetAllTravelModel.fromJson(Map<String, dynamic> json) => GetAllTravelModel(
     id: json["_id"],
     departure: json["departure"],
     destination: json["destination"],

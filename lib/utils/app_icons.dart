@@ -7,7 +7,7 @@ class AppIcons{
   static String eyeOffIcon = "$baseUrl/eye-off.svg";
   static String errorImage = "$baseUrl/errorImage.svg";
   static String editIcon= "$baseUrl/edit.svg";
-  static String backButton = "$baseUrl/backArrow.svg";
+
 
 // Sign in Screen
   static String emailIcon ="$baseUrl/email.svg";
@@ -32,5 +32,10 @@ class AppIcons{
   static String inventoryIcon ="$baseUrl/inventoryIcon.svg";
   static String walletIcon ="$baseUrl/walletAlt.svg";
   static String subscriptionIcon ="$baseUrl/subscriptionIcon.svg";
+  static String bottomArrow ="$baseUrl/bottomArrow.svg";
+  static String travel ="$baseUrl/travel.svg";
+  static String save ="$baseUrl/save.svg";
+  static String calenderIcon ="$baseUrl/calenderIcon.svg";
+  static String successfulIcon ="$baseUrl/successfulIcon.svg";
 
 }

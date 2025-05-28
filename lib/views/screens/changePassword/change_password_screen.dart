@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,7 +35,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: SvgPicture.asset(AppIcons.backButton),
+          icon: Icon(CupertinoIcons.back),
           padding: EdgeInsets.all(8.0),
           iconSize: 18.sp,
         ),

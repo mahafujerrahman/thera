@@ -1,11 +1,13 @@
 import '../models/language_model.dart';
 
 class AppConstants{
-  static String APP_NAME = "Home Health";
+  static String APP_NAME = "home Health";
   static const String bearerToken = "BearerToken";
 
   static const String phoneNumber = "PhoneNumber";
   static String isLogged = "IsLogged";
+
+
 
   static String userId="userId";
   // share preference Key
@@ -30,10 +32,12 @@ class AppConstants{
   static String role = "Role";
   static String selectedOption = "selectedOption";
   static String fcmToken = "fcmToken";
+  static String uniqueAnimal = "uniqueAnimal";
 
 
+  static String createdServiceClientId="createdServiceClientId";
 
-  static String productId="productId";
+
   static String userLat="userLat";
   static String userLag="userLag";
 

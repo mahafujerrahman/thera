@@ -1,7 +1,7 @@
 class AppStrings {
 
   //============================> Sign in Screen <==============================
-  static String myProfile = 'My Profile';
+
   static String signUp = 'Sign Up';
   static String signIn = 'Sign In';
   static String logIn = 'Login';

@@ -54,13 +54,14 @@ dependencies:
   dotted_border: ^2.1.0
   table_calendar: ^3.2.0
   connectivity_plus: ^6.1.2
-  logger:
+  logger: ^2.5.0
   flutter_email_sender: ^7.0.0
   syncfusion_flutter_pdf: ^28.2.6
   pdf: ^3.11.3
   share_plus: ^10.1.4
   firebase_core: ^3.12.1
   firebase_messaging: ^15.2.4
+  flutter_stripe: ^11.5.0
 
 
 dev_dependencies:

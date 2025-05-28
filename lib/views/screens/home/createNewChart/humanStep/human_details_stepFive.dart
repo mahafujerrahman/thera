@@ -1,0 +1,428 @@
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:thera_track_app/Utils/app_constants.dart';
+import 'package:thera_track_app/controller/clientController/clientController.dart';
+import 'package:thera_track_app/controller/clientController/service_controller.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
+import 'package:thera_track_app/helpers/route.dart';
+import 'package:thera_track_app/utils/app_colors.dart';
+import 'package:thera_track_app/utils/app_icons.dart';
+import 'package:thera_track_app/utils/app_images.dart';
+import 'package:thera_track_app/utils/style.dart';
+import 'package:thera_track_app/views/base/custom_button.dart';
+import 'package:thera_track_app/views/base/custom_row.dart';
+import 'package:thera_track_app/views/base/dotted_border_container.dart';
+import 'package:thera_track_app/views/base/price_details_row.dart';
+
+
+class HumanStepFive extends StatefulWidget {
+  const HumanStepFive({super.key});
+
+  @override
+  State<HumanStepFive> createState() => _HumanStepFiveState();
+}
+
+class _HumanStepFiveState extends State<HumanStepFive> {
+  final TextEditingController fullNameCTRl = TextEditingController();
+  final TextEditingController emailCTRl = TextEditingController();
+  final TextEditingController addressCTRl = TextEditingController();
+
+  final ClientController clientController = Get.put(ClientController());
+  final ServiceController serviceController = Get.put(ServiceController());
+  StreamSubscription? streamSubscription;
+  bool isConnection = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var clientID = await PrefsHelper.getString(AppConstants.createdServiceClientId);
+      clientController.clientDetailsByID(clientID);
+
+      isConnection = await InternetConnectionChecker.instance.hasConnection;
+
+      if (isConnection) {
+        print("------------------Internet available");
+      } else {
+        print("------------------No available");
+      }
+    });
+  }
+
+
+
+  @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        backgroundColor: AppColors.whiteColor,
+        //=============================> AppBar Section <=======================
+        appBar: AppBar(
+          title: Text(
+            'New Create Details',
+            style: AppStyles.fontSize16(fontWeight: FontWeight.w500),
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.h, vertical: 12.w),
+            child: Obx(() {
+              var clientInfo = clientController.getClientInfoByIdModel.value;
+
+              // If clientInfo is null, display a loading spinner or placeholder
+              if (clientInfo == null) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16.h),
+                  Center(
+                    child: Image.asset(
+                      height: 100.h,
+                      AppImages.appLogo,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  CustomRow(
+                      title: 'Name', displayData: clientInfo.name ?? 'N/A'),
+                  CustomRow(
+                      title: 'Email', displayData: clientInfo.email ?? 'N/A'),
+                  CustomRow(title: 'Mobile',
+                      displayData: clientInfo.phoneNumber ?? 'N/A'),
+                  CustomRow(
+                      title: 'Address', displayData: clientInfo.city ?? 'N/A'),
+                  SizedBox(height: 10.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 25.h, vertical: 12.w),
+                    child: DottedBorderContainer(
+                      child: Container(
+                        height: 200.h,
+                        width: double.infinity,
+                        child: Center(
+                          child: serviceController.selectedImage != null
+                              ? Image.file(
+                            serviceController.selectedImage!,
+                            height: 200.h,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                              : Image.asset(
+                              'assets/images/image_placeHolder.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryColor,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4.w),
+                          child: Text('Description',
+                              style: AppStyles.fontSize18(
+                                  color: AppColors.color575757)),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          child: Text(
+                              serviceController.descriptionTextController.text
+                                  .trim()),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Recent Clients section
+                  SizedBox(height: 10.h),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryColor,
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4.w),
+                          child: Text('Added Point ',
+                              style: AppStyles.fontSize18(
+                                  color: AppColors.color575757)),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (int i = 0; i <
+                                  serviceController.pointList.length; i++)
+                                Text('${i + 1}. ${serviceController
+                                    .pointList[i]}'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 10.h),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return PriceDetailWidget(
+                        title: serviceController.selectedList[index]
+                            .treatmentTitle,
+                        price: serviceController.selectedList[index].price
+                            .toString(),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox();
+                    },
+                    itemCount: serviceController.selectedList.length,
+                  ),
+                  Divider(color: AppColors.blackColor),
+                  PriceDetailWidget(title: 'Full Cost',
+                      price: serviceController.fullCost.value.toString()),
+                  PriceDetailWidget(title: 'Discount ',
+                      price: serviceController.discount.value.toString()),
+                  Divider(),
+                  PriceDetailWidget(title: 'Final Cost',
+                      price: serviceController.finalCost.value.toString()),
+                  SizedBox(height: 20.h),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.appoinmentCalenderScreen);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                                minimumSize: Size(double.infinity, 50.h),
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(AppIcons.calenderIcon),
+                                  SizedBox(width: 8.w),
+                                  Flexible(
+                                    child: Text(
+                                      'Make Appointment',
+                                      style: AppStyles.fontSize14(
+                                          color: AppColors.whiteColor),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4.r),
+                                ),
+                                minimumSize: Size(double.infinity, 50.h),
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(AppIcons.save),
+                                  SizedBox(width: 8.w),
+                                  Flexible(
+                                    child: Text(
+                                      'Save',
+                                      style: AppStyles.fontSize14(
+                                          color: AppColors.whiteColor),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 12.h),
+                      /*Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            onTap: () {},
+                            prefixIcon: Icon(Icons.send),
+                            text: 'Sent',
+                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: CustomButton(
+                            onTap: () {},
+                            prefixIcon: Icon(Icons.print),
+                            text: 'Print',
+                            textStyle: AppStyles.fontSize12(color: AppColors.whiteColor),
+                          ),
+                        ),
+                      ],
+                    ),*/
+                      // Paid/unpaid
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Paid Container
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    serviceController.isPaid.value = true;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50.h,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(
+                                        color: AppColors.primaryColor),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.2,
+                                        child: Checkbox(
+                                          value: serviceController.isPaid.value,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              serviceController.isPaid.value =
+                                                  value ?? false;
+                                            });
+                                          },
+                                          activeColor: AppColors.primaryColor,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Paid',
+                                        style: TextStyle(
+                                            color: AppColors.primaryColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            // Unpaid Container
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    serviceController.isPaid.value = false;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50.h,
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(
+                                        color: AppColors.redColor),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.2,
+                                        child: Checkbox(
+                                            value: !serviceController.isPaid
+                                                .value,
+                                            onChanged: (bool? value) {
+                                              setState(() {
+                                                serviceController.isPaid.value =
+                                                !(value ?? false);
+                                              });
+                                            },
+                                            activeColor: AppColors.redColor),
+                                      ),
+                                      Text(
+                                        'Unpaid',
+                                        style: TextStyle(
+                                            color: AppColors.redColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  /*     Obx((){
+                  return CustomButton(
+                    //  loading: serviceController.createServiceLoading.value,
+                      onTap: () {
+                        serviceController.createServiceClient();
+                      },
+                      text: 'Finished');
+                }*/
+                  CustomButton(
+                      onTap: () {
+                        serviceController.createServiceClient();
+                      },
+                      text: 'Finished'),
+                  SizedBox(height: 10.h),
+                ],
+              );
+            }),
+          ),
+        ),
+      );
+    }
+  }

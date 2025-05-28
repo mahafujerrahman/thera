@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:thera_track_app/views/screens/Auth/SignIn/sign_in_screen.dart';
 import 'package:thera_track_app/views/screens/Auth/SignUp/sign_up_screen.dart';
@@ -9,7 +8,7 @@ import 'package:thera_track_app/views/screens/Home/appointment/appointmentDetail
 import 'package:thera_track_app/views/screens/Home/appointment/appointment_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/chartArchive_screen.dart';
 import 'package:thera_track_app/views/screens/Home/chartArchive/detailsChartArchive_screen.dart';
-import 'package:thera_track_app/views/screens/Home/contacts/animal/animalList_screen.dart';
+import 'package:thera_track_app/views/screens/Home/contacts/animal/animal_list_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/animal/animal_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/animal/edit_animal_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/clients_contact_details_screen.dart';
@@ -17,32 +16,41 @@ import 'package:thera_track_app/views/screens/Home/contacts/animal/animal_contac
 import 'package:thera_track_app/views/screens/Home/contacts/contact_search_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/edit_contact_details_screen.dart';
 import 'package:thera_track_app/views/screens/Home/contacts/human/human_client_contact_screen.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_stepThree.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/appoinmentCalenderScreen.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/createNewChartDetails.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFive.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepFour.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_details_StepSeven.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_details_stepFive.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepFour.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepTwo.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/humanStep/human_stepthree.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_stepFive.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_stepFour.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepOne.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepSix.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepThree.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_stepSix.dart';
 import 'package:thera_track_app/views/screens/Home/createNewChart/steps/createNew_chart_stepTwo.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/equipmentScreen.dart';
-import 'package:thera_track_app/views/screens/Home/createNewChart/steps/horseDetailsScreen.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/equipment_screen.dart';
+import 'package:thera_track_app/views/screens/Home/createNewChart/animalStep/animal_horseDetailsScreen.dart';
 import 'package:thera_track_app/views/screens/Home/home_screen.dart';
 import 'package:thera_track_app/views/screens/Home/inventory/inventory_screen.dart';
 import 'package:thera_track_app/views/screens/Home/notification/notificationScreen.dart';
 import 'package:thera_track_app/views/screens/Home/offline_file/offline_file_screen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/costDetailsScreen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/addCostScreen.dart';
-import 'package:thera_track_app/views/screens/Home/wallet/wallet_screen.dart';
 import 'package:thera_track_app/views/screens/Splash/onboarding_screen.dart';
 import 'package:thera_track_app/views/screens/Splash/splash_screen.dart';
-import 'package:thera_track_app/views/screens/appDrawer/AccountSetUp/accountSetUp_screen.dart';
-import 'package:thera_track_app/views/screens/appDrawer/advance_setting/advance_settings_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/advanceSetting/advance_setting_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/subscription/payment_succesful_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_now_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/yourDetails/edit_yourDetails_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/feedback/feedback_screen.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/edit_invoiceSetup.dart';
+import 'package:thera_track_app/views/screens/appDrawer/invoice/invoiceSetupScreen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/paid/paidDetails_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/subscription/subscription_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/treatment/treatment_screen.dart';
 import 'package:thera_track_app/views/screens/appDrawer/unpaid/undPaidDetails_screen.dart';
+import 'package:thera_track_app/views/screens/home/appointment/reschedule_calender.dart';
+import 'package:thera_track_app/views/screens/home/travel/addCostScreen.dart';
+import 'package:thera_track_app/views/screens/home/travel/costDetailsScreen.dart';
+import 'package:thera_track_app/views/screens/home/travel/travel_screen.dart';
 import '../views/screens/appDrawer/yourDetails/yourDetails_screen.dart';
 
 class AppRoutes{
@@ -53,16 +61,19 @@ class AppRoutes{
   static String forgotPasswordScreen="/ForgotPasswordScreen";
   static String verifyScreen="/verifyScreen";
   static String homeScreen="/homeScreen";
-  static String accountSetUpScreen="/accountSetUpScreen";
+
   static String yourDetailsScreen="/yourDetailsScreen";
   static String treatmentScreen="/treatmentScreen";
-  static String advanceSettingsScreen="/advanceSettingsScreen";
+  static String editYourDetailsScreen="/editYourDetailsScreen";
   static String createNewChartStepOneScreen="/createNewChartStepOneScreen";
   static String paidDetailsScreen="/paidDetailsScreen";
   static String unPaidDetailsScreen="/unPaidDetailsScreen";
   static String feedbackScreen="/feedbackScreen";
+//animal
+  static String animalStepThreeScreen="/animalStepThreeScreen";
+
   static String createNewChartStepTwoScreen="/createNewChartStepTwoScreen";
-  static String createNewChartStepThreeScreen="/createNewChartStepThreeScreen";
+
   static String horseDetailsScreen="/horseDetailsScreen";
   static String chartArchiveScreen="/chartArchiveScreen";
   static String chartArchiveDetailsScreen="/chartArchiveDetailsScreen";
@@ -70,26 +81,40 @@ class AppRoutes{
   static String animalContactsScreen= "/animalContactsScreen";
   static String contactSearchScreen= "/contactSearchScreen";
   static String clientsContactDetailsScreen= "/clientsContactDetailsScreen";
-  static String editContactDetailsScreen= "/editContactDetailsScreen";
+  static String editContactDetailsScreen= "/human_editContactDetailsScreen";
   static String offLineFileScreen= "/offLineFileScreen";
   static String animalContactDetailsScreen= "/animalContactDetailsScreen";
   static String animalListScreen= "/animalListScreen";
   static String editAnimalContactDetailsScreen= "/editAnimalContactDetailsScreen";
-  static String createNewChartStepFourScreen = "/createNewChartStepFourScreen";
-  static String createNewChartStepFiveScreen = "/createNewChartStepFiveScreen";
-  static String createNewChartStepSixScreen = "/createNewChartStepSixScreen";
-  static String createNewChartDetailsScreen = "/createNewChartDetailsScreen";
+  //Animal Step
+  static String animalStepFourScreen = "/animalStepFourScreen";
+  static String animalStepFiveScreen = "/animalStepFiveScreen";
+  static String animalStepSixScreen = "/animalStepSixScreen";
+  static String animalServiceDetailsScreen = "/animalServiceDetailsScreen";
+  static String subscriptionNowScreen = "/subscription_now_screen";
+
+
   static String appoinmentCalenderScreen = "/appoinmentCalenderScreen";
   static String notificationScreen = "/notificationScreen";
   static String resetPassword = "/resetPassword";
   static String inventoryScreen = "/inventoryScreen";
-  static String walletDetailsScreen = "/walletDetailsScreen";
+  static String travelDetailsScreen = "/travelDetailsScreen";
   static String costAddScreen = "/costAddScreen";
   static String costDetailsScreen = "/costDetailsScreen";
   static String equipmentScreen = "/equipmentScreen";
   static String humanContactsScreen = "/humanContactsScreen";
   static String appointmentDetailsScreen = "/appointmentDetailsScreen";
   static String subscriptionScreen = "/subscriptionScreen";
+  static String stripePaymentScreen = "/stripePaymentScreen";
+  static String humanStepTwo = "/humanStepTwo";
+  static String humanStepThree = "/humanStepThree";
+  static String humanStepFour = "/humanStepFour";
+  static String humanStepFive = "/HumanStepFive";
+  static String invoiceSetupScreen = "/invoice_setupScreen";
+  static String editInvoiceSetupScreen = "/edit_InvoiceSetupScreen";
+  static String advanceSettingScreen = "/advanceSettingScreen";
+  static String appoinmentRescheduleCalenderScreen = "/appoinmentRescheduleCalenderScreen";
+  static String paymentSuccessfulScreen = "/paymentSuccessfulScreen";
 
 
 
@@ -109,26 +134,24 @@ class AppRoutes{
    GetPage(name:homeScreen, page: ()=> HomeScreen(),transition: Transition.noTransition),
 
    //App Drawer
-   GetPage(name:accountSetUpScreen, page: ()=> AccountSetUpScreen(),transition: Transition.noTransition),
+   GetPage(name:editYourDetailsScreen, page: ()=> EditYourDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:yourDetailsScreen, page: ()=> YourDetailsScreen(),transition: Transition.noTransition),
+   GetPage(name:invoiceSetupScreen, page: ()=> InvoiceSetupScreen(),transition: Transition.noTransition),
+   GetPage(name:editInvoiceSetupScreen, page: ()=> EditInvoiceSetupScreen(),transition: Transition.noTransition),
    GetPage(name:treatmentScreen, page: ()=> TreatmentScreen(),transition: Transition.noTransition),
-   GetPage(name:advanceSettingsScreen, page: ()=> AdvanceSettingsScreen(),transition: Transition.noTransition),
    GetPage(name:paidDetailsScreen, page: ()=> PaidDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:unPaidDetailsScreen, page: ()=> UnPaidDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:feedbackScreen, page: ()=> FeedbackScreen(),transition: Transition.noTransition),
+   GetPage(name:advanceSettingScreen, page: ()=> AdvanceSettingScreen(),transition: Transition.noTransition),
 
    //Create New Chart Step
    GetPage(name:createNewChartStepOneScreen, page: ()=> CreateNewChartStepOneScreen(),transition: Transition.noTransition),
    GetPage(name:createNewChartStepTwoScreen, page: ()=> CreateNewChartStepTwoScreen(),transition: Transition.noTransition),
-   GetPage(name:createNewChartStepThreeScreen, page: ()=> CreateNewChartStepThreeScreen(),transition: Transition.noTransition),
-   GetPage(name:createNewChartStepFourScreen, page: ()=> CreateNewChartStepFourScreen(),transition: Transition.noTransition),
-   GetPage(name:createNewChartStepFiveScreen, page: ()=> CreateNewChartStepFiveScreen(),transition: Transition.noTransition),
-   GetPage(name:createNewChartStepSixScreen, page: ()=> CreateNewChartStepSixScreen(),transition: Transition.noTransition),
 
-   GetPage(name:createNewChartDetailsScreen, page: ()=> CreateNewChartDetailsScreen(),transition: Transition.noTransition),
 
    GetPage(name:horseDetailsScreen, page: ()=> HorseDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:appoinmentCalenderScreen, page: ()=> AppoinmentCalenderScreen(),transition: Transition.noTransition),
+   GetPage(name:appoinmentRescheduleCalenderScreen, page: ()=> AppoinmentRescheduleCalenderScreen(),transition: Transition.noTransition),
 
 
    //ChartArchiveScreen
@@ -154,7 +177,7 @@ class AppRoutes{
    //Inventory Screen
    GetPage(name:inventoryScreen, page: ()=> InventoryScreen(),transition: Transition.noTransition),
    // Wallet Details Screen
-   GetPage(name:walletDetailsScreen, page: ()=> WalletDetailsScreen(),transition: Transition.noTransition),
+   GetPage(name:travelDetailsScreen, page: ()=> TravelDetailsScreen(),transition: Transition.noTransition),
    GetPage(name:costAddScreen, page: ()=> CostAddScreen(),transition: Transition.noTransition),
    GetPage(name:costDetailsScreen, page: ()=> CostDetailsScreen(),transition: Transition.noTransition),
 
@@ -168,5 +191,21 @@ class AppRoutes{
 
    //Subscription Screen
    GetPage(name:subscriptionScreen, page: ()=> SubscriptionScreen(),transition: Transition.noTransition),
-  ];
+   GetPage(name:subscriptionNowScreen, page: ()=> SubscriptionNowScreen(),transition: Transition.noTransition),
+   GetPage(name:paymentSuccessfulScreen, page: ()=> PaymentSuccessfulScreen(),transition: Transition.noTransition),
+
+   //human Step
+   GetPage(name:humanStepTwo, page: ()=> HumanStepTwo(),transition: Transition.noTransition),
+   GetPage(name:humanStepThree, page: ()=> HumanStepThree(),transition: Transition.noTransition),
+   GetPage(name:humanStepFour, page: ()=> HumanStepFour(),transition: Transition.noTransition),
+   GetPage(name:humanStepFive, page: ()=> HumanStepFive(),transition: Transition.noTransition),
+
+   //animal step
+   GetPage(name:animalStepThreeScreen, page: ()=> AnimalStepThreeScreen(),transition: Transition.noTransition),
+   GetPage(name:animalStepFourScreen, page: ()=> AnimalStepFourScreen(),transition: Transition.noTransition),
+   GetPage(name:animalStepFiveScreen, page: ()=> AnimalStepFiveScreen(),transition: Transition.noTransition),
+   GetPage(name:animalStepSixScreen, page: ()=> AnimalStepSixScreen(),transition: Transition.noTransition),
+   GetPage(name:animalServiceDetailsScreen, page: ()=> AnimalServiceDetailsScreen(),transition: Transition.noTransition),
+
+ ];
 }
