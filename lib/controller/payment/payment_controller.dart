@@ -5,10 +5,12 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:thera_track_app/controller/payment/keys.dart';
+import 'package:thera_track_app/helpers/prefs_helpers.dart';
 import 'package:thera_track_app/helpers/route.dart';
 import 'package:thera_track_app/service/api_checker.dart';
 import 'package:thera_track_app/service/api_client.dart';
 import 'package:thera_track_app/service/api_constants.dart';
+import 'package:thera_track_app/utils/app_constants.dart';
 
 class PaymentController extends GetxController {
   Map<String, dynamic>? internetPaymentData;
@@ -22,16 +24,18 @@ class PaymentController extends GetxController {
       await Stripe.instance.presentPaymentSheet().then((val) async {
         var logger = Logger();
 
-        logger.i('======>> Payment Successful Response: ${internetPaymentData.toString()}');
+        logger.i(
+            '======>> Payment Successful Response: ${internetPaymentData.toString()}');
 
         final paymentIntentId = internetPaymentData?['id'] ?? '';
 
         if (currentSubscriptionId != null && paymentIntentId.isNotEmpty) {
           logger.w("joy bangla");
 
-          return;
           // Call backend API to confirm payment success
-          await subcriptionPaymentSuccess(currentSubscriptionId!, paymentIntentId, 'USD');
+          await subcriptionPaymentSuccess(
+              currentSubscriptionId!, paymentIntentId, 'USD');
+          logger.w("joy bangla2");
         } else {
           logger.w('subscriptionId or paymentIntentId is missing');
         }
@@ -55,7 +59,8 @@ class PaymentController extends GetxController {
   }
 
   // Create Payment Intent on Stripe server
-  Future<Map<String, dynamic>?> makeInternetForPayment(String amountToBeCharge, String currency) async {
+  Future<Map<String, dynamic>?> makeInternetForPayment(
+      String amountToBeCharge, String currency) async {
     double amount = double.parse(amountToBeCharge);
     try {
       Map<String, dynamic> paymentInfo = {
@@ -84,21 +89,24 @@ class PaymentController extends GetxController {
   }
 
   // Initialize Payment Sheet and show it
-  Future<void> paymentSheetInitialization(
-      String amountToBeCharge, String currency, BuildContext context, String subscriptionId) async {
+  Future<void> paymentSheetInitialization(String amountToBeCharge,
+      String currency, BuildContext context, String subscriptionId) async {
     try {
       currentSubscriptionId = subscriptionId;
-      internetPaymentData = await makeInternetForPayment(amountToBeCharge, currency);
+      internetPaymentData =
+          await makeInternetForPayment(amountToBeCharge, currency);
 
       if (internetPaymentData != null) {
-        await Stripe.instance.initPaymentSheet(
+        await Stripe.instance
+            .initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
             allowsDelayedPaymentMethods: true,
             paymentIntentClientSecret: internetPaymentData!["client_secret"],
             style: ThemeMode.dark,
             merchantDisplayName: "Mahafujer Rahman",
           ),
-        ).then((val) {
+        )
+            .then((val) {
           print("Payment sheet initialized: $val");
         }).catchError((error) {
           print("Error initializing payment sheet: $error");
@@ -124,7 +132,11 @@ class PaymentController extends GetxController {
   }
 
   // Call backend API to confirm payment success
-  Future<void> subcriptionPaymentSuccess(String subscriptionId, String stripePaymentId, String currency) async {
+  Future<void> subcriptionPaymentSuccess(
+      String subscriptionId, String stripePaymentId, String currency) async {
+    Logger log = Logger();
+    log.w("HI Bro, I am going to be executed!!!-------YaaaaY");
+    var token = await PrefsHelper.getString(AppConstants.bearerToken);
     loading(true);
     try {
       var body = {
@@ -132,13 +144,19 @@ class PaymentController extends GetxController {
         "stripPaymentId": stripePaymentId,
         "currency": currency
       };
-      var headers = {'Content-Type': 'application/json'};
-      var response = await ApiClient.postData(ApiConstants.createPaymentEndPoint,
-          jsonEncode(body), headers: headers);
+      var headers = {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer $token"
+      };
+      var response = await ApiClient.postData(
+          ApiConstants.createPaymentEndPoint, jsonEncode(body),
+          headers: headers);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        log.w("YaaaaY------>>>> Payment Done");
         Get.toNamed(AppRoutes.paymentSuccessfulScreen);
         print('Payment success confirmed on backend');
+
         Get.snackbar('Success', response.body['message']);
       } else {
         ApiChecker.checkApi(response);
